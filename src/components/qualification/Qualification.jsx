@@ -125,6 +125,22 @@ const Qualification = () => {
             }
           >
             <div className="qualification__data">
+              <div>
+                <h3 className="qualification__title">Android Developer</h3>
+                <span className="qualification__subtitle">
+                  PT Uninet Media Sakti
+                </span>
+                <div className="qualification__calendar">
+                  <i className="uil uil-calendar-alt"></i> 2024
+                </div>
+              </div>
+              <div>
+                <span className="qualification__rounder"></span>
+                <span className="qualification__line"></span>
+              </div>
+            </div>
+
+            <div className="qualification__data">
               <div></div>
               <div>
                 <span className="qualification__rounder"></span>

@@ -17,7 +17,7 @@ const HardSkills = () => {
           <div className="skills__data">
             <i class="bx bx-badge-check"></i>
             <div>
-              <h3 className="skills__name">RESTful APIs</h3>
+              <h3 className="skills__name">Retrofit</h3>
               <span className="skills__level">Intermediate</span>
             </div>
           </div>
@@ -25,7 +25,7 @@ const HardSkills = () => {
           <div className="skills__data">
             <i class="bx bx-badge-check"></i>
             <div>
-              <h3 className="skills__name">MySQL</h3>
+              <h3 className="skills__name">Dagger Hilt</h3>
               <span className="skills__level">Intermediate</span>
             </div>
           </div>
