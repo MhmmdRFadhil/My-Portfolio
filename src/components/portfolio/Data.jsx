@@ -5,8 +5,16 @@ import Kryption from "../../assets/Kryption.jpg";
 import CoffeeShop from "../../assets/CoffeeShop.jpg";
 import Github from "../../assets/Github.jpg";
 import MovieCatalogue from "../../assets/MovieCatalogue.jpg";
+import UnApps from "../../assets/UnApps.jpg";
 
 export const projectsData = [
+  {
+    id: 1,
+    image: UnApps,
+    title: "UnApps",
+    category: "advanced",
+    link: "https://play.google.com/store/apps/details?id=com.uninet.umscustomerapp&pcampaignid=web_share",
+  },
   {
     id: 2,
     image: Nutrilicious,
