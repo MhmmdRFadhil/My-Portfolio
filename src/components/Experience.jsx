@@ -1,10 +1,42 @@
 import { useState } from 'react'
-import { Briefcase, GraduationCap } from 'lucide-react'
+import { Briefcase, GraduationCap, ChevronDown } from 'lucide-react'
 import { experienceTabs, experienceData } from '../data/site'
 import Reveal from './ui/Reveal'
 import { AnimatePresence, motion } from 'framer-motion'
 
 const tabIcons = { work: Briefcase, education: GraduationCap }
+
+// Description starts hidden — tapping the card reveals it, keeping the
+// timeline compact by default instead of always showing full paragraphs.
+function TimelineCard({ item }) {
+  const [expanded, setExpanded] = useState(false)
+
+  return (
+    <button
+      type="button"
+      onClick={() => setExpanded((v) => !v)}
+      aria-expanded={expanded}
+      className="card-chunky p-2.5 sm:p-3.5 md:p-4 text-left w-full max-w-[320px] sm:max-w-sm md:max-w-[380px]"
+    >
+      <div className="flex items-start justify-between gap-2">
+        <div className="min-w-0">
+          <span className="inline-block font-mono text-[8px] sm:text-[11px] font-bold text-primary bg-[var(--primary-tint)] px-1.5 sm:px-2 py-0.5 rounded-md mb-1 sm:mb-1.5">
+            {item.year}
+          </span>
+          <h4 className="text-[11.5px] sm:text-[15px] mb-0.5 leading-snug">{item.title}</h4>
+          <div className="text-muted text-[10px] sm:text-[12.5px] font-semibold">{item.org}</div>
+        </div>
+        <ChevronDown
+          size={14}
+          className={`flex-shrink-0 text-muted mt-0.5 transition-transform ${expanded ? 'rotate-180' : ''}`}
+        />
+      </div>
+      {expanded && (
+        <p className="text-muted text-[10.5px] sm:text-[13.5px] leading-relaxed mt-2">{item.desc}</p>
+      )}
+    </button>
+  )
+}
 
 export default function Experience() {
   const [tab, setTab] = useState('work')
@@ -18,7 +50,7 @@ export default function Experience() {
           <p className="text-muted mt-3">A track record of professional roles and academic foundations in Android and software development.</p>
         </Reveal>
 
-        <Reveal delay={0.05} className="flex flex-wrap gap-2.5 mb-10">
+        <Reveal delay={0.05} className="flex flex-wrap justify-center gap-2.5 mb-10">
           {experienceTabs.map((t) => {
             const Icon = tabIcons[t.key]
             return (
@@ -43,18 +75,30 @@ export default function Experience() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -12 }}
             transition={{ duration: 0.3 }}
-            className="relative pl-9"
+            className="relative flex flex-col gap-1 md:gap-1"
           >
-            <div className="absolute left-[7px] top-1.5 bottom-1.5 w-[3px] bg-line" />
-            {experienceData[tab].map((item, i) => (
-              <div key={i} className="relative pb-10 last:pb-0">
-                <div className="absolute -left-9 top-1 w-4 h-4 rounded-full bg-primary border-2 border-line" />
-                <span className="font-mono text-[12.5px] text-primary block mb-1.5">{item.year}</span>
-                <h4 className="text-[17px] mb-1">{item.title}</h4>
-                <div className="text-muted text-sm mb-2 font-semibold">{item.org}</div>
-                <p className="text-muted text-[14.5px]">{item.desc}</p>
-              </div>
-            ))}
+            {/* Center spine — the zigzag alternates cards left/right of it at every size. */}
+            <div className="absolute left-1/2 top-2 bottom-2 w-[2px] md:w-[3px] -translate-x-1/2 bg-line" />
+
+            {experienceData[tab].map((item, i) => {
+              const isLeft = i % 2 === 0
+              const card = <TimelineCard item={item} />
+
+              return (
+                <div key={i} className="relative py-1.5 md:py-1.5">
+                  {/* minmax(0, 1fr), not bare 1fr — otherwise a row with a
+                      long title/org grows its column past the fair share,
+                      so cards end up different widths row to row. */}
+                  <div className="grid grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] gap-x-2 sm:gap-x-6 items-start">
+                    <div className="flex justify-end">{isLeft && card}</div>
+                    <div className="flex justify-center pt-2">
+                      <span className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-primary border-2 border-line" />
+                    </div>
+                    <div className="flex justify-start">{!isLeft && card}</div>
+                  </div>
+                </div>
+              )
+            })}
           </motion.div>
         </AnimatePresence>
       </div>
