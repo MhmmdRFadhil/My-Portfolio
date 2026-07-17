@@ -64,57 +64,38 @@ function MarqueeText({ text, as: Tag = 'span', className = '', active = false })
   )
 }
 
-// Below this, a touch is a tap (which shouldn't start the marquee) rather
-// than a deliberate hold (which should).
-const HOLD_THRESHOLD_MS = 180
-
 function Pill({ s }) {
   const Icon = iconMap[s.icon]
   const [hovering, setHovering] = useState(false)
-  const [pressing, setPressing] = useState(false)
-  const holdTimer = useRef(null)
-  const active = hovering || pressing
-
-  const clearHoldTimer = () => {
-    if (holdTimer.current) {
-      clearTimeout(holdTimer.current)
-      holdTimer.current = null
-    }
-  }
-  const endPress = () => { clearHoldTimer(); setPressing(false) }
+  const [clicked, setClicked] = useState(false)
+  const active = hovering || clicked
 
   // Scrolling moves the card out from under the cursor/finger without
-  // firing a leave/up event, so an active marquee needs its own reset on
-  // scroll — otherwise a touch-scroll started from a held card leaves it
+  // firing a leave event, so an active marquee needs its own reset on
+  // scroll — otherwise scrolling away from a clicked card leaves it
   // stuck mid-animation.
   useEffect(() => {
     if (!active) return
-    const reset = () => { setHovering(false); endPress() }
+    const reset = () => { setHovering(false); setClicked(false) }
     window.addEventListener('scroll', reset, { passive: true, capture: true })
     return () => window.removeEventListener('scroll', reset, { capture: true })
   }, [active])
-
-  useEffect(() => () => clearHoldTimer(), [])
 
   return (
     <div
       className="skill-pill h-full"
       onPointerEnter={(e) => { if (e.pointerType === 'mouse' && supportsHover()) setHovering(true) }}
-      onPointerLeave={(e) => { if (e.pointerType === 'mouse') setHovering(false); endPress() }}
-      onPointerDown={(e) => {
-        // Touch/pen: only start the marquee once the press has been held
-        // past the threshold, so a quick tap never triggers it (and so
-        // there's nothing for it to get "stuck" on afterward). Mouse
-        // presses (rare, but possible alongside hover) can start instantly.
-        if (e.pointerType === 'mouse') {
-          setPressing(true)
-          return
-        }
-        clearHoldTimer()
-        holdTimer.current = setTimeout(() => setPressing(true), HOLD_THRESHOLD_MS)
-      }}
-      onPointerUp={endPress}
-      onPointerCancel={endPress}
+      // On a hover-capable (mouse) device, leaving the card should always
+      // stop the marquee — including a click-toggled one, since a mouse
+      // user has no other way to "leave" a click-on state. Touch devices
+      // don't get a real leave here, so the tap toggle stays in charge.
+      onPointerLeave={(e) => { if (e.pointerType === 'mouse') { setHovering(false); setClicked(false) } }}
+      // click is the browser's unified tap/click event — it fires
+      // reliably on both desktop and mobile (unlike raw pointer/touch
+      // events, which have all sorts of device-specific edge cases), so
+      // toggling here is the simplest reliable way to start/stop the
+      // marquee on tap.
+      onClick={() => setClicked((v) => !v)}
     >
       <div className="w-8 h-8 rounded-lg bg-surfaceAlt border-2 border-line flex items-center justify-center flex-shrink-0 text-primary">
         <Icon size={16} />
@@ -123,7 +104,7 @@ function Pill({ s }) {
         <MarqueeText
           as="h4"
           text={s.name}
-          className="text-[13px] sm:text-[14px] font-bold leading-tight"
+          className="font-mono text-[12.5px] sm:text-[13.5px] font-bold leading-tight tracking-tight"
           active={active}
         />
         <MarqueeText
@@ -165,10 +146,16 @@ export default function Skills() {
         {/* 2 columns from mobile up (instead of 1) so 10 pills only take
             5 rows, not 10. Names that don't fit their column become a
             looping marquee (see MarqueeText) instead of wrapping or
-            being cut off with an ellipsis. */}
-        <Reveal delay={0.15} className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4">
-          {allSkills.map((s) => <Pill key={s.name} s={s} />)}
-        </Reveal>
+            being cut off with an ellipsis. Each pill reveals individually
+            on a short per-index delay instead of the whole grid fading in
+            as one block, for a cascading entrance. */}
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4">
+          {allSkills.map((s, i) => (
+            <Reveal key={s.name} delay={0.15 + (i % 8) * 0.05} y={16}>
+              <Pill s={s} />
+            </Reveal>
+          ))}
+        </div>
       </div>
     </section>
   )
