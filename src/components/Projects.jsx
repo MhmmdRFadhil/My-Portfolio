@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { motion } from 'framer-motion'
 import { Github as GithubIcon } from 'lucide-react'
 import { projects, projectFilters } from '../data/site'
 import Reveal from './ui/Reveal'
@@ -50,18 +51,29 @@ export default function Projects() {
         </Reveal>
 
         <Reveal delay={0.05} className="flex flex-wrap justify-center gap-2.5 mb-10">
-          {projectFilters.map((f) => (
-            <button
-              key={f.key}
-              onClick={() => setFilter(f.key)}
-              className={`text-[13.5px] font-bold px-5 py-2.5 rounded-2xl border-2 transition-colors
-                ${filter === f.key
-                  ? 'bg-[var(--primary-fill)] text-white border-[var(--primary-fill)] shadow-[0_4px_0_0_var(--primary-fill-shadow)]'
-                  : 'bg-surface text-muted border-line shadow-[0_4px_0_0_var(--ghost-shadow)] hover:text-ink'}`}
-            >
-              {f.label}
-            </button>
-          ))}
+          {projectFilters.map((f) => {
+            const isActive = filter === f.key
+            return (
+              <div key={f.key} className="relative">
+                {isActive && (
+                  <motion.span
+                    layoutId="project-filter-pill"
+                    className="absolute inset-0 rounded-2xl bg-[var(--primary-fill)] shadow-[0_4px_0_0_var(--primary-fill-shadow)]"
+                    transition={{ type: 'spring', stiffness: 380, damping: 32 }}
+                  />
+                )}
+                <button
+                  onClick={() => setFilter(f.key)}
+                  className={`relative z-10 text-[13.5px] font-bold px-5 py-2.5 rounded-2xl border-2 transition-colors
+                    ${isActive
+                      ? 'text-white border-transparent'
+                      : 'bg-surface text-muted border-line shadow-[0_4px_0_0_var(--ghost-shadow)] hover:text-ink'}`}
+                >
+                  {f.label}
+                </button>
+              </div>
+            )
+          })}
         </Reveal>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -72,10 +84,14 @@ export default function Projects() {
 
             return (
               <Reveal key={p.id} delay={(i % 3) * 0.08}>
-                <div className="card-chunky flex flex-col h-full overflow-hidden transition-all duration-200
+                <div className="group card-chunky flex flex-col h-full overflow-hidden transition-all duration-200
                   hover:-translate-y-1 hover:shadow-[0_9px_0_0_var(--ghost-shadow)]">
                   <div className="aspect-[3/2] bg-surfaceAlt border-b-2 border-line relative overflow-hidden">
-                    <img src={p.image} alt={p.title} className="w-full h-full object-cover" />
+                    <img
+                      src={p.image}
+                      alt={p.title}
+                      className="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-110"
+                    />
                     <div className={`absolute top-3.5 left-3.5 text-[11px] font-bold px-2.5 py-1 rounded-full capitalize ${categoryColor[p.category]}`}>
                       {p.category}
                     </div>

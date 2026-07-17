@@ -51,17 +51,26 @@ export default function Experience() {
         <Reveal delay={0.05} className="flex flex-wrap justify-center gap-2.5 mb-10">
           {experienceTabs.map((t) => {
             const Icon = tabIcons[t.key]
+            const isActive = tab === t.key
             return (
-              <button
-                key={t.key}
-                onClick={() => setTab(t.key)}
-                className={`flex items-center gap-2 text-sm font-bold px-5 py-3 rounded-2xl border-2 transition-colors
-                  ${tab === t.key
-                    ? 'bg-[var(--primary-fill)] text-white border-[var(--primary-fill)] shadow-[0_4px_0_0_var(--primary-fill-shadow)]'
-                    : 'bg-surface text-muted border-line shadow-[0_4px_0_0_var(--ghost-shadow)] hover:text-ink'}`}
-              >
-                <Icon size={16} /> {t.label}
-              </button>
+              <div key={t.key} className="relative">
+                {isActive && (
+                  <motion.span
+                    layoutId="exp-tab-pill"
+                    className="absolute inset-0 rounded-2xl bg-[var(--primary-fill)] shadow-[0_4px_0_0_var(--primary-fill-shadow)]"
+                    transition={{ type: 'spring', stiffness: 380, damping: 32 }}
+                  />
+                )}
+                <button
+                  onClick={() => setTab(t.key)}
+                  className={`relative z-10 flex items-center gap-2 text-sm font-bold px-5 py-3 rounded-2xl border-2 transition-colors
+                    ${isActive
+                      ? 'text-white border-transparent'
+                      : 'bg-surface text-muted border-line shadow-[0_4px_0_0_var(--ghost-shadow)] hover:text-ink'}`}
+                >
+                  <Icon size={16} /> {t.label}
+                </button>
+              </div>
             )
           })}
         </Reveal>
