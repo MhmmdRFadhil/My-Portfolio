@@ -112,15 +112,15 @@ img { max-width: 100%; display: block; }
 .chunky-shape {
   position: absolute;
   border: 3px solid var(--border);
-  opacity: .5;
-  animation: drift-chunky 24s ease-in-out infinite;
+  opacity: .35;
+  animation: drift-chunky 42s ease-in-out infinite;
 }
-[data-theme="dark"] .chunky-shape { opacity: .28; }
+[data-theme="dark"] .chunky-shape { opacity: .18; }
 .chunky-shape.square { border-radius: 18px; }
 .chunky-shape.circle { border-radius: 50%; }
 @keyframes drift-chunky {
   0%, 100% { transform: translate(0,0) rotate(0deg); }
-  50% { transform: translate(30px,-24px) rotate(12deg); }
+  50% { transform: translate(12px,-9px) rotate(4deg); }
 }
 @media (prefers-reduced-motion: reduce) { .chunky-shape { animation: none; } }
 
@@ -201,17 +201,21 @@ img { max-width: 100%; display: block; }
 /* Text that's wider than its container loops instead of being cut off
    with an ellipsis (see MarqueeText in Skills.jsx). The content is
    duplicated once by the component; this scrolls exactly one copy's
-   width so the loop reads as seamless. */
+   width so the loop reads as seamless. No animation until the pill is
+   hovered or tapped (see .marquee-text-track--active) — using `animation:
+   none` rather than animation-play-state:paused so it snaps back to
+   translateX(0) on deactivate, instead of freezing wherever it was
+   mid-scroll. */
 .marquee-text-track {
   display: inline-flex;
-  animation: marquee-text-scroll 6s linear infinite;
 }
+.marquee-text-track--active { animation: marquee-text-scroll 6s linear infinite; }
 .marquee-text-track span { padding-right: 24px; }
 @keyframes marquee-text-scroll {
   from { transform: translateX(0); }
   to { transform: translateX(calc(-50% - 12px)); }
 }
-@media (prefers-reduced-motion: reduce) { .marquee-text-track { animation: none; } }
+@media (prefers-reduced-motion: reduce) { .marquee-text-track--active { animation: none; } }
 
 ::selection { background: var(--primary-fill); color: #fff; }
 
