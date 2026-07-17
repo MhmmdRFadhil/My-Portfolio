@@ -19,7 +19,9 @@ export default {
       fontFamily: {
         display: ['"Bricolage Grotesque"', 'sans-serif'],
         body: ['"Plus Jakarta Sans"', 'sans-serif'],
-        mono: ['"JetBrains Mono"', 'monospace'],
+        // Kept in sync with --font-mono in index.css rather than
+        // duplicating the stack here.
+        mono: ['var(--font-mono)'],
       },
       borderRadius: {
         xl2: '22px',
@@ -28,3 +30,4 @@ export default {
   },
   plugins: [],
 }
+
