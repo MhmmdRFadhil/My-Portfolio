@@ -3,10 +3,12 @@ import { createContext, useContext, useEffect, useState } from 'react'
 const ThemeContext = createContext(null)
 
 export function ThemeProvider({ children }) {
+  // Default tema selalu 'light' terlepas dari preferensi sistem — hanya
+  // beralih ke dark kalau user sendiri yang pernah men-toggle (tersimpan
+  // di localStorage).
   const [theme, setTheme] = useState(() => {
     const saved = localStorage.getItem('portfolio-theme')
-    if (saved) return saved
-    return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+    return saved || 'light'
   })
 
   useEffect(() => {
