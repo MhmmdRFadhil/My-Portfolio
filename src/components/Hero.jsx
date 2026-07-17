@@ -48,7 +48,7 @@ export default function Hero() {
             {/* Socials as a vertical stack, running alongside name, role,
                 and the tagline together. */}
             <div className="flex items-start gap-3 md:gap-4">
-              <div className="flex flex-col gap-1.5 md:gap-2 flex-shrink-0">
+              <div className="flex flex-col gap-1.5 md:gap-2 flex-shrink-0 mt-1 md:mt-2">
                 {socials.map((s) => {
                   const Icon = socialIcons[s.icon]
                   return (
