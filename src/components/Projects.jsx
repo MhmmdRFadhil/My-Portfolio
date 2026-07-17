@@ -25,12 +25,12 @@ export default function Projects() {
           <p className="text-muted mt-3">A selection of production applications and focused projects that reflect my growth as an Android Developer.</p>
         </Reveal>
 
-        <Reveal delay={0.05} className="flex flex-wrap gap-2.5 mb-10">
+        <Reveal delay={0.05} className="flex flex-wrap justify-center gap-2.5 mb-10">
           {projectFilters.map((f) => (
             <button
               key={f.key}
               onClick={() => setFilter(f.key)}
-              className={`text-[13.5px] font-bold px-5 py-2.5 rounded-full border-2 transition-colors
+              className={`text-[13.5px] font-bold px-5 py-2.5 rounded-2xl border-2 transition-colors
                 ${filter === f.key
                   ? 'bg-[var(--primary-fill)] text-white border-[var(--primary-fill)] shadow-[0_4px_0_0_var(--primary-fill-shadow)]'
                   : 'bg-surface text-muted border-line shadow-[0_4px_0_0_var(--ghost-shadow)] hover:text-ink'}`}
@@ -44,7 +44,7 @@ export default function Projects() {
           {filtered.map((p, i) => {
             const isPlayStore = p.link.includes('play.google.com')
             const LinkIcon = isPlayStore ? Smartphone : GithubIcon
-            const linkLabel = isPlayStore ? 'Play Store' : 'Source'
+            const linkLabel = isPlayStore ? 'Play Store' : 'Github Source'
 
             return (
               <Reveal key={p.id} delay={(i % 3) * 0.08}>
@@ -60,6 +60,18 @@ export default function Projects() {
                     <h3 className="text-[19px]">{p.title}</h3>
                     {p.description && (
                       <p className="text-muted text-[13.5px] leading-relaxed line-clamp-3">{p.description}</p>
+                    )}
+                    {p.skills && (
+                      <div className="flex flex-wrap gap-1.5 pt-1">
+                        {p.skills.map((skill) => (
+                          <span
+                            key={skill}
+                            className="text-[11px] font-bold text-primary bg-surfaceAlt px-2.5 py-1 rounded-full"
+                          >
+                            {skill}
+                          </span>
+                        ))}
+                      </div>
                     )}
                     <div className="flex gap-4 mt-auto pt-2">
                       <a

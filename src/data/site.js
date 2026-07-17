@@ -58,7 +58,7 @@ export const skillSet1 = [
   { icon: 'zap', name: 'Coroutines & Flow', tag: 'Async' },
   { icon: 'branch', name: 'MVVM · MVI', tag: 'Architecture' },
   { icon: 'cpu', name: 'Hilt', tag: 'Dependency Injection' },
-  { icon: 'db', name: 'Room · DataStore', tag: 'Local Storage' },
+  { icon: 'db', name: 'Room · DataStore · SharedPreferences', tag: 'Local Storage' },
 ]
 
 export const skillSet2 = [
@@ -84,14 +84,7 @@ export const projects = [
     category: 'advanced',
     link: 'https://play.google.com/store/apps/details?id=id.co.cimbniaga.mobile.android&pcampaignid=web_share',
     description: "Contributed to the bill payment and top-up features of CIMB Niaga's banking super-app, focusing on feature development, architecture improvements, and production support.",
-  },
-  {
-    id: 1,
-    image: UnApps,
-    title: 'UnApps',
-    category: 'advanced',
-    link: 'https://play.google.com/store/apps/details?id=com.uninet.umscustomerapp&pcampaignid=web_share',
-    description: "A customer portal for Uninet, built to help customers manage transactions and access service information — including ticketing, live chat, WhatsApp integration, speed test, and bill checking.",
+    skills: ['Kotlin', 'MVVM', 'MVI', 'Jetpack Compose', 'REST API', 'Firebase'],
   },
   {
     id: 2,
@@ -100,6 +93,16 @@ export const projects = [
     category: 'advanced',
     link: 'https://play.google.com/store/apps/details?id=com.ryz.nutrilicious',
     description: 'An Android app that detects fruits and vegetables using image recognition, built with Kotlin and a Firebase backend.',
+    skills: ['Kotlin', 'Firebase'],
+  },
+  {
+    id: 1,
+    image: UnApps,
+    title: 'UnApps',
+    category: 'advanced',
+    link: 'https://play.google.com/store/apps/details?id=com.uninet.umscustomerapp&pcampaignid=web_share',
+    description: "A customer portal for Uninet, built to help customers manage transactions and access service information — including ticketing, live chat, WhatsApp integration, speed test, and bill checking.",
+    skills: ['Kotlin', 'MVVM', 'REST API'],
   },
   {
     id: 3,
@@ -108,6 +111,7 @@ export const projects = [
     category: 'intermediate',
     link: 'https://github.com/MhmmdRFadhil/TernaKu',
     description: 'An Android app for livestock sales in Dermaji Village, built with Kotlin and a RESTful API backend.',
+    skills: ['Kotlin', 'REST API'],
   },
   {
     id: 4,
@@ -116,6 +120,7 @@ export const projects = [
     category: 'other',
     link: 'https://github.com/MhmmdRFadhil/Kryption',
     description: 'A learning project exploring encryption and cryptography concepts, implemented as an Android application.',
+    skills: ['Kotlin'],
   },
   {
     id: 5,
@@ -124,6 +129,7 @@ export const projects = [
     category: 'intermediate',
     link: 'https://github.com/MhmmdRFadhil/UrSkripsi',
     description: 'A capstone project app for monitoring undergraduate thesis progress.',
+    skills: ['Kotlin', 'Firebase'],
   },
   {
     id: 6,
@@ -132,6 +138,7 @@ export const projects = [
     category: 'intermediate',
     link: 'https://github.com/MhmmdRFadhil/BAJP-Final-Submission',
     description: "Final project for the 'Belajar Android Jetpack Pro' course — an app that displays a catalogue of movies and TV shows.",
+    skills: ['Kotlin', 'REST API'],
   },
   {
     id: 7,
@@ -140,6 +147,7 @@ export const projects = [
     category: 'intermediate',
     link: 'https://github.com/MhmmdRFadhil/BFAA-Final-Submission',
     description: "Final project for the 'Fundamental Android Development' course — an app that lists and searches GitHub users.",
+    skills: ['Kotlin', 'REST API'],
   },
   {
     id: 8,
@@ -148,6 +156,7 @@ export const projects = [
     category: 'intermediate',
     link: 'https://github.com/MhmmdRFadhil/Coffee-Shop-App',
     description: 'A simple e-commerce app for selling coffee beans, with separate admin and customer access.',
+    skills: ['Kotlin', 'Firebase'],
   },
 ]
 
@@ -205,12 +214,6 @@ export const experienceData = {
       title: 'Studi Independen Bersertifikat Dicoding x Kampus Merdeka',
       org: 'Kampus Merdeka',
       desc: 'Completed an intensive Android development track covering app fundamentals and Jetpack, plus soft-skills training, capped by a final project.',
-    },
-    {
-      year: '2021 – 2022',
-      title: 'Android Application Developer',
-      org: 'PT Persentologics',
-      desc: 'Developed Android application features as part of the development team.',
     },
   ],
   education: [
