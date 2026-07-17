@@ -13,6 +13,7 @@ import BackToTop from './components/BackToTop'
 export default function App() {
   return (
     <ThemeProvider>
+      <a href="#main" className="skip-link">Skip to content</a>
       <ScrollProgress />
 
       {/* Bentuk solid mengambang di background — pengganti aurora gradient lama */}
@@ -26,7 +27,7 @@ export default function App() {
       </div>
 
       <Navbar />
-      <main>
+      <main id="main">
         <Hero />
         <About />
         <Skills />

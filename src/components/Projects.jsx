@@ -90,6 +90,8 @@ export default function Projects() {
                     <img
                       src={p.image}
                       alt={p.title}
+                      loading="lazy"
+                      decoding="async"
                       className="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-110"
                     />
                     <div className={`absolute top-3.5 left-3.5 text-[11px] font-bold px-2.5 py-1 rounded-full capitalize ${categoryColor[p.category]}`}>
