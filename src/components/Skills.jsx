@@ -10,6 +10,15 @@ const iconMap = {
   globe: Globe, git: GitMerge, flame: Flame, layout: LayoutGrid,
 }
 
+// WebKit (iOS Safari and anything built on it) fires a synthetic
+// pointerenter with pointerType "mouse" ~300ms after a tap, for :hover
+// compatibility — with no real pointer, no leave event ever follows, so
+// filtering on pointerType alone still leaves the marquee stuck on after
+// a tap. `(hover: hover)` reflects the primary input's real capability
+// and isn't fooled by that synthetic event, unlike pointerType.
+const supportsHover = () =>
+  typeof window !== 'undefined' && window.matchMedia('(hover: hover) and (pointer: fine)').matches
+
 // Kotlin's official brand mark (simple-icons, MIT licensed), not a generic
 // icon-set glyph — this banner is specifically about the language.
 function KotlinLogo({ size = 26, className = '' }) {
@@ -73,7 +82,7 @@ function Pill({ s }) {
   return (
     <div
       className="skill-pill h-full"
-      onPointerEnter={(e) => { if (e.pointerType === 'mouse') setHovering(true) }}
+      onPointerEnter={(e) => { if (e.pointerType === 'mouse' && supportsHover()) setHovering(true) }}
       onPointerLeave={(e) => { if (e.pointerType === 'mouse') setHovering(false); setPressing(false) }}
       onPointerDown={() => setPressing(true)}
       onPointerUp={() => setPressing(false)}
