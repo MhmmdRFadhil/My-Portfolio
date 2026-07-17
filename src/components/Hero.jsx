@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react'
-import { motion, useReducedMotion } from 'framer-motion'
+import { useEffect, useRef, useState } from 'react'
+import { motion, useMotionTemplate, useMotionValue, useReducedMotion, useSpring, useTransform } from 'framer-motion'
 import { Github, Linkedin, Instagram } from 'lucide-react'
 import { profile, socials } from '../data/site'
 import Button from './ui/Button'
@@ -56,6 +56,34 @@ export default function Hero() {
   const typedLast = spaceShown ? nameLast.slice(0, typedCount - nameLead.length - 1) : ''
   const highlightRevealed = typedLast === nameLast
 
+  // Photo tilt + cursor spotlight — mouse position (0-1 within the photo)
+  // drives both a subtle 3D tilt and a radial-gradient highlight that
+  // follows the cursor. Only real mouse pointers trigger it (touch has
+  // no hover concept, and gating on pointerType keeps a stray touch-drag
+  // from leaving the tilt stuck mid-rotation).
+  const photoRef = useRef(null)
+  const px = useMotionValue(0.5)
+  const py = useMotionValue(0.5)
+  // Spotlight only fades in while actually hovering — without this it
+  // rendered permanently at dead-center (px/py start at 0.5), reading as
+  // a constant bright glow over the photo instead of a hover effect.
+  const spotlightOpacity = useSpring(0, { stiffness: 250, damping: 30 })
+  const springConfig = { stiffness: 150, damping: 18, mass: 0.4 }
+  const tiltX = useSpring(useTransform(py, [0, 1], [10, -10]), springConfig)
+  const tiltY = useSpring(useTransform(px, [0, 1], [-10, 10]), springConfig)
+  const spotlightX = useTransform(px, (v) => `${v * 100}%`)
+  const spotlightY = useTransform(py, (v) => `${v * 100}%`)
+  const spotlightBackground = useMotionTemplate`radial-gradient(120px circle at ${spotlightX} ${spotlightY}, rgba(255,255,255,0.45), transparent 70%)`
+
+  const handlePhotoPointerMove = (e) => {
+    if (e.pointerType !== 'mouse' || prefersReduced || !photoRef.current) return
+    const rect = photoRef.current.getBoundingClientRect()
+    px.set((e.clientX - rect.left) / rect.width)
+    py.set((e.clientY - rect.top) / rect.height)
+    spotlightOpacity.set(1)
+  }
+  const resetPhotoTilt = () => { px.set(0.5); py.set(0.5); spotlightOpacity.set(0) }
+
   return (
     <section id="home" className="pt-8 md:pt-16 pb-24 md:pb-32 relative">
       <div className="wrap grid grid-cols-1 md:grid-cols-[1.05fr_0.95fr] gap-12 items-center">
@@ -63,18 +91,37 @@ export default function Hero() {
           {/* Photo with name/role stacked below it, same on desktop as
               mobile — name (not the role) carries the highlight mark. */}
           <motion.div variants={item} className="flex flex-col gap-6 md:gap-8 mb-5 md:mb-8">
-            <div className="relative w-[130px] h-[130px] md:w-[220px] md:h-[220px] flex-shrink-0">
-              <div
-                className="w-full h-full overflow-hidden shadow-[0_6px_0_0_var(--ghost-shadow)]"
-                style={{ borderRadius: '42% 58% 65% 35% / 45% 40% 60% 55%' }}
+            <motion.div
+              ref={photoRef}
+              onPointerMove={handlePhotoPointerMove}
+              onPointerLeave={resetPhotoTilt}
+              style={{ perspective: 600 }}
+              className="relative w-[130px] h-[130px] md:w-[220px] md:h-[220px] flex-shrink-0"
+            >
+              <motion.div
+                style={{
+                  borderRadius: '42% 58% 65% 35% / 45% 40% 60% 55%',
+                  rotateX: tiltX,
+                  rotateY: tiltY,
+                  transformStyle: 'preserve-3d',
+                }}
+                className="relative w-full h-full overflow-hidden shadow-[0_6px_0_0_var(--ghost-shadow)]"
               >
                 <img
                   src={profile.avatar}
                   alt={profile.name}
                   className="w-full h-full object-cover object-[center_15%]"
+                  loading="eager"
+                  fetchpriority="high"
+                  decoding="async"
                 />
-              </div>
-            </div>
+                <motion.div
+                  aria-hidden="true"
+                  className="absolute inset-0 pointer-events-none mix-blend-overlay"
+                  style={{ background: spotlightBackground, opacity: spotlightOpacity }}
+                />
+              </motion.div>
+            </motion.div>
 
             {/* Socials as a vertical stack, running alongside name, role,
                 and the tagline together. */}
