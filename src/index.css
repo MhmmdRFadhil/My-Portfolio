@@ -128,7 +128,7 @@ img { max-width: 100%; display: block; }
    COMPONENT CLASSES
    ========================================================= */
 .eyebrow {
-  font-family: 'JetBrains Mono', monospace;
+  font-family: var(--font-mono);
   font-size: 13px;
   letter-spacing: .12em;
   color: var(--primary);
@@ -170,7 +170,7 @@ img { max-width: 100%; display: block; }
 
 .btn-primary { background: var(--primary-fill); color: #fff; --btn-shadow: var(--primary-fill-shadow); }
 .btn-accent  { background: var(--accent); color: var(--ink); --btn-shadow: var(--accent-dark); }
-.btn-ghost   { background: var(--surface); color: var(--ink); border: 2px solid var(--border-soft); --btn-shadow: var(--ghost-shadow); }
+.btn-ghost   { background: var(--surface); color: var(--ink); --btn-shadow: var(--ghost-shadow); }
 
 .highlight {
   position: relative;
@@ -183,7 +183,7 @@ img { max-width: 100%; display: block; }
   position: absolute;
   left: -4px; right: -4px; bottom: 2px; height: 40%;
   background: var(--primary-fill);
-  opacity: .35;
+  opacity: .6;
   z-index: -1;
   border-radius: 4px;
   /* Starts collapsed and sweeps in from the left — see

@@ -129,55 +129,48 @@ export default function Hero() {
           transition={{ duration: 0.7, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
           className="flex flex-col"
         >
-          {/* Mobile only: "fun main()" tag above the card — offset to the
-              left with a slight tilt, echoing the desktop version's
-              top-left placement instead of a plain centered chip. */}
-          <div className="flex md:hidden justify-start pl-4 mb-3">
+          {/* "fun main()" tag above the card at every size — this used to
+              be an absolutely positioned corner sticker on desktop only,
+              but that drifted into a disconnected floating label once the
+              card grew wider/taller with the new snippet. Normal document
+              flow (the same approach mobile already used) keeps it
+              directly above the card regardless of the card's size. */}
+          <div className="flex justify-start pl-4 mb-3">
             <span className="font-mono text-[11px] font-bold bg-surface
               px-3 py-1.5 rounded-xl shadow-[0_3px_0_0_var(--ghost-shadow)] text-primary rotate-[-3deg] inline-block">
               fun main()
             </span>
           </div>
 
-          <div className="flex md:justify-center relative">
-            <div className="w-full md:w-[340px] card-chunky overflow-hidden">
+          <div className="flex md:justify-center">
+            <div className="w-full md:w-[390px] card-chunky overflow-hidden">
               <div className="flex items-center gap-1.5 px-4 py-3.5 border-b-2 border-line">
                 <span className="w-2.5 h-2.5 rounded-full bg-[#FF6159]" />
                 <span className="w-2.5 h-2.5 rounded-full bg-[#FFBD2E]" />
                 <span className="w-2.5 h-2.5 rounded-full bg-accent2" />
                 <em className="not-italic font-mono text-[11px] text-muted ml-2">MainActivity.kt</em>
               </div>
-              <div className="p-5 font-mono text-[12.5px] leading-[1.9] text-muted">
-                <div><span className="text-primary">class</span> <span className="text-accent2">Portfolio</span> : Mvi {'{'}</div>
-                <div>&nbsp;&nbsp;val stack = listOf(</div>
-                <div>&nbsp;&nbsp;&nbsp;&nbsp;"Kotlin", "Compose"</div>
-                <div>&nbsp;&nbsp;)</div>
-                <div>&nbsp;&nbsp;<span className="text-primary">fun</span> <span className="text-accent2">build</span>() {'{'} ship() {'}'}</div>
-                <div>{'}'}</div>
+              <div className="p-5 font-mono text-[12.5px] leading-[1.9] text-muted md:whitespace-nowrap overflow-x-auto">
+                <div><span className="text-primary">data class</span> <span className="text-accent2">Developer</span>(</div>
+                <div>&nbsp;&nbsp;val name = "rzqnfdhl",</div>
+                <div>&nbsp;&nbsp;val stack = listOf("Kotlin", "Compose"),</div>
+                <div>&nbsp;&nbsp;val focus = "Clean Arch"</div>
+                <div>)</div>
+                <div><span className="text-primary">fun</span> Developer.<span className="text-accent2">ship</span>() = println("🚀 Shipped")</div>
                 <div className="flex flex-wrap gap-1.5 mt-3">
-                  <span className="font-mono text-[10.5px] bg-[var(--primary-fill)] text-white px-2.5 py-1 rounded-full">✓ build passed</span>
-                  <span className="font-mono text-[10.5px] bg-surfaceAlt text-primary px-2.5 py-1 rounded-full">Room DB</span>
+                  <span className="font-mono text-[10.5px] bg-[var(--primary-fill)] text-white px-2.5 py-1 rounded-full">✓ null-safe</span>
+                  <span className="font-mono text-[10.5px] bg-surfaceAlt text-primary px-2.5 py-1 rounded-full">100% Kotlin</span>
                 </div>
               </div>
             </div>
-
-            {/* Desktop only: decorative floating stickers — there's margin
-                around the fixed-width card for these to overlap into
-                without colliding with anything. */}
-            <div className="hidden md:block absolute top-[2%] -left-[8%] font-mono text-xs font-bold bg-surface
-              px-3.5 py-2 rounded-xl shadow-[0_4px_0_0_var(--ghost-shadow)] text-primary rotate-[-3deg]">
-              fun main()
-            </div>
-            <div className="hidden md:block absolute bottom-[12%] -right-[10%] font-mono text-xs font-bold bg-[var(--primary-fill)]
-              px-3.5 py-2 rounded-xl shadow-[0_4px_0_0_var(--primary-fill-shadow)] text-white rotate-[3deg]">
-              ✓ Published
-            </div>
           </div>
 
-          {/* Mobile only: "✓ Published" tag below the card — offset to the
-              right with a slight tilt, echoing the desktop version's
-              bottom-right placement instead of a plain centered chip. */}
-          <div className="flex md:hidden justify-end pr-4 mt-3">
+          {/* "✓ Published" tag below the card at every size — an absolutely
+              positioned corner sticker kept drifting onto the in-card
+              badges whenever the code snippet's line count changed, so
+              this sits in normal document flow underneath the card
+              instead, the same way it already worked on mobile. */}
+          <div className="flex justify-end pr-4 mt-3">
             <span className="font-mono text-[11px] font-bold bg-[var(--primary-fill)] text-white
               px-3 py-1.5 rounded-xl shadow-[0_3px_0_0_var(--primary-fill-shadow)] rotate-[3deg] inline-block">
               ✓ Published
