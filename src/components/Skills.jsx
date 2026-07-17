@@ -64,29 +64,57 @@ function MarqueeText({ text, as: Tag = 'span', className = '', active = false })
   )
 }
 
+// Below this, a touch is a tap (which shouldn't start the marquee) rather
+// than a deliberate hold (which should).
+const HOLD_THRESHOLD_MS = 180
+
 function Pill({ s }) {
   const Icon = iconMap[s.icon]
   const [hovering, setHovering] = useState(false)
   const [pressing, setPressing] = useState(false)
+  const holdTimer = useRef(null)
   const active = hovering || pressing
 
-  // Scrolling moves the card out from under the cursor without firing a
-  // mouseleave event, so an active marquee needs its own reset on scroll.
+  const clearHoldTimer = () => {
+    if (holdTimer.current) {
+      clearTimeout(holdTimer.current)
+      holdTimer.current = null
+    }
+  }
+  const endPress = () => { clearHoldTimer(); setPressing(false) }
+
+  // Scrolling moves the card out from under the cursor/finger without
+  // firing a leave/up event, so an active marquee needs its own reset on
+  // scroll — otherwise a touch-scroll started from a held card leaves it
+  // stuck mid-animation.
   useEffect(() => {
     if (!active) return
-    const reset = () => { setHovering(false); setPressing(false) }
+    const reset = () => { setHovering(false); endPress() }
     window.addEventListener('scroll', reset, { passive: true, capture: true })
     return () => window.removeEventListener('scroll', reset, { capture: true })
   }, [active])
+
+  useEffect(() => () => clearHoldTimer(), [])
 
   return (
     <div
       className="skill-pill h-full"
       onPointerEnter={(e) => { if (e.pointerType === 'mouse' && supportsHover()) setHovering(true) }}
-      onPointerLeave={(e) => { if (e.pointerType === 'mouse') setHovering(false); setPressing(false) }}
-      onPointerDown={() => setPressing(true)}
-      onPointerUp={() => setPressing(false)}
-      onPointerCancel={() => setPressing(false)}
+      onPointerLeave={(e) => { if (e.pointerType === 'mouse') setHovering(false); endPress() }}
+      onPointerDown={(e) => {
+        // Touch/pen: only start the marquee once the press has been held
+        // past the threshold, so a quick tap never triggers it (and so
+        // there's nothing for it to get "stuck" on afterward). Mouse
+        // presses (rare, but possible alongside hover) can start instantly.
+        if (e.pointerType === 'mouse') {
+          setPressing(true)
+          return
+        }
+        clearHoldTimer()
+        holdTimer.current = setTimeout(() => setPressing(true), HOLD_THRESHOLD_MS)
+      }}
+      onPointerUp={endPress}
+      onPointerCancel={endPress}
     >
       <div className="w-8 h-8 rounded-lg bg-surfaceAlt border-2 border-line flex items-center justify-center flex-shrink-0 text-primary">
         <Icon size={16} />
