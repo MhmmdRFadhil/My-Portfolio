@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { AnimatePresence, motion } from 'framer-motion'
 import { Instagram, MapPin, Mail, Send } from 'lucide-react'
 import { contactInfo } from '../data/site'
 import Reveal from './ui/Reveal'
@@ -70,36 +71,57 @@ export default function Contact() {
           <form onSubmit={handleSubmit} className="p-6 md:p-8 flex flex-col">
             <div className="mb-4">
               <label htmlFor="name" className="block text-[13.5px] font-bold mb-1.5">Name</label>
-              <input
-                id="name" type="text" required placeholder="Your name"
-                className="w-full px-1 py-2 border-0 border-b-2 border-[var(--border-soft)] bg-transparent text-ink
-                  transition-colors focus:outline-none focus:border-primary"
-              />
+              {/* Underline is two stacked bars instead of a plain
+                  border-bottom: the soft static one, and a primary-color
+                  one that grows in from the left on focus (peer-focus)
+                  rather than just flipping color instantly. */}
+              <div className="relative">
+                <input
+                  id="name" type="text" required placeholder="Your name"
+                  className="peer w-full px-1 py-2 border-0 bg-transparent text-ink focus:outline-none"
+                />
+                <span className="absolute left-0 right-0 bottom-0 h-[2px] bg-[var(--border-soft)]" />
+                <span className="absolute left-0 right-0 bottom-0 h-[2px] bg-primary origin-left scale-x-0 peer-focus:scale-x-100 transition-transform duration-300 ease-out" />
+              </div>
             </div>
             <div className="mb-4">
               <label htmlFor="email" className="block text-[13.5px] font-bold mb-1.5">Email</label>
-              <input
-                id="email" type="email" required placeholder="you@example.com"
-                className="w-full px-1 py-2 border-0 border-b-2 border-[var(--border-soft)] bg-transparent text-ink
-                  transition-colors focus:outline-none focus:border-primary"
-              />
+              <div className="relative">
+                <input
+                  id="email" type="email" required placeholder="you@example.com"
+                  className="peer w-full px-1 py-2 border-0 bg-transparent text-ink focus:outline-none"
+                />
+                <span className="absolute left-0 right-0 bottom-0 h-[2px] bg-[var(--border-soft)]" />
+                <span className="absolute left-0 right-0 bottom-0 h-[2px] bg-primary origin-left scale-x-0 peer-focus:scale-x-100 transition-transform duration-300 ease-out" />
+              </div>
             </div>
             <div className="mb-2">
               <label htmlFor="message" className="block text-[13.5px] font-bold mb-1.5">Message</label>
-              <textarea
-                id="message" required placeholder="Tell me about your project or requirement..."
-                className="w-full min-h-[80px] px-1 py-2 border-0 border-b-2 border-[var(--border-soft)] bg-transparent text-ink
-                  resize-none transition-colors focus:outline-none focus:border-primary"
-              />
+              <div className="relative">
+                <textarea
+                  id="message" required placeholder="Tell me about your project or requirement..."
+                  className="peer w-full min-h-[80px] px-1 py-2 border-0 bg-transparent text-ink resize-none focus:outline-none"
+                />
+                <span className="absolute left-0 right-0 bottom-0 h-[2px] bg-[var(--border-soft)]" />
+                <span className="absolute left-0 right-0 bottom-0 h-[2px] bg-primary origin-left scale-x-0 peer-focus:scale-x-100 transition-transform duration-300 ease-out" />
+              </div>
             </div>
             <Button as="button" type="submit" variant="primary" className="mt-4 w-full sm:w-fit">
               Send Message
             </Button>
-            {sent && (
-              <p className="text-[13.5px] text-primary mt-3">
-                Thanks! Your message has been recorded (connect this form to a backend or EmailJS to actually send it).
-              </p>
-            )}
+            <AnimatePresence>
+              {sent && (
+                <motion.p
+                  initial={{ opacity: 0, y: -6, height: 0 }}
+                  animate={{ opacity: 1, y: 0, height: 'auto' }}
+                  exit={{ opacity: 0, height: 0 }}
+                  transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+                  className="text-[13.5px] text-primary mt-3"
+                >
+                  Thanks! Your message has been recorded (connect this form to a backend or EmailJS to actually send it).
+                </motion.p>
+              )}
+            </AnimatePresence>
           </form>
         </Reveal>
       </div>

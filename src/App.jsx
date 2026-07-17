@@ -1,4 +1,5 @@
 import { ThemeProvider } from './context/ThemeContext'
+import ScrollProgress from './components/ScrollProgress'
 import Navbar from './components/Navbar'
 import Hero from './components/Hero'
 import About from './components/About'
@@ -12,6 +13,8 @@ import BackToTop from './components/BackToTop'
 export default function App() {
   return (
     <ThemeProvider>
+      <ScrollProgress />
+
       {/* Bentuk solid mengambang di background — pengganti aurora gradient lama */}
       <div className="chunky-field" aria-hidden="true">
         <span className="chunky-shape square" style={{ width: 160, height: 160, top: -70, left: -90, borderColor: 'var(--primary)' }} />

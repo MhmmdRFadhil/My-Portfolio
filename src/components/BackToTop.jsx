@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { AnimatePresence, motion } from 'framer-motion'
 import { ArrowUp } from 'lucide-react'
 import { smoothScrollTo } from '../utils/smoothScroll'
 
@@ -19,15 +20,23 @@ export default function BackToTop() {
   const scrollTop = () => smoothScrollTo(0)
 
   return (
-    <button
-      onClick={scrollTop}
-      aria-label="Kembali ke atas"
-      className={`fixed bottom-6 right-6 z-[90] w-12 h-12 rounded-full bg-[var(--primary-fill)] text-white
-        flex items-center justify-center shadow-[0_4px_0_0_var(--primary-fill-shadow)]
-        transition-all duration-300
-        ${visible ? 'opacity-100 translate-y-0 pointer-events-auto' : 'opacity-0 translate-y-3 pointer-events-none'}`}
-    >
-      <ArrowUp size={20} />
-    </button>
+    <AnimatePresence>
+      {visible && (
+        <motion.button
+          onClick={scrollTop}
+          aria-label="Kembali ke atas"
+          initial={{ opacity: 0, scale: 0.5, rotate: -90 }}
+          animate={{ opacity: 1, scale: 1, rotate: 0 }}
+          exit={{ opacity: 0, scale: 0.5, rotate: 90 }}
+          transition={{ type: 'spring', stiffness: 400, damping: 25 }}
+          whileHover={{ y: -3 }}
+          whileTap={{ scale: 0.88 }}
+          className="fixed bottom-6 right-6 z-[90] w-12 h-12 rounded-full bg-[var(--primary-fill)] text-white
+            flex items-center justify-center shadow-[0_4px_0_0_var(--primary-fill-shadow)]"
+        >
+          <ArrowUp size={20} />
+        </motion.button>
+      )}
+    </AnimatePresence>
   )
 }
