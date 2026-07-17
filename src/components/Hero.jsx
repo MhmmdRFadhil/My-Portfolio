@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react'
 import { motion, useReducedMotion } from 'framer-motion'
 import { Github, Linkedin, Instagram } from 'lucide-react'
 import { profile, socials } from '../data/site'
@@ -15,6 +16,29 @@ const item = {
   show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] } },
 }
 
+// Types `text` out one character at a time. Reduced-motion users get the
+// full text immediately instead of the animation.
+function useTypewriter(text, { speed = 65, startDelay = 500, prefersReduced = false } = {}) {
+  const [count, setCount] = useState(prefersReduced ? text.length : 0)
+
+  useEffect(() => {
+    if (prefersReduced) { setCount(text.length); return }
+    setCount(0)
+    let i = 0
+    let interval
+    const start = setTimeout(() => {
+      interval = setInterval(() => {
+        i += 1
+        setCount(i)
+        if (i >= text.length) clearInterval(interval)
+      }, speed)
+    }, startDelay)
+    return () => { clearTimeout(start); clearInterval(interval) }
+  }, [text, prefersReduced, speed, startDelay])
+
+  return { count, done: count >= text.length }
+}
+
 export default function Hero() {
   const prefersReduced = useReducedMotion()
   const anim = prefersReduced ? {} : { variants: container, initial: 'hidden', animate: 'show' }
@@ -24,6 +48,13 @@ export default function Hero() {
   const nameWords = profile.name.split(' ')
   const nameLast = nameWords.pop()
   const nameLead = nameWords.join(' ')
+  const nameFull = `${nameLead} ${nameLast}`
+
+  const { count: typedCount } = useTypewriter(nameFull, { prefersReduced })
+  const typedLead = nameFull.slice(0, Math.min(typedCount, nameLead.length))
+  const spaceShown = typedCount > nameLead.length
+  const typedLast = spaceShown ? nameLast.slice(0, typedCount - nameLead.length - 1) : ''
+  const highlightRevealed = typedLast === nameLast
 
   return (
     <section id="home" className="pt-8 md:pt-16 pb-24 md:pb-32 relative">
@@ -69,8 +100,13 @@ export default function Hero() {
               </div>
 
               <div>
-                <h1 className="text-[22px] md:text-[36px] leading-tight whitespace-nowrap">
-                  {nameLead} <span className="highlight">{nameLast}</span>
+                <h1 className="text-[22px] md:text-[36px] leading-tight whitespace-nowrap" aria-label={nameFull}>
+                  <span aria-hidden="true">
+                    {typedLead}
+                    {spaceShown && ' '}
+                    <span className={`highlight${highlightRevealed ? ' highlight--reveal' : ''}`}>{typedLast}</span>
+                    <span className="typewriter-cursor" />
+                  </span>
                 </h1>
                 <p className="text-muted font-semibold text-sm md:text-xl mt-1.5 md:mt-2">{profile.role}</p>
 

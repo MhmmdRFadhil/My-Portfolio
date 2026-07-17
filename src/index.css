@@ -185,8 +185,17 @@ img { max-width: 100%; display: block; }
   background: var(--primary-fill);
   opacity: .35;
   z-index: -1;
-  transform: rotate(-1deg);
   border-radius: 4px;
+  /* Starts collapsed and sweeps in from the left — see
+     .highlight--reveal, toggled on once the typewriter effect in Hero.jsx
+     finishes typing the highlighted word. */
+  transform: rotate(-1deg) scaleX(0);
+  transform-origin: left center;
+  transition: transform .5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.highlight--reveal::after { transform: rotate(-1deg) scaleX(1); }
+@media (prefers-reduced-motion: reduce) {
+  .highlight::after { transition: none; transform: rotate(-1deg) scaleX(1); }
 }
 
 .skill-pill {
@@ -216,6 +225,18 @@ img { max-width: 100%; display: block; }
   to { transform: translateX(calc(-50% - 12px)); }
 }
 @media (prefers-reduced-motion: reduce) { .marquee-text-track--active { animation: none; } }
+
+.typewriter-cursor {
+  display: inline-block;
+  width: 3px;
+  height: 0.85em;
+  margin-left: 3px;
+  background: var(--primary-fill);
+  vertical-align: -0.05em;
+  animation: typewriter-blink 0.9s step-end infinite;
+}
+@keyframes typewriter-blink { 50% { opacity: 0; } }
+@media (prefers-reduced-motion: reduce) { .typewriter-cursor { animation: none; } }
 
 ::selection { background: var(--primary-fill); color: #fff; }
 
