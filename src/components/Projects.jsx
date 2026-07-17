@@ -12,6 +12,20 @@ const categoryColor = {
   other: 'bg-white text-[#1E1B2E]',
 }
 
+// Canonical skill ordering (language, then architecture, then UI, then
+// data/network, then misc) so every project's tag row reads the same
+// left-to-right regardless of the order skills were added to its entry.
+const skillOrder = ['Kotlin', 'MVVM', 'MVI', 'Jetpack Compose', 'REST API', 'Firebase', 'Machine Learning']
+const sortedSkills = (skills) =>
+  [...skills].sort((a, b) => {
+    const ia = skillOrder.indexOf(a)
+    const ib = skillOrder.indexOf(b)
+    if (ia === -1 && ib === -1) return a.localeCompare(b)
+    if (ia === -1) return 1
+    if (ib === -1) return -1
+    return ia - ib
+  })
+
 export default function Projects() {
   const [filter, setFilter] = useState('all')
   const filtered = filter === 'all' ? projects : projects.filter((p) => p.category === filter)
@@ -63,7 +77,7 @@ export default function Projects() {
                     )}
                     {p.skills && (
                       <div className="flex flex-wrap gap-1.5 pt-1">
-                        {p.skills.map((skill) => (
+                        {sortedSkills(p.skills).map((skill) => (
                           <span
                             key={skill}
                             className="text-[11px] font-bold text-primary bg-surfaceAlt px-2.5 py-1 rounded-full"

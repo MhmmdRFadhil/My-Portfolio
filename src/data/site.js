@@ -93,7 +93,7 @@ export const projects = [
     category: 'advanced',
     link: 'https://play.google.com/store/apps/details?id=com.ryz.nutrilicious',
     description: 'An Android app that detects fruits and vegetables using image recognition, built with Kotlin and a Firebase backend.',
-    skills: ['Kotlin', 'Firebase'],
+    skills: ['Kotlin', 'Firebase', 'Machine Learning', 'MVVM'],
   },
   {
     id: 1,
