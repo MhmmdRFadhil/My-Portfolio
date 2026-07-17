@@ -17,6 +17,9 @@ export default function App() {
         <span className="chunky-shape square" style={{ width: 160, height: 160, top: -70, left: -90, borderColor: 'var(--primary)' }} />
         <span className="chunky-shape square" style={{ width: 140, height: 140, bottom: -80, left: '20%', borderColor: 'var(--accent)', animationDelay: '-8s' }} />
         <span className="chunky-shape circle" style={{ width: 130, height: 130, bottom: -70, right: -80, borderColor: 'var(--accent2)', animationDelay: '-14s' }} />
+        <span className="chunky-shape circle" style={{ width: 120, height: 120, top: -60, right: -70, borderColor: 'var(--primary)', animationDelay: '-20s' }} />
+        <span className="chunky-shape circle" style={{ width: 80, height: 80, top: '45%', left: -55, borderColor: 'var(--accent2)', animationDelay: '-26s' }} />
+        <span className="chunky-shape square" style={{ width: 100, height: 100, bottom: '10%', right: -55, borderColor: 'var(--accent)', animationDelay: '-32s' }} />
       </div>
 
       <Navbar />

@@ -112,15 +112,15 @@ img { max-width: 100%; display: block; }
 .chunky-shape {
   position: absolute;
   border: 3px solid var(--border);
-  opacity: .35;
-  animation: drift-chunky 42s ease-in-out infinite;
+  opacity: .42;
+  animation: drift-chunky 32s ease-in-out infinite;
 }
-[data-theme="dark"] .chunky-shape { opacity: .18; }
+[data-theme="dark"] .chunky-shape { opacity: .22; }
 .chunky-shape.square { border-radius: 18px; }
 .chunky-shape.circle { border-radius: 50%; }
 @keyframes drift-chunky {
   0%, 100% { transform: translate(0,0) rotate(0deg); }
-  50% { transform: translate(12px,-9px) rotate(4deg); }
+  50% { transform: translate(18px,-14px) rotate(6deg); }
 }
 @media (prefers-reduced-motion: reduce) { .chunky-shape { animation: none; } }
 
