@@ -31,7 +31,7 @@ export default function Hero() {
         <motion.div {...anim}>
           {/* Photo with name/role stacked below it, same on desktop as
               mobile — name (not the role) carries the highlight mark. */}
-          <motion.div variants={item} className="flex flex-col gap-4 md:gap-5 mb-5 md:mb-8">
+          <motion.div variants={item} className="flex flex-col gap-6 md:gap-8 mb-5 md:mb-8">
             <div className="relative w-[130px] h-[130px] md:w-[220px] md:h-[220px] flex-shrink-0">
               <div
                 className="w-full h-full overflow-hidden shadow-[0_6px_0_0_var(--ghost-shadow)]"
