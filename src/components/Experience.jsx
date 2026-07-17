@@ -18,19 +18,17 @@ function TimelineCard({ item }) {
       aria-expanded={expanded}
       className="card-chunky !rounded-xl p-2.5 sm:p-3.5 md:p-4 text-left w-full max-w-[320px] sm:max-w-sm md:max-w-[380px]"
     >
-      <div className="flex items-start justify-between gap-2">
-        <div className="min-w-0">
-          <span className="inline-block font-mono text-[8px] sm:text-[11px] font-bold text-primary bg-[var(--primary-tint)] px-1.5 sm:px-2 py-0.5 rounded-md mb-1 sm:mb-1.5">
-            {item.year}
-          </span>
-          <h4 className="text-[11.5px] sm:text-[15px] mb-0.5 leading-snug">{item.title}</h4>
-          <div className="text-muted text-[10px] sm:text-[12.5px] font-semibold">{item.org}</div>
-        </div>
+      <div className="flex items-center justify-between gap-2 mb-1 sm:mb-1.5">
+        <span className="inline-block font-mono text-[8px] sm:text-[11px] font-bold text-primary bg-[var(--primary-tint)] px-1.5 sm:px-2 py-0.5 rounded-md">
+          {item.year}
+        </span>
         <ChevronDown
           size={14}
-          className={`flex-shrink-0 text-muted mt-0.5 transition-transform ${expanded ? 'rotate-180' : ''}`}
+          className={`flex-shrink-0 text-muted transition-transform ${expanded ? 'rotate-180' : ''}`}
         />
       </div>
+      <h4 className="text-[11.5px] sm:text-[15px] mb-0.5 leading-snug">{item.title}</h4>
+      <div className="text-muted text-[10px] sm:text-[12.5px] font-semibold">{item.org}</div>
       {expanded && (
         <p className="text-muted text-[10.5px] sm:text-[13.5px] leading-relaxed mt-2">{item.desc}</p>
       )}
