@@ -7,13 +7,37 @@ import Button from './ui/Button'
 
 const iconMap = { instagram: Instagram, pin: MapPin, email: Mail }
 
-export default function Contact() {
-  const [sent, setSent] = useState(false)
+// Set in .env as VITE_FORMSPREE_ENDPOINT (see .env.example) — a Formspree
+// form endpoint, e.g. https://formspree.io/f/xxxxxxxx. Not a secret (it's
+// meant to be public in client-side code), just kept out of source so
+// swapping accounts doesn't require a code change.
+const FORMSPREE_ENDPOINT = import.meta.env.VITE_FORMSPREE_ENDPOINT
 
-  const handleSubmit = (e) => {
+export default function Contact() {
+  const [status, setStatus] = useState('idle') // idle | sending | sent | error
+
+  const handleSubmit = async (e) => {
     e.preventDefault()
-    setSent(true)
-    e.target.reset()
+    if (!FORMSPREE_ENDPOINT) {
+      console.error('VITE_FORMSPREE_ENDPOINT is not set — see .env.example')
+      setStatus('error')
+      return
+    }
+
+    setStatus('sending')
+    const form = e.target
+    try {
+      const res = await fetch(FORMSPREE_ENDPOINT, {
+        method: 'POST',
+        headers: { Accept: 'application/json' },
+        body: new FormData(form),
+      })
+      if (!res.ok) throw new Error('Request failed')
+      setStatus('sent')
+      form.reset()
+    } catch {
+      setStatus('error')
+    }
   }
 
   return (
@@ -77,7 +101,7 @@ export default function Contact() {
                   rather than just flipping color instantly. */}
               <div className="relative">
                 <input
-                  id="name" type="text" required placeholder="Your name"
+                  id="name" name="name" type="text" required placeholder="Your name"
                   className="peer w-full px-1 py-2 border-0 bg-transparent text-ink focus:outline-none"
                 />
                 <span className="absolute left-0 right-0 bottom-0 h-[2px] bg-[var(--border-soft)]" />
@@ -88,7 +112,7 @@ export default function Contact() {
               <label htmlFor="email" className="block text-[13.5px] font-bold mb-1.5">Email</label>
               <div className="relative">
                 <input
-                  id="email" type="email" required placeholder="you@example.com"
+                  id="email" name="email" type="email" required placeholder="you@example.com"
                   className="peer w-full px-1 py-2 border-0 bg-transparent text-ink focus:outline-none"
                 />
                 <span className="absolute left-0 right-0 bottom-0 h-[2px] bg-[var(--border-soft)]" />
@@ -99,26 +123,45 @@ export default function Contact() {
               <label htmlFor="message" className="block text-[13.5px] font-bold mb-1.5">Message</label>
               <div className="relative">
                 <textarea
-                  id="message" required placeholder="Tell me about your project or requirement..."
+                  id="message" name="message" required placeholder="Tell me about your project or requirement..."
                   className="peer w-full min-h-[80px] px-1 py-2 border-0 bg-transparent text-ink resize-none focus:outline-none"
                 />
                 <span className="absolute left-0 right-0 bottom-0 h-[2px] bg-[var(--border-soft)]" />
                 <span className="absolute left-0 right-0 bottom-0 h-[2px] bg-primary origin-left scale-x-0 peer-focus:scale-x-100 transition-transform duration-300 ease-out" />
               </div>
             </div>
-            <Button as="button" type="submit" variant="primary" className="mt-4 w-full sm:w-fit">
-              Send Message
+            <Button
+              as="button"
+              type="submit"
+              variant="primary"
+              disabled={status === 'sending'}
+              className="mt-4 w-full sm:w-fit disabled:opacity-60 disabled:cursor-not-allowed"
+            >
+              {status === 'sending' ? 'Sending…' : 'Send Message'}
             </Button>
-            <AnimatePresence>
-              {sent && (
+            <AnimatePresence mode="wait">
+              {status === 'sent' && (
                 <motion.p
+                  key="sent"
                   initial={{ opacity: 0, y: -6, height: 0 }}
                   animate={{ opacity: 1, y: 0, height: 'auto' }}
                   exit={{ opacity: 0, height: 0 }}
                   transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
                   className="text-[13.5px] text-primary mt-3"
                 >
-                  Thanks! Your message has been recorded (connect this form to a backend or EmailJS to actually send it).
+                  Thanks! Your message has been sent — I'll get back to you within 1–2 business days.
+                </motion.p>
+              )}
+              {status === 'error' && (
+                <motion.p
+                  key="error"
+                  initial={{ opacity: 0, y: -6, height: 0 }}
+                  animate={{ opacity: 1, y: 0, height: 'auto' }}
+                  exit={{ opacity: 0, height: 0 }}
+                  transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+                  className="text-[13.5px] text-red-500 mt-3"
+                >
+                  Something went wrong sending that — please try again, or email me directly instead.
                 </motion.p>
               )}
             </AnimatePresence>
