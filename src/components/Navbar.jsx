@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Moon, Sun, Menu, X } from 'lucide-react'
 import { navLinks, profile } from '../data/site'
@@ -18,9 +18,24 @@ export default function Navbar() {
   const [open, setOpen] = useState(false)
   const active = useActiveSection(navIds)
   const scrolling = useIsScrolling()
+  const [nearTop, setNearTop] = useState(true)
+
+  // Rubber-band overscroll past the top (flicking up past y=0 on trackpad/
+  // touch) keeps firing scroll events the whole time it's bouncing back,
+  // which kept the navbar hidden through the bounce and then sliding in
+  // right as the page was still settling — reads as the navbar itself
+  // "bouncing". Forcing it visible near the top sidesteps that boundary
+  // entirely instead of trying to out-time the bounce.
+  useEffect(() => {
+    const handleScroll = () => setNearTop(window.scrollY < 40)
+    window.addEventListener('scroll', handleScroll, { passive: true })
+    handleScroll()
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
+
   // Never hide while the mobile menu is open — the user is reading it,
   // not scrolling past it.
-  const hidden = scrolling && !open
+  const hidden = scrolling && !open && !nearTop
 
   const closeMenu = () => setOpen(false)
 
