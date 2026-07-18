@@ -41,9 +41,9 @@ export const socials = [
 ]
 
 export const stats = [
-  { num: '10+', label: 'Apps shipped' },
+  { num: '3', label: 'Apps shipped' },
   { num: '3+', label: 'Years experience' },
-  { num: '8', label: 'Featured projects' },
+  { num: '9', label: 'Featured projects' },
   { num: '100%', label: 'Kotlin & Compose' },
 ]
 
