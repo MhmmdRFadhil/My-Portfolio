@@ -58,11 +58,11 @@ export default function Navbar() {
       className={`sticky top-0 z-[100] transition-transform duration-300 ease-out
         ${hidden ? '-translate-y-[calc(100%+1rem)]' : 'translate-y-0'}`}
     >
-      <div className="wrap pt-2.5 md:pt-3.5">
-        <nav className="flex items-center justify-between h-[58px] md:h-[76px] px-3.5 md:px-5
+      <div className="wrap pt-3.5">
+        <nav className="flex items-center justify-between h-[76px] px-4 md:px-5
           bg-surface rounded-[var(--radius-md)] shadow-[0_5px_0_0_var(--ghost-shadow)]">
-          <a href="#home" onClick={(e) => handleNavClick(e, 'home')} className="font-display font-extrabold text-base md:text-lg flex items-center gap-2 md:gap-2.5">
-            <span className="w-2 h-2 md:w-2.5 md:h-2.5 rounded-full bg-primary" />
+          <a href="#home" onClick={(e) => handleNavClick(e, 'home')} className="font-display font-extrabold text-lg flex items-center gap-2.5">
+            <span className="w-2.5 h-2.5 rounded-full bg-primary" />
             {profile.shortName}
             <span className="text-primary">{profile.handle}</span>
           </a>
@@ -90,12 +90,12 @@ export default function Navbar() {
             ))}
           </ul>
 
-          <div className="flex items-center gap-2 md:gap-2.5">
+          <div className="flex items-center gap-2.5">
             <motion.button
               onClick={toggleTheme}
               aria-label="Toggle tema"
               whileTap={{ scale: 0.88 }}
-              className="w-8 h-8 md:w-10 md:h-10 rounded-lg border-2 border-line bg-surface flex items-center justify-center overflow-hidden"
+              className="w-10 h-10 rounded-lg border-2 border-line bg-surface flex items-center justify-center overflow-hidden"
             >
               <AnimatePresence mode="wait" initial={false}>
                 <motion.span
@@ -106,8 +106,7 @@ export default function Navbar() {
                   transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
                   className="flex items-center justify-center"
                 >
-                  {theme === 'dark' ? <Sun size={16} className="md:hidden" /> : <Moon size={16} className="md:hidden" />}
-                  {theme === 'dark' ? <Sun size={18} className="hidden md:block" /> : <Moon size={18} className="hidden md:block" />}
+                  {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
                 </motion.span>
               </AnimatePresence>
             </motion.button>
@@ -115,9 +114,9 @@ export default function Navbar() {
               onClick={() => setOpen((o) => !o)}
               aria-label="Menu"
               whileTap={{ scale: 0.88 }}
-              className="md:hidden w-8 h-8 rounded-lg border-2 border-line bg-surface flex items-center justify-center"
+              className="md:hidden w-10 h-10 rounded-lg border-2 border-line bg-surface flex items-center justify-center"
             >
-              {open ? <X size={16} /> : <Menu size={16} />}
+              {open ? <X size={18} /> : <Menu size={18} />}
             </motion.button>
           </div>
         </nav>
