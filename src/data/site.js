@@ -21,7 +21,7 @@ export const profile = {
   role: 'Android Developer',
   handle: '.dev',
   tagline:
-    'Android Developer specializing in Kotlin and Jetpack Compose, with a track record of shipping production-grade applications across fintech and consumer products. I focus on clean architecture, thoughtful UX, and reliable releases — from first commit to Play Store launch.',
+    'Android Developer specializing in Kotlin and Jetpack Compose — from banking and fintech features to image-recognition tools and customer service platforms, I focus on clean architecture, thoughtful UX, and reliable releases, from first commit to Play Store launch.',
   avatar: profilePhoto,
 }
 
@@ -40,30 +40,33 @@ export const socials = [
   { label: 'Instagram', href: 'https://www.instagram.com/rzqnfdhl/', icon: 'instagram' },
 ]
 
-export const stats = [
-  { num: '3', label: 'Apps shipped' },
-  { num: '3+', label: 'Years experience' },
-  { num: '9', label: 'Featured projects' },
-  { num: '100%', label: 'Kotlin & Compose' },
-]
-
 export const aboutText = [
-  "I'm an Android Developer with experience building and maintaining applications across fintech and consumer products, from early-stage prototypes to features running in production. My work is grounded in Kotlin and Jetpack Compose, backed by clean, testable architecture.",
-  "Beyond feature delivery, I place equal weight on code quality and maintainability — sensible state management, thorough testing, and documentation that keeps collaboration smooth across the development lifecycle.",
+  "I'm an Android Developer with experience building and maintaining applications across fintech and consumer products — from banking features like bill payments and top-ups, to image-recognition tools, to customer service platforms with live chat and ticketing. My work is grounded in Kotlin and Jetpack Compose, backed by clean, testable architecture.",
+  "Beyond feature delivery, I place equal weight on code quality and maintainability — sensible state management, thorough testing, and documentation that keeps collaboration smooth, whether I'm working solo or alongside a team in production.",
 ]
 
-export const skillSet1 = [
-  { icon: 'compose', name: 'Jetpack Compose', tag: 'Declarative UI' },
+// `featured` + `blurb` mark the 3 signature skills that get a larger tile
+// in the Skills bento grid — picked because they recur most across real
+// shipped projects' skill tags.
+export const skills = [
+  { icon: 'kotlin', name: 'Kotlin', tag: 'Primary Language' },
+  {
+    icon: 'compose', name: 'Jetpack Compose', tag: 'Declarative UI',
+    featured: true, blurb: 'My daily driver for building declarative, state-driven UI.',
+  },
   { icon: 'zap', name: 'Coroutines & Flow', tag: 'Async' },
-  { icon: 'branch', name: 'MVVM · MVI', tag: 'Architecture' },
+  {
+    icon: 'branch', name: 'MVVM · MVI', tag: 'Architecture',
+    featured: true, blurb: 'The architecture backbone behind every app I ship.',
+  },
   { icon: 'cpu', name: 'Hilt', tag: 'Dependency Injection' },
   { icon: 'db', name: 'Room · DataStore · SharedPreferences', tag: 'Local Storage' },
-]
-
-export const skillSet2 = [
   { icon: 'globe', name: 'Retrofit', tag: 'Networking' },
   { icon: 'git', name: 'Git & Code Review', tag: 'Collaboration' },
-  { icon: 'flame', name: 'Firebase', tag: 'Backend Services' },
+  {
+    icon: 'flame', name: 'Firebase', tag: 'Backend Services',
+    featured: true, blurb: 'Handles auth, storage, and real-time data behind the scenes.',
+  },
   { icon: 'layout', name: 'Material Design 3', tag: 'UI System' },
   { icon: 'zap', name: 'Performance Profiling', tag: 'Optimization' },
 ]
@@ -91,7 +94,7 @@ export const projects = [
     title: 'Nutrilicious',
     category: 'advanced',
     link: 'https://play.google.com/store/apps/details?id=com.ryz.nutrilicious',
-    description: 'An Android app that detects fruits and vegetables using image recognition, built with Kotlin and a Firebase backend.',
+    description: 'An Android app that detects fruits and vegetables using on-device image recognition, built with Kotlin and an MVVM architecture backed by Firebase for storing scan history and nutrition data.',
     skills: ['Kotlin', 'Firebase', 'Machine Learning', 'MVVM'],
   },
   {
@@ -109,7 +112,7 @@ export const projects = [
     title: 'TernaKu',
     category: 'intermediate',
     link: 'https://github.com/MhmmdRFadhil/TernaKu',
-    description: 'An Android app for livestock sales in Dermaji Village, built with Kotlin and a RESTful API backend.',
+    description: 'An Android app for livestock sales in Dermaji Village, built with Kotlin and a RESTful API backend to connect local farmers with buyers, streamlining listings, transactions, and order tracking.',
     skills: ['Kotlin', 'REST API'],
   },
   {
@@ -118,7 +121,7 @@ export const projects = [
     title: 'Kryption',
     category: 'other',
     link: 'https://github.com/MhmmdRFadhil/Kryption',
-    description: 'A learning project exploring encryption and cryptography concepts, implemented as an Android application.',
+    description: 'A learning project exploring encryption and cryptography concepts, implemented as an Android application in Kotlin — covering symmetric and asymmetric algorithms, key management, and secure text encoding.',
     skills: ['Kotlin'],
   },
   {
@@ -127,7 +130,7 @@ export const projects = [
     title: 'UrSkripsi',
     category: 'intermediate',
     link: 'https://github.com/MhmmdRFadhil/UrSkripsi',
-    description: 'A capstone project app for monitoring undergraduate thesis progress.',
+    description: 'A capstone project app for monitoring undergraduate thesis progress, built with Kotlin and Firebase to help students track milestones, manage advisor consultations, and stay on schedule toward graduation.',
     skills: ['Kotlin', 'Firebase'],
   },
   {
@@ -136,7 +139,7 @@ export const projects = [
     title: 'Movie Catalogue',
     category: 'intermediate',
     link: 'https://github.com/MhmmdRFadhil/BAJP-Final-Submission',
-    description: "Final project for the 'Belajar Android Jetpack Pro' course — an app that displays a catalogue of movies and TV shows.",
+    description: "Final project for the 'Belajar Android Jetpack Pro' course — an app that displays a catalogue of movies and TV shows, consuming a REST API to browse, search, and view detailed information for each title.",
     skills: ['Kotlin', 'REST API'],
   },
   {
@@ -145,7 +148,7 @@ export const projects = [
     title: 'Github',
     category: 'intermediate',
     link: 'https://github.com/MhmmdRFadhil/BFAA-Final-Submission',
-    description: "Final project for the 'Fundamental Android Development' course — an app that lists and searches GitHub users.",
+    description: "Final project for the 'Fundamental Android Development' course — an app that lists and searches GitHub users, consuming the GitHub REST API to display profiles, repositories, and follower details.",
     skills: ['Kotlin', 'REST API'],
   },
   {
@@ -154,9 +157,20 @@ export const projects = [
     title: 'Coffee Shop',
     category: 'intermediate',
     link: 'https://github.com/MhmmdRFadhil/Coffee-Shop-App',
-    description: 'A simple e-commerce app for selling coffee beans, with separate admin and customer access.',
+    description: 'A simple e-commerce app for selling coffee beans, with separate admin and customer access — built with Kotlin and Firebase to manage product listings, orders, and real-time inventory updates.',
     skills: ['Kotlin', 'Firebase'],
   },
+]
+
+const appsShippedCount = projects.filter((p) =>
+  p.link.includes('play.google.com')
+).length
+
+export const stats = [
+  { num: String(appsShippedCount), label: 'Apps shipped' },
+  { num: '3+', label: 'Years experience' },
+  { num: String(projects.length), label: 'Featured projects' },
+  { num: '100%', label: 'Kotlin & Compose' },
 ]
 
 export const experienceTabs = [
