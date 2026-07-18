@@ -30,13 +30,13 @@ export default function BackToTop() {
         <motion.button
           onClick={scrollTop}
           aria-label="Kembali ke atas"
-          initial={{ opacity: 0, scale: 0.5, rotate: -90 }}
-          animate={{ opacity: 1, scale: 1, rotate: 0 }}
-          exit={{ opacity: 0, scale: 0.5, rotate: 90 }}
-          transition={{ type: 'spring', stiffness: 400, damping: 25 }}
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: 12 }}
+          transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
           whileHover={{ y: -3 }}
           whileTap={{ scale: 0.88 }}
-          className="fixed bottom-6 right-6 z-[90] w-12 h-12 rounded-full bg-[var(--primary-fill)] text-white
+          className="fixed bottom-6 right-6 z-[90] w-12 h-12 rounded-[var(--radius-sm)] bg-[var(--primary-fill)] text-white
             flex items-center justify-center shadow-[0_4px_0_0_var(--primary-fill-shadow)]"
         >
           <ArrowUp size={20} />
