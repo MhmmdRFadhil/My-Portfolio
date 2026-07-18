@@ -72,8 +72,7 @@ export default function Navbar() {
               onClick={toggleTheme}
               aria-label="Toggle tema"
               whileTap={{ scale: 0.88 }}
-              className="w-10 h-10 rounded-xl border-2 border-line bg-surface flex items-center justify-center overflow-hidden
-                hover:-translate-y-0.5 transition-transform"
+              className="w-10 h-10 rounded-xl border-2 border-line bg-surface flex items-center justify-center overflow-hidden"
             >
               <AnimatePresence mode="wait" initial={false}>
                 <motion.span
