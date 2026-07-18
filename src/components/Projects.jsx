@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
-import { Github as GithubIcon } from 'lucide-react'
+import { Github as GithubIcon, Rocket, Plus } from 'lucide-react'
 import { projects, projectFilters } from '../data/site'
 import Reveal from './ui/Reveal'
 
@@ -16,10 +16,12 @@ function PlayStoreLogo({ size = 14, className = '' }) {
 
 // Fixed light backgrounds (not theme-dependent) — these badges float on
 // top of project screenshots, so they need to stay legible regardless of
-// theme rather than blend into a dark-mode tinted surface.
+// theme rather than blend into a dark-mode tinted surface. Reads as a
+// tier gradient (solid → tinted → neutral) rather than three unrelated
+// colors, matching what the categories actually are: a difficulty scale.
 const categoryColor = {
   advanced: 'bg-[var(--primary-fill)] text-white',
-  intermediate: 'bg-white text-[var(--primary-fill)]',
+  intermediate: 'bg-[var(--accent)] text-[var(--primary-dark)]',
   other: 'bg-white text-[#1E1B2E]',
 }
 
@@ -36,6 +38,40 @@ const sortedSkills = (skills) =>
     if (ib === -1) return -1
     return ia - ib
   })
+
+const VISIBLE_SKILLS = 3
+
+// Caps the tag row at 3 skills, folding the rest behind a "+N" pill —
+// tapping it reveals the remaining skills inline, in the card itself.
+function SkillsRow({ skills }) {
+  const [expanded, setExpanded] = useState(false)
+  const sorted = sortedSkills(skills)
+  const hidden = sorted.length - VISIBLE_SKILLS
+  const visible = expanded ? sorted : sorted.slice(0, VISIBLE_SKILLS)
+
+  return (
+    <div className="flex flex-wrap gap-1.5 pt-1">
+      {visible.map((skill) => (
+        <span
+          key={skill}
+          className="text-[11px] font-bold text-primary bg-surfaceAlt px-2.5 py-1 rounded-full"
+        >
+          {skill}
+        </span>
+      ))}
+      {!expanded && hidden > 0 && (
+        <button
+          type="button"
+          onClick={() => setExpanded(true)}
+          className="inline-flex items-center justify-center text-[11px] font-bold text-primary bg-surfaceAlt px-2.5 py-1 rounded-full hover:bg-[var(--primary-tint)] transition-colors"
+        >
+          <Plus size={10} strokeWidth={3} className="-mr-0.5" />
+          {hidden}
+        </button>
+      )}
+    </div>
+  )
+}
 
 export default function Projects() {
   const [filter, setFilter] = useState('all')
@@ -97,24 +133,19 @@ export default function Projects() {
                     <div className={`absolute top-3.5 left-3.5 text-[11px] font-bold px-2.5 py-1 rounded-full capitalize ${categoryColor[p.category]}`}>
                       {p.category}
                     </div>
+                    {isPlayStore && (
+                      <div className="absolute top-3.5 right-3.5 inline-flex items-center gap-1 text-[11px] font-bold px-2.5 py-1 rounded-full bg-[var(--accent2)] text-white">
+                        <Rocket size={11} />
+                        Published
+                      </div>
+                    )}
                   </div>
                   <div className="p-6 flex flex-col gap-2 flex-1">
                     <h3 className="text-[19px]">{p.title}</h3>
                     {p.description && (
                       <p className="text-muted text-[13.5px] leading-relaxed line-clamp-3">{p.description}</p>
                     )}
-                    {p.skills && (
-                      <div className="flex flex-wrap gap-1.5 pt-1">
-                        {sortedSkills(p.skills).map((skill) => (
-                          <span
-                            key={skill}
-                            className="text-[11px] font-bold text-primary bg-surfaceAlt px-2.5 py-1 rounded-full"
-                          >
-                            {skill}
-                          </span>
-                        ))}
-                      </div>
-                    )}
+                    {p.skills && <SkillsRow skills={p.skills} />}
                     <div className="flex gap-4 mt-auto pt-2">
                       <a
                         href={p.link}
