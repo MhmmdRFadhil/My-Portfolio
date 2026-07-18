@@ -81,16 +81,6 @@ export const projectFilters = [
 
 export const projects = [
   {
-    id: 10,
-    image: MyStore,
-    title: 'My Store',
-    category: 'other',
-    link: 'https://github.com/MhmmdRFadhil/MyStore',
-    description: "Final project for a Dicoding Android course — an e-commerce app for browsing and purchasing products, using deep links to jump straight to product details and a REST API for catalog and order data.",
-    skills: ['Kotlin', 'REST API', 'Deeplink'],
-    certificate: 'https://www.dicoding.com/certificates/EYX4JQR8JZDL',
-  },
-  {
     id: 9,
     image: OctoCIMB,
     title: 'Octo by CIMB Niaga',
@@ -117,6 +107,16 @@ export const projects = [
     link: 'https://play.google.com/store/apps/details?id=com.uninet.umscustomerapp&pcampaignid=web_share',
     description: "A customer portal for Uninet, built to help customers manage transactions and access service information — including ticketing, live chat, WhatsApp integration, speed test, and bill checking.",
     skills: ['Kotlin', 'MVVM', 'REST API'],
+  },
+  {
+    id: 10,
+    image: MyStore,
+    title: 'My Store',
+    category: 'other',
+    link: 'https://github.com/MhmmdRFadhil/MyStore',
+    description: "Final project for a Dicoding Android course — an e-commerce app for browsing and purchasing products, using deep links to jump straight to product details and a REST API for catalog and order data.",
+    skills: ['Kotlin', 'REST API', 'Deeplink'],
+    certificate: 'https://www.dicoding.com/certificates/EYX4JQR8JZDL',
   },
   {
     id: 3,
