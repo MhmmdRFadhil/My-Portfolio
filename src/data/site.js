@@ -110,6 +110,18 @@ export const projects = [
     skills: ['Kotlin', 'MVVM', 'MVI', 'Jetpack Compose', 'REST API', 'Firebase'],
   },
   {
+    id: 1,
+    image: UnApps,
+    title: 'UnApps',
+    category: 'company',
+    link: 'https://play.google.com/store/apps/details?id=com.uninet.umscustomerapp&pcampaignid=web_share',
+    description: {
+      en: "A customer portal for Uninet, built to help customers manage transactions and access service information — including ticketing, live chat, WhatsApp integration, speed test, and bill checking.",
+      id: 'Portal pelanggan untuk Uninet, dibangun untuk membantu pelanggan mengelola transaksi dan mengakses informasi layanan — termasuk tiket, live chat, integrasi WhatsApp, speed test, dan pengecekan tagihan.',
+    },
+    skills: ['Kotlin', 'MVVM', 'REST API'],
+  },
+  {
     id: 2,
     image: Nutrilicious,
     title: 'Nutrilicious',
@@ -121,18 +133,6 @@ export const projects = [
     },
     skills: ['Kotlin', 'Firebase', 'Machine Learning', 'MVVM'],
     certificate: 'https://drive.google.com/file/d/1bxglVFCWqk5BNLuE4P9WtBBQt7Rv2jQH/view?usp=sharing',
-  },
-  {
-    id: 1,
-    image: UnApps,
-    title: 'UnApps',
-    category: 'company',
-    link: 'https://play.google.com/store/apps/details?id=com.uninet.umscustomerapp&pcampaignid=web_share',
-    description: {
-      en: "A customer portal for Uninet, built to help customers manage transactions and access service information — including ticketing, live chat, WhatsApp integration, speed test, and bill checking.",
-      id: 'Portal pelanggan untuk Uninet, dibangun untuk membantu pelanggan mengelola transaksi dan mengakses informasi layanan — termasuk tiket, live chat, integrasi WhatsApp, speed test, dan pengecekan tagihan.',
-    },
-    skills: ['Kotlin', 'MVVM', 'REST API'],
   },
   {
     id: 10,
