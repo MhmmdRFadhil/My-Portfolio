@@ -4,6 +4,7 @@ import { Moon, Sun, Menu, X } from 'lucide-react'
 import { navLinks, profile } from '../data/site'
 import { useTheme } from '../context/ThemeContext'
 import { useActiveSection } from '../hooks/useActiveSection'
+import { useIsScrolling } from '../hooks/useIsScrolling'
 import { scrollToId, smoothScrollTo } from '../utils/smoothScroll'
 
 // Hoisted so useActiveSection gets a stable array reference — building
@@ -16,6 +17,10 @@ export default function Navbar() {
   const { theme, toggleTheme } = useTheme()
   const [open, setOpen] = useState(false)
   const active = useActiveSection(navIds)
+  const scrolling = useIsScrolling()
+  // Never hide while the mobile menu is open — the user is reading it,
+  // not scrolling past it.
+  const hidden = scrolling && !open
 
   const closeMenu = () => setOpen(false)
 
@@ -34,7 +39,10 @@ export default function Navbar() {
   }
 
   return (
-    <header className="sticky top-0 z-[100]">
+    <header
+      className={`sticky top-0 z-[100] transition-transform duration-300 ease-out
+        ${hidden ? '-translate-y-[calc(100%+1rem)]' : 'translate-y-0'}`}
+    >
       <div className="wrap pt-3.5">
         <nav className="flex items-center justify-between h-[76px] px-4 md:px-5
           bg-surface rounded-2xl shadow-[0_5px_0_0_var(--ghost-shadow)]">

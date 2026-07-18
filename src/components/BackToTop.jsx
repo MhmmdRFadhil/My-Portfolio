@@ -2,15 +2,20 @@ import { useEffect, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { ArrowUp } from 'lucide-react'
 import { smoothScrollTo } from '../utils/smoothScroll'
+import { useIsScrolling } from '../hooks/useIsScrolling'
 
 export default function BackToTop() {
-  const [visible, setVisible] = useState(false)
+  const [pastThreshold, setPastThreshold] = useState(false)
+  const scrolling = useIsScrolling()
+  // Only show once scrolled past the hero AND scrolling has settled —
+  // it hides while actively scrolling and reappears once the user stops.
+  const visible = pastThreshold && !scrolling
 
   useEffect(() => {
     const handleScroll = () => {
       const home = document.getElementById('home')
       const threshold = home ? home.offsetTop + home.offsetHeight : window.innerHeight
-      setVisible(window.scrollY > threshold)
+      setPastThreshold(window.scrollY > threshold)
     }
     window.addEventListener('scroll', handleScroll, { passive: true })
     handleScroll()
