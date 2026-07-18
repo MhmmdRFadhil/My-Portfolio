@@ -126,8 +126,8 @@ export default function Skills() {
       <div className="wrap">
         <Reveal className="max-w-xl mb-12">
           <span className="eyebrow">Skills</span>
-          <h2 className="text-3xl md:text-[40px]">Tools I reach for daily</h2>
-          <p className="text-muted mt-3">A curated toolkit for building, testing, and shipping production-ready Android applications end-to-end.</p>
+          <h2 className="text-3xl md:text-[40px]">My everyday toolkit</h2>
+          <p className="text-muted mt-3">The languages, frameworks, and tools I reach for to build, test, and ship Android apps end-to-end.</p>
         </Reveal>
 
         <Reveal delay={0.1}>
@@ -138,7 +138,7 @@ export default function Skills() {
             </div>
             <div>
               <h3 className="text-white text-xl md:text-2xl mb-1">Kotlin-first, Compose-native</h3>
-              <p className="text-white/80 text-sm">Every application I build starts from a single source of truth, built on a declarative UI layer for predictable, maintainable state.</p>
+              <p className="text-white/80 text-sm">Every app I build starts from a single source of truth on a declarative UI layer — predictable, maintainable state by design.</p>
             </div>
           </div>
         </Reveal>

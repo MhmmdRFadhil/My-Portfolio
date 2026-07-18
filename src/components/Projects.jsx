@@ -46,8 +46,8 @@ export default function Projects() {
       <div className="wrap">
         <Reveal className="max-w-xl mb-10">
           <span className="eyebrow">Projects</span>
-          <h2 className="text-3xl md:text-[40px]">Selected work</h2>
-          <p className="text-muted mt-3">A selection of production applications and focused projects that reflect my growth as an Android Developer.</p>
+          <h2 className="text-3xl md:text-[40px]">What I've built</h2>
+          <p className="text-muted mt-3">Apps I've shipped to production, alongside smaller projects that mark milestones in my growth as a developer.</p>
         </Reveal>
 
         <Reveal delay={0.05} className="flex flex-nowrap justify-safe-center gap-1.5 sm:gap-2.5 mb-10 py-1.5 overflow-x-auto scrollbar-none">

@@ -197,7 +197,7 @@ export default function Hero() {
                 <span className="w-2.5 h-2.5 rounded-full bg-accent2" />
                 <em className="not-italic font-mono text-[11px] text-muted ml-2">MainActivity.kt</em>
               </div>
-              <div className="p-5 font-mono text-[12.5px] leading-[1.9] text-muted md:whitespace-nowrap overflow-x-auto">
+              <div className="p-5 font-mono text-[12.5px] leading-[1.9] text-muted whitespace-nowrap overflow-x-auto scrollbar-none">
                 <div><span className="text-primary">data class</span> <span className="text-accent2">Developer</span>(</div>
                 <div>&nbsp;&nbsp;val name = "rzqnfdhl",</div>
                 <div>&nbsp;&nbsp;val stack = listOf("Kotlin", "Compose"),</div>

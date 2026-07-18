@@ -45,7 +45,7 @@ export default function Experience() {
         <Reveal className="max-w-xl mb-10">
           <span className="eyebrow">Experience</span>
           <h2 className="text-3xl md:text-[40px]">Where I've worked & learned</h2>
-          <p className="text-muted mt-3">A track record of professional roles and academic foundations in Android and software development.</p>
+          <p className="text-muted mt-3">The roles that shaped my Android development skills, and the education that got me started.</p>
         </Reveal>
 
         <Reveal delay={0.05} className="flex flex-wrap justify-center gap-2.5 mb-10">
