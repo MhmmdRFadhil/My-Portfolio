@@ -16,7 +16,8 @@ function TimelineCard({ item }) {
       type="button"
       onClick={() => setExpanded((v) => !v)}
       aria-expanded={expanded}
-      className="card-chunky !rounded-xl p-2.5 sm:p-3.5 md:p-4 text-left w-full max-w-[320px] sm:max-w-sm md:max-w-[380px]"
+      className="card-chunky !rounded-xl p-2.5 sm:p-3.5 md:p-4 text-left w-full max-w-[320px] sm:max-w-sm md:max-w-[380px]
+        transition-transform duration-150 ease-out active:translate-y-1.5 active:shadow-none"
     >
       <div className="flex items-center justify-between gap-2 mb-1 sm:mb-1.5">
         <span className="inline-block font-mono text-[8px] sm:text-[11px] font-bold text-primary bg-[var(--primary-tint)] px-1.5 sm:px-2 py-0.5 rounded-md">
@@ -53,17 +54,17 @@ export default function Experience() {
             const Icon = tabIcons[t.key]
             const isActive = tab === t.key
             return (
-              <div key={t.key} className="relative">
+              <div key={t.key} className="relative group transition-transform duration-150 ease-out active:translate-y-1">
                 {isActive && (
                   <motion.span
                     layoutId="exp-tab-pill"
-                    className="absolute inset-0 rounded-xl bg-[var(--primary-fill)] shadow-[0_4px_0_0_var(--primary-fill-shadow)]"
+                    className="absolute inset-0 rounded-xl bg-[var(--primary-fill)] shadow-[0_4px_0_0_var(--primary-fill-shadow)] transition-shadow duration-150 ease-out group-active:shadow-none"
                     transition={{ type: 'spring', stiffness: 380, damping: 32 }}
                   />
                 )}
                 <button
                   onClick={() => setTab(t.key)}
-                  className={`relative z-10 flex items-center gap-1.5 sm:gap-2 text-[12.5px] sm:text-sm font-bold px-4 sm:px-5 py-2 sm:py-3 rounded-xl transition-colors
+                  className={`relative z-10 flex items-center gap-1.5 sm:gap-2 text-[12.5px] sm:text-sm font-bold px-4 sm:px-5 py-2 sm:py-3 rounded-xl transition-colors active:shadow-none
                     ${isActive
                       ? 'text-white'
                       : 'bg-surface text-muted shadow-[0_4px_0_0_var(--ghost-shadow)] hover:text-ink'}`}

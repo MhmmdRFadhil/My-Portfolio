@@ -54,17 +54,17 @@ export default function Projects() {
           {projectFilters.map((f) => {
             const isActive = filter === f.key
             return (
-              <div key={f.key} className="relative flex-shrink-0">
+              <div key={f.key} className="relative flex-shrink-0 group transition-transform duration-150 ease-out active:translate-y-1">
                 {isActive && (
                   <motion.span
                     layoutId="project-filter-pill"
-                    className="absolute inset-0 rounded-xl bg-[var(--primary-fill)] shadow-[0_4px_0_0_var(--primary-fill-shadow)]"
+                    className="absolute inset-0 rounded-xl bg-[var(--primary-fill)] shadow-[0_4px_0_0_var(--primary-fill-shadow)] transition-shadow duration-150 ease-out group-active:shadow-none"
                     transition={{ type: 'spring', stiffness: 380, damping: 32 }}
                   />
                 )}
                 <button
                   onClick={() => setFilter(f.key)}
-                  className={`relative z-10 text-[12.5px] sm:text-sm font-bold px-4 sm:px-5 py-2 sm:py-3 rounded-xl whitespace-nowrap transition-colors
+                  className={`relative z-10 text-[12.5px] sm:text-sm font-bold px-4 sm:px-5 py-2 sm:py-3 rounded-xl whitespace-nowrap transition-colors active:shadow-none
                     ${isActive
                       ? 'text-white'
                       : 'bg-surface text-muted shadow-[0_4px_0_0_var(--ghost-shadow)] hover:text-ink'}`}
