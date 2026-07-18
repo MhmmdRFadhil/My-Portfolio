@@ -14,6 +14,7 @@ import MovieCatalogue from '../assets/MovieCatalogue.jpg'
 import Github from '../assets/Github.jpg'
 import CoffeeShop from '../assets/CoffeeShop.jpg'
 import OctoCIMB from '../assets/OctoCIMB.svg'
+import MyStore from '../assets/MyStore.svg'
 
 export const profile = {
   name: 'Muhammad Rizqan Fadhil',
@@ -73,17 +74,27 @@ export const skills = [
 
 export const projectFilters = [
   { key: 'all', label: 'All' },
-  { key: 'advanced', label: 'Advanced' },
-  { key: 'intermediate', label: 'Intermediate' },
+  { key: 'company', label: 'Company' },
+  { key: 'college', label: 'College' },
   { key: 'other', label: 'Other' },
 ]
 
 export const projects = [
   {
+    id: 10,
+    image: MyStore,
+    title: 'My Store',
+    category: 'other',
+    link: 'https://github.com/MhmmdRFadhil/MyStore',
+    description: "Final project for a Dicoding Android course — an e-commerce app for browsing and purchasing products, using deep links to jump straight to product details and a REST API for catalog and order data.",
+    skills: ['Kotlin', 'REST API', 'Deeplink'],
+    certificate: 'https://www.dicoding.com/certificates/EYX4JQR8JZDL',
+  },
+  {
     id: 9,
     image: OctoCIMB,
     title: 'Octo by CIMB Niaga',
-    category: 'advanced',
+    category: 'company',
     link: 'https://play.google.com/store/apps/details?id=id.co.cimbniaga.mobile.android&pcampaignid=web_share',
     description: "Contributed to the bill payment and top-up features of CIMB Niaga's banking super-app, focusing on feature development, architecture improvements, and production support.",
     skills: ['Kotlin', 'MVVM', 'MVI', 'Jetpack Compose', 'REST API', 'Firebase'],
@@ -92,16 +103,17 @@ export const projects = [
     id: 2,
     image: Nutrilicious,
     title: 'Nutrilicious',
-    category: 'advanced',
+    category: 'college',
     link: 'https://play.google.com/store/apps/details?id=com.ryz.nutrilicious',
     description: 'An Android app that detects fruits and vegetables using on-device image recognition, built with Kotlin and an MVVM architecture backed by Firebase for storing scan history and nutrition data.',
     skills: ['Kotlin', 'Firebase', 'Machine Learning', 'MVVM'],
+    certificate: 'https://drive.google.com/file/d/1bxglVFCWqk5BNLuE4P9WtBBQt7Rv2jQH/view?usp=sharing',
   },
   {
     id: 1,
     image: UnApps,
     title: 'UnApps',
-    category: 'advanced',
+    category: 'company',
     link: 'https://play.google.com/store/apps/details?id=com.uninet.umscustomerapp&pcampaignid=web_share',
     description: "A customer portal for Uninet, built to help customers manage transactions and access service information — including ticketing, live chat, WhatsApp integration, speed test, and bill checking.",
     skills: ['Kotlin', 'MVVM', 'REST API'],
@@ -110,7 +122,7 @@ export const projects = [
     id: 3,
     image: TernaKu,
     title: 'TernaKu',
-    category: 'intermediate',
+    category: 'college',
     link: 'https://github.com/MhmmdRFadhil/TernaKu',
     description: 'An Android app for livestock sales in Dermaji Village, built with Kotlin and a RESTful API backend to connect local farmers with buyers, streamlining listings, transactions, and order tracking.',
     skills: ['Kotlin', 'REST API'],
@@ -128,7 +140,7 @@ export const projects = [
     id: 5,
     image: UrSkripsi,
     title: 'UrSkripsi',
-    category: 'intermediate',
+    category: 'college',
     link: 'https://github.com/MhmmdRFadhil/UrSkripsi',
     description: 'A capstone project app for monitoring undergraduate thesis progress, built with Kotlin and Firebase to help students track milestones, manage advisor consultations, and stay on schedule toward graduation.',
     skills: ['Kotlin', 'Firebase'],
@@ -137,25 +149,27 @@ export const projects = [
     id: 6,
     image: MovieCatalogue,
     title: 'Movie Catalogue',
-    category: 'intermediate',
+    category: 'other',
     link: 'https://github.com/MhmmdRFadhil/BAJP-Final-Submission',
     description: "Final project for the 'Belajar Android Jetpack Pro' course — an app that displays a catalogue of movies and TV shows, consuming a REST API to browse, search, and view detailed information for each title.",
     skills: ['Kotlin', 'REST API'],
+    certificate: 'https://www.dicoding.com/certificates/MRZMKVK90PYQ',
   },
   {
     id: 7,
     image: Github,
     title: 'Github',
-    category: 'intermediate',
+    category: 'other',
     link: 'https://github.com/MhmmdRFadhil/BFAA-Final-Submission',
     description: "Final project for the 'Fundamental Android Development' course — an app that lists and searches GitHub users, consuming the GitHub REST API to display profiles, repositories, and follower details.",
     skills: ['Kotlin', 'REST API'],
+    certificate: 'https://www.dicoding.com/certificates/98XWK0WMLXM3',
   },
   {
     id: 8,
     image: CoffeeShop,
     title: 'Coffee Shop',
-    category: 'intermediate',
+    category: 'college',
     link: 'https://github.com/MhmmdRFadhil/Coffee-Shop-App',
     description: 'A simple e-commerce app for selling coffee beans, with separate admin and customer access — built with Kotlin and Firebase to manage product listings, orders, and real-time inventory updates.',
     skills: ['Kotlin', 'Firebase'],

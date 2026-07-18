@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
-import { Github as GithubIcon, Rocket, Plus } from 'lucide-react'
+import { Github as GithubIcon, Rocket, Plus, Award } from 'lucide-react'
 import { projects, projectFilters } from '../data/site'
 import Reveal from './ui/Reveal'
 
@@ -16,12 +16,12 @@ function PlayStoreLogo({ size = 14, className = '' }) {
 
 // Fixed light backgrounds (not theme-dependent) — these badges float on
 // top of project screenshots, so they need to stay legible regardless of
-// theme rather than blend into a dark-mode tinted surface. Reads as a
-// tier gradient (solid → tinted → neutral) rather than three unrelated
-// colors, matching what the categories actually are: a difficulty scale.
+// theme rather than blend into a dark-mode tinted surface. Color signals
+// what kind of project it was: solid fill for employer work, tinted for
+// self-initiated projects, neutral for academic/coursework.
 const categoryColor = {
-  advanced: 'bg-[var(--primary-fill)] text-white',
-  intermediate: 'bg-[var(--accent)] text-[var(--primary-dark)]',
+  company: 'bg-[var(--primary-fill)] text-white',
+  college: 'bg-[var(--accent)] text-[var(--primary-dark)]',
   other: 'bg-white text-[#1E1B2E]',
 }
 
@@ -155,6 +155,16 @@ export default function Projects() {
                       >
                         <LinkIcon size={14} /> {linkLabel}
                       </a>
+                      {p.certificate && (
+                        <a
+                          href={p.certificate}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="text-[13.5px] font-bold text-primary flex items-center gap-1.5"
+                        >
+                          <Award size={14} /> Certificate
+                        </a>
+                      )}
                     </div>
                   </div>
                 </div>
