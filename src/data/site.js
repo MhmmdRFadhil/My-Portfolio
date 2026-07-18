@@ -22,7 +22,6 @@ export const profile = {
   handle: '.dev',
   tagline:
     'Android Developer specializing in Kotlin and Jetpack Compose, with a track record of shipping production-grade applications across fintech and consumer products. I focus on clean architecture, thoughtful UX, and reliable releases — from first commit to Play Store launch.',
-  avatarInitials: 'RF',
   avatar: profilePhoto,
 }
 

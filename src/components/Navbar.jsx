@@ -6,10 +6,16 @@ import { useTheme } from '../context/ThemeContext'
 import { useActiveSection } from '../hooks/useActiveSection'
 import { scrollToId, smoothScrollTo } from '../utils/smoothScroll'
 
+// Hoisted so useActiveSection gets a stable array reference — building
+// this inline in the component body would create a new array every
+// render, and since it's the effect's dependency, that would tear down
+// and re-attach the scroll listener on every render instead of once.
+const navIds = navLinks.map((l) => l.id)
+
 export default function Navbar() {
   const { theme, toggleTheme } = useTheme()
   const [open, setOpen] = useState(false)
-  const active = useActiveSection(navLinks.map((l) => l.id))
+  const active = useActiveSection(navIds)
 
   const closeMenu = () => setOpen(false)
 
@@ -67,7 +73,7 @@ export default function Navbar() {
               aria-label="Toggle tema"
               whileTap={{ scale: 0.88 }}
               className="w-10 h-10 rounded-xl border-2 border-line bg-surface flex items-center justify-center overflow-hidden
-                hover:-translate-y-0.5 hover:shadow-[0_4px_0_0_var(--ghost-shadow)] transition-transform"
+                hover:-translate-y-0.5 transition-transform"
             >
               <AnimatePresence mode="wait" initial={false}>
                 <motion.span

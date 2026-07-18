@@ -12,19 +12,14 @@ export default {
         muted: 'var(--muted)',
         line: 'var(--border)',
         primary: 'var(--primary)',
-        primaryDark: 'var(--primary-dark)',
         accent: 'var(--accent)',
         accent2: 'var(--accent2)',
       },
       fontFamily: {
         display: ['"Bricolage Grotesque"', 'sans-serif'],
-        body: ['"Plus Jakarta Sans"', 'sans-serif'],
         // Kept in sync with --font-mono in index.css rather than
         // duplicating the stack here.
         mono: ['var(--font-mono)'],
-      },
-      borderRadius: {
-        xl2: '22px',
       },
     },
   },

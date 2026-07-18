@@ -137,6 +137,17 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
 }
 .mono { font-family: var(--font-mono); }
 
+/* Hides the scrollbar on horizontally-scrollable rows (e.g. the mobile
+   category filter) while keeping the element scrollable via touch/drag. */
+.scrollbar-none { scrollbar-width: none; -ms-overflow-style: none; }
+.scrollbar-none::-webkit-scrollbar { display: none; }
+
+/* Centers content that fits, but falls back to start-alignment instead of
+   clipping both edges once it's wide enough to need horizontal scroll —
+   plain `justify-content: center` on an overflowing scroll container
+   clips symmetrically on both sides with no way to scroll to the start. */
+.justify-safe-center { justify-content: safe center; }
+
 .wrap { max-width: var(--maxw); margin-left: auto; margin-right: auto; padding-left: 24px; padding-right: 24px; position: relative; z-index: 1; }
 
 /* =========================================================

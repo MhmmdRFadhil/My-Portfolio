@@ -57,18 +57,20 @@ export default function Experience() {
                 {isActive && (
                   <motion.span
                     layoutId="exp-tab-pill"
-                    className="absolute inset-0 rounded-2xl bg-[var(--primary-fill)] shadow-[0_4px_0_0_var(--primary-fill-shadow)]"
+                    className="absolute inset-0 rounded-xl bg-[var(--primary-fill)] shadow-[0_4px_0_0_var(--primary-fill-shadow)]"
                     transition={{ type: 'spring', stiffness: 380, damping: 32 }}
                   />
                 )}
                 <button
                   onClick={() => setTab(t.key)}
-                  className={`relative z-10 flex items-center gap-2 text-sm font-bold px-5 py-3 rounded-2xl border-2 transition-colors
+                  className={`relative z-10 flex items-center gap-1.5 sm:gap-2 text-[12.5px] sm:text-sm font-bold px-4 sm:px-5 py-2 sm:py-3 rounded-xl transition-colors
                     ${isActive
-                      ? 'text-white border-transparent'
-                      : 'bg-surface text-muted border-line shadow-[0_4px_0_0_var(--ghost-shadow)] hover:text-ink'}`}
+                      ? 'text-white'
+                      : 'bg-surface text-muted shadow-[0_4px_0_0_var(--ghost-shadow)] hover:text-ink'}`}
                 >
-                  <Icon size={16} /> {t.label}
+                  <Icon size={14} className="sm:hidden" />
+                  <Icon size={16} className="hidden sm:block" />
+                  {t.label}
                 </button>
               </div>
             )

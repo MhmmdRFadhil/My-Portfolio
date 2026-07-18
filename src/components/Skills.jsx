@@ -104,13 +104,13 @@ function Pill({ s }) {
         <MarqueeText
           as="h4"
           text={s.name}
-          className="font-mono text-[12.5px] sm:text-[13.5px] font-bold leading-tight tracking-tight"
+          className="text-[12.5px] sm:text-[13.5px] font-bold leading-tight tracking-tight"
           active={active}
         />
         <MarqueeText
           as="span"
           text={s.tag}
-          className="text-[10.5px] sm:text-[11px] font-mono text-muted"
+          className="text-[10.5px] sm:text-[11px] text-muted"
           active={active}
         />
       </div>
@@ -118,9 +118,9 @@ function Pill({ s }) {
   )
 }
 
-export default function Skills() {
-  const allSkills = [...skillSet1, ...skillSet2]
+const allSkills = [...skillSet1, ...skillSet2]
 
+export default function Skills() {
   return (
     <section id="skills" className="py-24 md:py-[130px]">
       <div className="wrap">

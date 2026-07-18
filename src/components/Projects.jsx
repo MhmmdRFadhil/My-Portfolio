@@ -50,24 +50,24 @@ export default function Projects() {
           <p className="text-muted mt-3">A selection of production applications and focused projects that reflect my growth as an Android Developer.</p>
         </Reveal>
 
-        <Reveal delay={0.05} className="flex flex-wrap justify-center gap-2.5 mb-10">
+        <Reveal delay={0.05} className="flex flex-nowrap justify-safe-center gap-1.5 sm:gap-2.5 mb-10 py-1.5 overflow-x-auto scrollbar-none">
           {projectFilters.map((f) => {
             const isActive = filter === f.key
             return (
-              <div key={f.key} className="relative">
+              <div key={f.key} className="relative flex-shrink-0">
                 {isActive && (
                   <motion.span
                     layoutId="project-filter-pill"
-                    className="absolute inset-0 rounded-2xl bg-[var(--primary-fill)] shadow-[0_4px_0_0_var(--primary-fill-shadow)]"
+                    className="absolute inset-0 rounded-xl bg-[var(--primary-fill)] shadow-[0_4px_0_0_var(--primary-fill-shadow)]"
                     transition={{ type: 'spring', stiffness: 380, damping: 32 }}
                   />
                 )}
                 <button
                   onClick={() => setFilter(f.key)}
-                  className={`relative z-10 text-[13.5px] font-bold px-5 py-2.5 rounded-2xl border-2 transition-colors
+                  className={`relative z-10 text-[12.5px] sm:text-sm font-bold px-4 sm:px-5 py-2 sm:py-3 rounded-xl whitespace-nowrap transition-colors
                     ${isActive
-                      ? 'text-white border-transparent'
-                      : 'bg-surface text-muted border-line shadow-[0_4px_0_0_var(--ghost-shadow)] hover:text-ink'}`}
+                      ? 'text-white'
+                      : 'bg-surface text-muted shadow-[0_4px_0_0_var(--ghost-shadow)] hover:text-ink'}`}
                 >
                   {f.label}
                 </button>
