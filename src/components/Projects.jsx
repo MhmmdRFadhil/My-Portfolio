@@ -75,6 +75,7 @@ function SkillsRow({ skills }) {
 
 export default function Projects() {
   const [filter, setFilter] = useState('all')
+  const [hasFiltered, setHasFiltered] = useState(false)
   const filtered = filter === 'all' ? projects : projects.filter((p) => p.category === filter)
 
   return (
@@ -99,7 +100,7 @@ export default function Projects() {
                   />
                 )}
                 <button
-                  onClick={() => setFilter(f.key)}
+                  onClick={() => { setFilter(f.key); setHasFiltered(true) }}
                   className={`relative z-10 text-[12.5px] sm:text-sm font-bold px-4 sm:px-5 py-2 sm:py-3 rounded-lg whitespace-nowrap transition-colors active:shadow-none
                     ${isActive
                       ? 'text-white'
@@ -119,7 +120,7 @@ export default function Projects() {
             const linkLabel = isPlayStore ? 'Play Store' : 'Github'
 
             return (
-              <Reveal key={p.id} delay={(i % 3) * 0.08}>
+              <Reveal key={p.id} delay={(i % 3) * 0.08} mount={hasFiltered}>
                 <div className="group card-chunky flex flex-col h-full overflow-hidden transition-all duration-200
                   hover:-translate-y-1 hover:shadow-[0_9px_0_0_var(--ghost-shadow)]">
                   <div className="aspect-[3/2] bg-surfaceAlt border-b-2 border-line relative overflow-hidden">
