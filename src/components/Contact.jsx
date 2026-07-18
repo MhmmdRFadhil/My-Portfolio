@@ -7,17 +7,51 @@ import Button from './ui/Button'
 
 const iconMap = { instagram: Instagram, pin: MapPin, email: Mail }
 
+function FieldError({ message }) {
+  return (
+    <AnimatePresence>
+      {message && (
+        <motion.p
+          initial={{ opacity: 0, y: -4, height: 0 }}
+          animate={{ opacity: 1, y: 0, height: 'auto' }}
+          exit={{ opacity: 0, height: 0 }}
+          transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
+          className="text-[13px] text-red-500 mt-1.5"
+        >
+          {message}
+        </motion.p>
+      )}
+    </AnimatePresence>
+  )
+}
+
 // Set in .env as VITE_FORMSPREE_ENDPOINT (see .env.example) — a Formspree
 // form endpoint, e.g. https://formspree.io/f/xxxxxxxx. Not a secret (it's
 // meant to be public in client-side code), just kept out of source so
 // swapping accounts doesn't require a code change.
 const FORMSPREE_ENDPOINT = import.meta.env.VITE_FORMSPREE_ENDPOINT
 
+function validate(form) {
+  const errors = {}
+  if (form.elements.name.validity.valueMissing) errors.name = "Oops, forgot your name there"
+  if (form.elements.email.validity.valueMissing) errors.email = "Hey, we'll need your email"
+  else if (form.elements.email.validity.typeMismatch) errors.email = "Hmm, that email doesn't look right"
+  if (form.elements.message.validity.valueMissing) errors.message = "Don't leave me hanging, write something!"
+  return errors
+}
+
 export default function Contact() {
   const [status, setStatus] = useState('idle') // idle | sending | sent | error
+  const [errors, setErrors] = useState({})
 
   const handleSubmit = async (e) => {
     e.preventDefault()
+    const form = e.target
+
+    const fieldErrors = validate(form)
+    setErrors(fieldErrors)
+    if (Object.keys(fieldErrors).length > 0) return
+
     if (!FORMSPREE_ENDPOINT) {
       console.error('VITE_FORMSPREE_ENDPOINT is not set — see .env.example')
       setStatus('error')
@@ -25,7 +59,6 @@ export default function Contact() {
     }
 
     setStatus('sending')
-    const form = e.target
     try {
       const res = await fetch(FORMSPREE_ENDPOINT, {
         method: 'POST',
@@ -46,7 +79,7 @@ export default function Contact() {
         <Reveal className="max-w-xl mb-12">
           <span className="eyebrow">Contact</span>
           <h2 className="text-3xl md:text-[40px]">Let's work together</h2>
-          <p className="text-muted mt-3">Interested in collaborating or have a role in mind? Send a message and I'll get back to you within 1–2 business days.</p>
+          <p className="text-muted mt-3">Got a project, a role, or just wanna say hi? Shoot me a message and I'll get back to you in a day or two.</p>
         </Reveal>
 
         <Reveal delay={0.1} className="card-chunky overflow-hidden grid grid-cols-1 md:grid-cols-[0.85fr_1.15fr]">
@@ -57,7 +90,7 @@ export default function Contact() {
             <div className="relative flex flex-col gap-5">
               <div>
                 <h3 className="text-white text-xl md:text-2xl mb-1.5">Get in touch</h3>
-                <p className="text-white/75 text-sm">Prefer social? DM me on Instagram and I'll usually reply within a day or two, even on weekends.</p>
+                <p className="text-white/75 text-sm">Not really a form person? Slide into my Instagram DMs instead — same day or two reply, weekends included.</p>
               </div>
 
               <div className="flex flex-col gap-3.5">
@@ -92,43 +125,42 @@ export default function Contact() {
           </div>
 
           {/* Right: form */}
-          <form onSubmit={handleSubmit} className="p-6 md:p-8 flex flex-col">
+          <form onSubmit={handleSubmit} noValidate className="p-6 md:p-8 flex flex-col">
             <div className="mb-4">
               <label htmlFor="name" className="block text-[13.5px] font-bold mb-1.5">Name</label>
-              {/* Underline is two stacked bars instead of a plain
-                  border-bottom: the soft static one, and a primary-color
-                  one that grows in from the left on focus (peer-focus)
-                  rather than just flipping color instantly. */}
-              <div className="relative">
+              <div className={`rounded-[var(--radius-sm)] border-2 bg-[var(--surface)] transition-colors focus-within:border-[var(--primary)] ${errors.name ? 'border-red-300' : 'border-[var(--border-soft)]'}`}>
                 <input
-                  id="name" name="name" type="text" required placeholder="Your name"
-                  className="peer w-full px-1 py-2 border-0 bg-transparent text-ink focus:outline-none"
+                  id="name" name="name" type="text" required placeholder="What's your name?"
+                  aria-invalid={!!errors.name}
+                  onChange={() => errors.name && setErrors((prev) => ({ ...prev, name: undefined }))}
+                  className="w-full px-3.5 py-2.5 border-0 bg-transparent text-ink text-[17px] placeholder:text-[14px] focus:outline-none"
                 />
-                <span className="absolute left-0 right-0 bottom-0 h-[2px] bg-[var(--border-soft)]" />
-                <span className="absolute left-0 right-0 bottom-0 h-[2px] bg-primary origin-left scale-x-0 peer-focus:scale-x-100 transition-transform duration-300 ease-out" />
               </div>
+              <FieldError message={errors.name} />
             </div>
             <div className="mb-4">
               <label htmlFor="email" className="block text-[13.5px] font-bold mb-1.5">Email</label>
-              <div className="relative">
+              <div className={`rounded-[var(--radius-sm)] border-2 bg-[var(--surface)] transition-colors focus-within:border-[var(--primary)] ${errors.email ? 'border-red-300' : 'border-[var(--border-soft)]'}`}>
                 <input
-                  id="email" name="email" type="email" required placeholder="you@example.com"
-                  className="peer w-full px-1 py-2 border-0 bg-transparent text-ink focus:outline-none"
+                  id="email" name="email" type="email" required placeholder="Where can I reach you?"
+                  aria-invalid={!!errors.email}
+                  onChange={() => errors.email && setErrors((prev) => ({ ...prev, email: undefined }))}
+                  className="w-full px-3.5 py-2.5 border-0 bg-transparent text-ink text-[17px] placeholder:text-[14px] focus:outline-none"
                 />
-                <span className="absolute left-0 right-0 bottom-0 h-[2px] bg-[var(--border-soft)]" />
-                <span className="absolute left-0 right-0 bottom-0 h-[2px] bg-primary origin-left scale-x-0 peer-focus:scale-x-100 transition-transform duration-300 ease-out" />
               </div>
+              <FieldError message={errors.email} />
             </div>
             <div className="mb-2">
               <label htmlFor="message" className="block text-[13.5px] font-bold mb-1.5">Message</label>
-              <div className="relative">
+              <div className={`rounded-[var(--radius-sm)] border-2 bg-[var(--surface)] transition-colors focus-within:border-[var(--primary)] ${errors.message ? 'border-red-300' : 'border-[var(--border-soft)]'}`}>
                 <textarea
-                  id="message" name="message" required placeholder="Tell me about your project or requirement..."
-                  className="peer w-full min-h-[80px] px-1 py-2 border-0 bg-transparent text-ink resize-none focus:outline-none"
+                  id="message" name="message" required placeholder="So, what's on your mind?"
+                  aria-invalid={!!errors.message}
+                  onChange={() => errors.message && setErrors((prev) => ({ ...prev, message: undefined }))}
+                  className="w-full min-h-[80px] px-3.5 py-2.5 border-0 bg-transparent text-ink text-[17px] placeholder:text-[14px] resize-none focus:outline-none"
                 />
-                <span className="absolute left-0 right-0 bottom-0 h-[2px] bg-[var(--border-soft)]" />
-                <span className="absolute left-0 right-0 bottom-0 h-[2px] bg-primary origin-left scale-x-0 peer-focus:scale-x-100 transition-transform duration-300 ease-out" />
               </div>
+              <FieldError message={errors.message} />
             </div>
             <Button
               as="button"
