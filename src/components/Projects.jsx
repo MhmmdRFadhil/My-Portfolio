@@ -14,15 +14,14 @@ function PlayStoreLogo({ size = 14, className = '' }) {
   )
 }
 
-// Fixed light backgrounds (not theme-dependent) — these badges float on
-// top of project screenshots, so they need to stay legible regardless of
-// theme rather than blend into a dark-mode tinted surface. Color signals
-// what kind of project it was: solid fill for employer work, tinted for
-// self-initiated projects, neutral for academic/coursework.
+// Theme-aware CSS vars so badges shift with light/dark mode instead of
+// sitting on top as a fixed color. Signals what kind of project it was:
+// solid fill for employer work, tinted for academic/coursework, neutral
+// surface for personal projects.
 const categoryColor = {
   company: 'bg-[var(--primary-fill)] text-white',
   college: 'bg-[var(--accent)] text-[var(--primary-dark)]',
-  other: 'bg-white text-[#1E1B2E]',
+  other: 'bg-[var(--surface)] text-[var(--ink)]',
 }
 
 // Canonical skill ordering (language, then architecture, then UI, then
