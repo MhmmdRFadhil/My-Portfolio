@@ -124,7 +124,7 @@ function FeaturedSkillCard({ s }) {
   const Icon = iconMap[s.icon]
 
   return (
-    <div className="card-chunky !rounded-[var(--radius-md)] h-full p-4 sm:p-5 flex flex-col justify-between transition-transform duration-150 ease-out hover:-translate-y-1">
+    <div className="card-chunky !rounded-[var(--radius-md)] h-full p-4 sm:p-5 flex flex-col justify-between transition-[transform,box-shadow] duration-150 ease-out hover:-translate-y-1 hover:shadow-[0_9px_0_0_var(--ghost-shadow)]">
       <div>
         <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-lg flex items-center justify-center mb-2.5 text-primary bg-[var(--primary-tint)]">
           <Icon size={16} />

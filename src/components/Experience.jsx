@@ -6,34 +6,59 @@ import { AnimatePresence, motion } from 'framer-motion'
 
 const tabIcons = { work: Briefcase, education: GraduationCap }
 
+const EASE = [0.22, 1, 0.36, 1]
+
 // Description starts hidden — tapping the card reveals it, keeping the
 // timeline compact by default instead of always showing full paragraphs.
-function TimelineCard({ item }) {
+function TimelineCard({ item, index = 0 }) {
   const [expanded, setExpanded] = useState(false)
 
   return (
-    <button
+    <motion.button
+      layout
       type="button"
       onClick={() => setExpanded((v) => !v)}
       aria-expanded={expanded}
-      className="card-chunky !rounded-[var(--radius-md)] p-2.5 sm:p-3.5 md:p-4 text-left w-full max-w-[320px] sm:max-w-sm md:max-w-[380px]
-        transition-transform duration-150 ease-out active:translate-y-1.5 active:shadow-none"
+      initial={{ opacity: 0, y: 16 }}
+      animate={{ opacity: 1, y: 0 }}
+      whileTap={{ y: 4, transition: { duration: 0.15, ease: EASE } }}
+      transition={{
+        layout: { duration: 0.35, ease: EASE },
+        opacity: { duration: 0.35, ease: EASE, delay: index * 0.05 },
+        y: { duration: 0.35, ease: EASE, delay: index * 0.05 },
+      }}
+      className="card-chunky !rounded-[var(--radius-sm)] !shadow-[0_4px_0_0_var(--ghost-shadow)] p-2.5 sm:p-3.5 md:p-4 text-left w-full max-w-[320px] sm:max-w-sm md:max-w-[380px]
+        transition-shadow duration-150 ease-out active:!shadow-[0_0_0_0_var(--ghost-shadow)]"
     >
-      <div className="flex items-center justify-between gap-2 mb-1 sm:mb-1.5">
-        <span className="inline-block font-mono text-[8px] sm:text-[11px] font-bold text-primary bg-[var(--primary-tint)] px-1.5 sm:px-2 py-0.5 rounded-lg">
+      <motion.div layout="position" className="flex items-center justify-between gap-2 mb-1 sm:mb-1.5">
+        <span className="inline-block text-[8px] sm:text-[11px] font-bold text-primary bg-[var(--primary-tint)] px-1.5 sm:px-2 py-0.5 rounded-lg">
           {item.year}
         </span>
-        <ChevronDown
-          size={14}
-          className={`flex-shrink-0 text-muted transition-transform ${expanded ? 'rotate-180' : ''}`}
-        />
-      </div>
-      <h4 className="text-[11.5px] sm:text-[15px] mb-0.5 leading-snug">{item.title}</h4>
-      <div className="text-muted text-[10px] sm:text-[12.5px] font-semibold">{item.org}</div>
-      {expanded && (
-        <p className="text-muted text-[10.5px] sm:text-[13.5px] leading-relaxed mt-2">{item.desc}</p>
-      )}
-    </button>
+        <motion.span
+          animate={{ rotate: expanded ? 180 : 0 }}
+          transition={{ duration: 0.3, ease: EASE }}
+          className="flex-shrink-0"
+        >
+          <ChevronDown size={14} className="text-muted" />
+        </motion.span>
+      </motion.div>
+      <motion.h4 layout="position" className="text-[11.5px] sm:text-[15px] mb-0.5 leading-snug">{item.title}</motion.h4>
+      <motion.div layout="position" className="text-muted text-[10px] sm:text-[12.5px] font-semibold">{item.org}</motion.div>
+      <AnimatePresence initial={false}>
+        {expanded && (
+          <motion.div
+            key="desc"
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: 'auto', opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ height: { duration: 0.35, ease: EASE }, opacity: { duration: 0.25, ease: EASE } }}
+            className="overflow-hidden"
+          >
+            <p className="text-muted text-[10.5px] sm:text-[13.5px] leading-relaxed mt-2">{item.desc}</p>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </motion.button>
   )
 }
 
@@ -92,7 +117,7 @@ export default function Experience() {
 
             {experienceData[tab].map((item, i) => {
               const isLeft = i % 2 === 0
-              const card = <TimelineCard item={item} />
+              const card = <TimelineCard item={item} index={i} />
 
               return (
                 <div key={i} className="relative py-1.5 md:py-1.5">

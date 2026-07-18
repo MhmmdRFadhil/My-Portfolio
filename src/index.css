@@ -208,10 +208,11 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
   font-size: 14.5px;
   padding: 14px 28px; border-radius: var(--radius-sm); border: none;
   cursor: pointer; user-select: none; white-space: nowrap;
+  /* Clickable elements get a lighter shadow than display cards (4px vs.
+     card-chunky's 6px) and no hover effect — just the press-down feel. */
   box-shadow: 0 4px 0 0 var(--btn-shadow);
   transition: transform .15s ease, box-shadow .15s ease;
 }
-.btn-chunky:hover { transform: translateY(-2px); box-shadow: 0 6px 0 0 var(--btn-shadow); }
 .btn-chunky:active { transform: translateY(4px); box-shadow: 0 0 0 0 var(--btn-shadow); }
 
 .btn-primary { background: var(--primary-fill); color: #fff; --btn-shadow: var(--primary-fill-shadow); }
@@ -248,7 +249,11 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
   display: flex; align-items: center; gap: 8px;
   background: var(--surface); border: none;
   border-radius: var(--radius-sm); padding: 10px 14px;
-  box-shadow: 0 4px 0 0 var(--ghost-shadow);
+  /* Treated as a display card (like the Projects/Skills-featured cards),
+     not a clickable button, even though it has an onClick — the click
+     only toggles the marquee, it's not a real navigation/action. Shadow
+     depth matches Projects' card-chunky: 6px resting, 9px on hover. */
+  box-shadow: 0 6px 0 0 var(--ghost-shadow);
   transition: transform .2s ease, box-shadow .2s ease;
   /* "manipulation" skips the browser's ~300ms tap-vs-double-tap-zoom
      delay, so the click that toggles the marquee registers instantly. */
@@ -256,7 +261,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
   -webkit-tap-highlight-color: transparent;
   cursor: pointer;
 }
-.skill-pill:hover { transform: translateY(-2px); box-shadow: 0 6px 0 0 var(--ghost-shadow); }
+.skill-pill:hover { transform: translateY(-2px); box-shadow: 0 9px 0 0 var(--ghost-shadow); }
 
 /* Text that's wider than its container loops instead of being cut off
    with an ellipsis (see MarqueeText in Skills.jsx). The content is

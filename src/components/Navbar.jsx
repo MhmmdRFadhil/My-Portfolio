@@ -60,7 +60,7 @@ export default function Navbar() {
     >
       <div className="wrap pt-3.5">
         <nav className="flex items-center justify-between h-[76px] px-4 md:px-5
-          bg-surface rounded-[var(--radius-md)] shadow-[0_5px_0_0_var(--ghost-shadow)]">
+          bg-surface rounded-[var(--radius-md)] shadow-[0_6px_0_0_var(--ghost-shadow)]">
           <a href="#home" onClick={(e) => handleNavClick(e, 'home')} className="font-display font-extrabold text-lg flex items-center gap-2.5">
             <span className="w-2.5 h-2.5 rounded-full bg-primary" />
             {profile.shortName}
@@ -129,7 +129,7 @@ export default function Navbar() {
       >
         <div className="wrap">
           <ul className="flex flex-col gap-2 p-3 bg-surface rounded-[var(--radius-md)]
-            shadow-[0_5px_0_0_var(--ghost-shadow)] list-none">
+            shadow-[0_6px_0_0_var(--ghost-shadow)] list-none">
             {navLinks.map((link) => (
               <li key={link.id}>
                 <a

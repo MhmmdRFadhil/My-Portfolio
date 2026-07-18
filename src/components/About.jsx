@@ -52,7 +52,7 @@ export default function About() {
         <div className="grid grid-cols-2 gap-4">
           {stats.map((s, i) => (
             <Reveal key={s.label} delay={0.15 + i * 0.08}>
-              <div className="card-chunky p-6 transition-transform duration-200 hover:-translate-y-1">
+              <div className="card-chunky p-6 transition-[transform,box-shadow] duration-200 hover:-translate-y-1 hover:shadow-[0_9px_0_0_var(--ghost-shadow)]">
                 <StatNumber num={s.num} />
                 <div className="text-[13.5px] text-muted mt-1">{s.label}</div>
               </div>

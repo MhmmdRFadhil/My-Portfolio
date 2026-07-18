@@ -184,7 +184,7 @@ export default function Hero() {
               directly above the card regardless of the card's size. */}
           <div className="flex justify-start pl-4 mb-3">
             <span className="font-mono text-[11px] font-bold bg-surface
-              px-3 py-1.5 rounded-lg shadow-[0_3px_0_0_var(--ghost-shadow)] text-primary rotate-[-3deg] inline-block">
+              px-3 py-1.5 rounded-lg shadow-[0_4px_0_0_var(--ghost-shadow)] text-primary rotate-[-3deg] inline-block">
               fun main()
             </span>
           </div>
@@ -219,7 +219,7 @@ export default function Hero() {
               instead, the same way it already worked on mobile. */}
           <div className="flex justify-end pr-4 mt-3">
             <span className="font-mono text-[11px] font-bold bg-[var(--primary-fill)] text-white
-              px-3 py-1.5 rounded-lg shadow-[0_3px_0_0_var(--primary-fill-shadow)] rotate-[3deg] inline-block">
+              px-3 py-1.5 rounded-lg shadow-[0_4px_0_0_var(--primary-fill-shadow)] rotate-[3deg] inline-block">
               ✓ Published
             </span>
           </div>
