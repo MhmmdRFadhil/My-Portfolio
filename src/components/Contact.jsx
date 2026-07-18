@@ -128,7 +128,7 @@ export default function Contact() {
           <form onSubmit={handleSubmit} noValidate className="p-6 md:p-8 flex flex-col">
             <div className="mb-4">
               <label htmlFor="name" className="block text-[13.5px] font-bold mb-1.5">Name</label>
-              <div className={`rounded-[var(--radius-sm)] border-2 bg-[var(--surface)] transition-colors focus-within:border-[var(--primary)] ${errors.name ? 'border-red-300' : 'border-[var(--border-soft)]'}`}>
+              <div className={`rounded-[var(--radius-sm)] border-2 bg-[var(--surface)] transition-colors focus-within:border-[var(--primary)] ${errors.name ? 'border-red-500' : 'border-[var(--border-soft)]'}`}>
                 <input
                   id="name" name="name" type="text" required placeholder="What's your name?"
                   aria-invalid={!!errors.name}
@@ -140,7 +140,7 @@ export default function Contact() {
             </div>
             <div className="mb-4">
               <label htmlFor="email" className="block text-[13.5px] font-bold mb-1.5">Email</label>
-              <div className={`rounded-[var(--radius-sm)] border-2 bg-[var(--surface)] transition-colors focus-within:border-[var(--primary)] ${errors.email ? 'border-red-300' : 'border-[var(--border-soft)]'}`}>
+              <div className={`rounded-[var(--radius-sm)] border-2 bg-[var(--surface)] transition-colors focus-within:border-[var(--primary)] ${errors.email ? 'border-red-500' : 'border-[var(--border-soft)]'}`}>
                 <input
                   id="email" name="email" type="email" required placeholder="Where can I reach you?"
                   aria-invalid={!!errors.email}
@@ -152,7 +152,7 @@ export default function Contact() {
             </div>
             <div className="mb-2">
               <label htmlFor="message" className="block text-[13.5px] font-bold mb-1.5">Message</label>
-              <div className={`rounded-[var(--radius-sm)] border-2 bg-[var(--surface)] transition-colors focus-within:border-[var(--primary)] ${errors.message ? 'border-red-300' : 'border-[var(--border-soft)]'}`}>
+              <div className={`rounded-[var(--radius-sm)] border-2 bg-[var(--surface)] transition-colors focus-within:border-[var(--primary)] ${errors.message ? 'border-red-500' : 'border-[var(--border-soft)]'}`}>
                 <textarea
                   id="message" name="message" required placeholder="So, what's on your mind?"
                   aria-invalid={!!errors.message}
