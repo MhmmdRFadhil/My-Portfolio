@@ -124,15 +124,15 @@ function FeaturedSkillCard({ s }) {
   const Icon = iconMap[s.icon]
 
   return (
-    <div className="card-chunky h-full p-3 sm:p-4 flex flex-col justify-between transition-transform duration-150 ease-out hover:-translate-y-1">
+    <div className="card-chunky !rounded-2xl h-full p-4 sm:p-5 flex flex-col justify-between transition-transform duration-150 ease-out hover:-translate-y-1">
       <div>
-        <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-lg flex items-center justify-center mb-1.5 text-primary bg-[var(--primary-tint)]">
+        <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-lg flex items-center justify-center mb-2.5 text-primary bg-[var(--primary-tint)]">
           <Icon size={16} />
         </div>
         <h4 className="text-[13px] sm:text-[14px] font-bold leading-tight">{s.name}</h4>
         <span className="text-[10px] sm:text-[10.5px] text-muted font-semibold">{s.tag}</span>
       </div>
-      <p className="text-[10.5px] sm:text-[11.5px] text-muted leading-snug mt-1 line-clamp-2">{s.blurb}</p>
+      <p className="text-[10.5px] sm:text-[11.5px] text-muted leading-snug mt-2 line-clamp-2">{s.blurb}</p>
     </div>
   )
 }
@@ -168,7 +168,7 @@ export default function Skills() {
             or being cut off with an ellipsis. Each item reveals on a
             short per-index delay instead of the whole grid fading in as
             one block, for a cascading entrance. */}
-        <div className="grid grid-cols-2 md:grid-cols-4 auto-rows-[64px] sm:auto-rows-[68px] [grid-auto-flow:dense] gap-2.5 sm:gap-3">
+        <div className="grid grid-cols-2 md:grid-cols-4 auto-rows-[76px] sm:auto-rows-[80px] [grid-auto-flow:dense] gap-2.5 sm:gap-3">
           {skills.map((s, i) => (
             <Reveal
               key={s.name}
