@@ -2,7 +2,9 @@ import { useEffect, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Moon, Sun, Menu, X } from 'lucide-react'
 import { navLinks, profile } from '../data/site'
+import { translations } from '../data/translations'
 import { useTheme } from '../context/ThemeContext'
+import { useLanguage } from '../context/LanguageContext'
 import { useActiveSection } from '../hooks/useActiveSection'
 import { useIsScrolling } from '../hooks/useIsScrolling'
 import { scrollToId, smoothScrollTo } from '../utils/smoothScroll'
@@ -15,6 +17,8 @@ const navIds = navLinks.map((l) => l.id)
 
 export default function Navbar() {
   const { theme, toggleTheme } = useTheme()
+  const { lang, toggleLanguage } = useLanguage()
+  const t = translations[lang]
   const [open, setOpen] = useState(false)
   const active = useActiveSection(navIds)
   const scrolling = useIsScrolling()
@@ -84,7 +88,7 @@ export default function Navbar() {
                   className={`relative z-10 text-sm font-bold px-3.5 py-2 rounded-lg block transition-colors
                     ${active === link.id ? 'text-white' : 'text-muted hover:text-primary hover:bg-[var(--primary-tint)]'}`}
                 >
-                  {link.label}
+                  {link.label[lang]}
                 </a>
               </li>
             ))}
@@ -93,7 +97,7 @@ export default function Navbar() {
           <div className="flex items-center gap-2.5">
             <motion.button
               onClick={toggleTheme}
-              aria-label="Toggle tema"
+              aria-label={t.nav.themeToggle}
               whileTap={{ scale: 0.88 }}
               className="w-10 h-10 rounded-lg border-2 border-line bg-surface flex items-center justify-center overflow-hidden"
             >
@@ -111,8 +115,27 @@ export default function Navbar() {
               </AnimatePresence>
             </motion.button>
             <motion.button
+              onClick={toggleLanguage}
+              aria-label={t.nav.langToggle}
+              whileTap={{ scale: 0.88 }}
+              className="w-10 h-10 rounded-lg border-2 border-line bg-surface flex items-center justify-center overflow-hidden text-[11px] font-bold"
+            >
+              <AnimatePresence mode="wait" initial={false}>
+                <motion.span
+                  key={lang}
+                  initial={{ rotate: -90, opacity: 0 }}
+                  animate={{ rotate: 0, opacity: 1 }}
+                  exit={{ rotate: 90, opacity: 0 }}
+                  transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
+                  className="flex items-center justify-center"
+                >
+                  {lang.toUpperCase()}
+                </motion.span>
+              </AnimatePresence>
+            </motion.button>
+            <motion.button
               onClick={() => setOpen((o) => !o)}
-              aria-label="Menu"
+              aria-label={t.nav.menu}
               whileTap={{ scale: 0.88 }}
               className="md:hidden w-10 h-10 rounded-lg border-2 border-line bg-surface flex items-center justify-center"
             >
@@ -138,7 +161,7 @@ export default function Navbar() {
                   className={`block text-[13.5px] font-bold px-4 py-3 rounded-lg transition-colors
                     ${active === link.id ? 'text-white bg-[var(--primary-fill)]' : 'text-muted hover:text-primary hover:bg-[var(--primary-tint)]'}`}
                 >
-                  {link.label}
+                  {link.label[lang]}
                 </a>
               </li>
             ))}

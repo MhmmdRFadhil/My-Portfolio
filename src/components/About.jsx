@@ -1,6 +1,8 @@
 import { useEffect, useRef, useState } from 'react'
 import { useInView, useReducedMotion } from 'framer-motion'
 import { aboutText, stats } from '../data/site'
+import { translations } from '../data/translations'
+import { useLanguage } from '../context/LanguageContext'
 import Reveal from './ui/Reveal'
 
 // Counts up from 0 to the numeric part of `num` (e.g. "10+" -> 10, "100%"
@@ -38,23 +40,26 @@ function StatNumber({ num }) {
 }
 
 export default function About() {
+  const { lang } = useLanguage()
+  const t = translations[lang]
+
   return (
     <section id="about" className="py-24 md:py-[130px]">
       <div className="wrap grid grid-cols-1 md:grid-cols-[1.2fr_1fr] gap-12 items-center">
         <Reveal>
-          <span className="eyebrow">About</span>
-          <h2 className="text-3xl md:text-[40px] mb-6">Building Android apps people actually enjoy using</h2>
+          <span className="eyebrow">{t.about.eyebrow}</span>
+          <h2 className="text-3xl md:text-[40px] mb-6">{t.about.heading}</h2>
           {aboutText.map((p, i) => (
-            <p key={i} className="text-muted text-[16px] mb-4">{p}</p>
+            <p key={i} className="text-muted text-[16px] mb-4">{p[lang]}</p>
           ))}
         </Reveal>
 
         <div className="grid grid-cols-2 gap-4">
           {stats.map((s, i) => (
-            <Reveal key={s.label} delay={0.15 + i * 0.08}>
+            <Reveal key={i} delay={0.15 + i * 0.08}>
               <div className="card-chunky p-6 transition-[transform,box-shadow] duration-200 hover:-translate-y-1 hover:shadow-[0_9px_0_0_var(--ghost-shadow)]">
                 <StatNumber num={s.num} />
-                <div className="text-[13.5px] text-muted mt-1">{s.label}</div>
+                <div className="text-[13.5px] text-muted mt-1">{s.label[lang]}</div>
               </div>
             </Reveal>
           ))}

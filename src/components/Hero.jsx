@@ -2,6 +2,8 @@ import { useEffect, useRef, useState } from 'react'
 import { motion, useMotionTemplate, useMotionValue, useReducedMotion, useSpring, useTransform } from 'framer-motion'
 import { Github, Linkedin, Instagram } from 'lucide-react'
 import { profile, socials } from '../data/site'
+import { translations } from '../data/translations'
+import { useLanguage } from '../context/LanguageContext'
 import Button from './ui/Button'
 import cvFile from '../assets/CV - MUHAMMAD RIZQAN FADHIL.pdf'
 
@@ -40,6 +42,8 @@ function useTypewriter(text, { speed = 65, startDelay = 500, prefersReduced = fa
 }
 
 export default function Hero() {
+  const { lang } = useLanguage()
+  const t = translations[lang]
   const prefersReduced = useReducedMotion()
   const anim = prefersReduced ? {} : { variants: container, initial: 'hidden', animate: 'show' }
 
@@ -158,12 +162,12 @@ export default function Hero() {
                 <p className="text-muted font-semibold text-sm md:text-xl mt-1.5 md:mt-2">{profile.role}</p>
 
                 <motion.p variants={item} className="text-muted text-[15px] md:text-[18px] max-w-md md:max-w-lg mt-3 md:mt-4">
-                  {profile.tagline}
+                  {profile.tagline[lang]}
                 </motion.p>
 
                 <motion.div variants={item} className="flex flex-wrap gap-3.5 mt-6 md:mt-8">
-                  <Button href="#projects" variant="primary">View Projects</Button>
-                  <Button href={cvFile} download="Muhammad Rizqan Fadhil - CV.pdf" variant="ghost">Download CV</Button>
+                  <Button href="#projects" variant="primary">{t.hero.viewProjects}</Button>
+                  <Button href={cvFile} download="Muhammad Rizqan Fadhil - CV.pdf" variant="ghost">{t.hero.downloadCV}</Button>
                 </motion.div>
               </div>
             </div>
@@ -220,7 +224,7 @@ export default function Hero() {
           <div className="flex justify-end pr-4 mt-3">
             <span className="font-mono text-[11px] font-bold bg-[var(--primary-fill)] text-white
               px-3 py-1.5 rounded-lg shadow-[0_4px_0_0_var(--primary-fill-shadow)] rotate-[3deg] inline-block">
-              ✓ Published
+              {t.hero.published}
             </span>
           </div>
         </motion.div>

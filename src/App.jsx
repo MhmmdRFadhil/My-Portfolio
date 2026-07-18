@@ -1,4 +1,6 @@
 import { ThemeProvider } from './context/ThemeContext'
+import { LanguageProvider, useLanguage } from './context/LanguageContext'
+import { translations } from './data/translations'
 import ScrollProgress from './components/ScrollProgress'
 import Navbar from './components/Navbar'
 import Hero from './components/Hero'
@@ -10,10 +12,13 @@ import Contact from './components/Contact'
 import Footer from './components/Footer'
 import BackToTop from './components/BackToTop'
 
-export default function App() {
+function AppContent() {
+  const { lang } = useLanguage()
+  const t = translations[lang]
+
   return (
-    <ThemeProvider>
-      <a href="#main" className="skip-link">Skip to content</a>
+    <>
+      <a href="#main" className="skip-link">{t.app.skipToContent}</a>
       <ScrollProgress />
 
       {/* Bentuk solid mengambang di background — pengganti aurora gradient lama */}
@@ -37,6 +42,16 @@ export default function App() {
       </main>
       <Footer />
       <BackToTop />
+    </>
+  )
+}
+
+export default function App() {
+  return (
+    <ThemeProvider>
+      <LanguageProvider>
+        <AppContent />
+      </LanguageProvider>
     </ThemeProvider>
   )
 }

@@ -1,5 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { skills } from '../data/site'
+import { translations } from '../data/translations'
+import { useLanguage } from '../context/LanguageContext'
 import Reveal from './ui/Reveal'
 import {
   Layers, Layers3, Zap, GitBranch, Cpu, Database, Globe, GitMerge, Flame, LayoutGrid,
@@ -64,7 +66,7 @@ function MarqueeText({ text, as: Tag = 'span', className = '', active = false })
   )
 }
 
-function Pill({ s }) {
+function Pill({ s, lang }) {
   const Icon = iconMap[s.icon]
   const [hovering, setHovering] = useState(false)
   const [clicked, setClicked] = useState(false)
@@ -109,7 +111,7 @@ function Pill({ s }) {
         />
         <MarqueeText
           as="span"
-          text={s.tag}
+          text={s.tag[lang]}
           className="text-[10px] sm:text-[10.5px] text-muted"
           active={active}
         />
@@ -120,7 +122,7 @@ function Pill({ s }) {
 
 // Larger bento tile for the 3 signature skills — wide enough that the
 // name never needs the Pill's marquee-on-overflow treatment.
-function FeaturedSkillCard({ s }) {
+function FeaturedSkillCard({ s, lang }) {
   const Icon = iconMap[s.icon]
 
   return (
@@ -130,21 +132,24 @@ function FeaturedSkillCard({ s }) {
           <Icon size={16} />
         </div>
         <h4 className="text-[13px] sm:text-[14px] font-bold leading-tight">{s.name}</h4>
-        <span className="text-[10px] sm:text-[10.5px] text-muted font-semibold">{s.tag}</span>
+        <span className="text-[10px] sm:text-[10.5px] text-muted font-semibold">{s.tag[lang]}</span>
       </div>
-      <p className="text-[10.5px] sm:text-[11.5px] text-muted leading-snug mt-2 line-clamp-2">{s.blurb}</p>
+      <p className="text-[10.5px] sm:text-[11.5px] text-muted leading-snug mt-2 line-clamp-2">{s.blurb[lang]}</p>
     </div>
   )
 }
 
 export default function Skills() {
+  const { lang } = useLanguage()
+  const t = translations[lang]
+
   return (
     <section id="skills" className="py-24 md:py-[130px]">
       <div className="wrap">
         <Reveal className="max-w-xl mb-12">
-          <span className="eyebrow">Skills</span>
-          <h2 className="text-3xl md:text-[40px]">My everyday toolkit</h2>
-          <p className="text-muted mt-3">The languages, frameworks, and tools I reach for to build, test, and ship Android apps end-to-end.</p>
+          <span className="eyebrow">{t.skills.eyebrow}</span>
+          <h2 className="text-3xl md:text-[40px]">{t.skills.heading}</h2>
+          <p className="text-muted mt-3">{t.skills.intro}</p>
         </Reveal>
 
         <Reveal delay={0.1}>
@@ -154,8 +159,8 @@ export default function Skills() {
               <Layers3 size={26} />
             </div>
             <div>
-              <h3 className="text-white text-xl md:text-2xl mb-1">The stack behind everything I ship</h3>
-              <p className="text-white/80 text-sm">Kotlin and Jetpack Compose are the foundation, backed by the architecture, data, and workflow tools below that keep every app fast, testable, and easy to maintain.</p>
+              <h3 className="text-white text-xl md:text-2xl mb-1">{t.skills.bannerTitle}</h3>
+              <p className="text-white/80 text-sm">{t.skills.bannerBody}</p>
             </div>
           </div>
         </Reveal>
@@ -176,7 +181,7 @@ export default function Skills() {
               y={16}
               className={`h-full ${s.featured ? 'col-span-2 row-span-2' : ''}`}
             >
-              {s.featured ? <FeaturedSkillCard s={s} /> : <Pill s={s} />}
+              {s.featured ? <FeaturedSkillCard s={s} lang={lang} /> : <Pill s={s} lang={lang} />}
             </Reveal>
           ))}
         </div>

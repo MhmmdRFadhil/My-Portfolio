@@ -2,6 +2,8 @@ import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { Github as GithubIcon, Rocket, Plus, Award } from 'lucide-react'
 import { projects, projectFilters } from '../data/site'
+import { translations } from '../data/translations'
+import { useLanguage } from '../context/LanguageContext'
 import Reveal from './ui/Reveal'
 
 // Google Play's official brand mark (simple-icons, MIT licensed), not a
@@ -73,6 +75,8 @@ function SkillsRow({ skills }) {
 }
 
 export default function Projects() {
+  const { lang } = useLanguage()
+  const t = translations[lang]
   const [filter, setFilter] = useState('all')
   const [hasFiltered, setHasFiltered] = useState(false)
   const filtered = filter === 'all' ? projects : projects.filter((p) => p.category === filter)
@@ -81,9 +85,9 @@ export default function Projects() {
     <section id="projects" className="py-24 md:py-[130px]">
       <div className="wrap">
         <Reveal className="max-w-xl mb-10">
-          <span className="eyebrow">Projects</span>
-          <h2 className="text-3xl md:text-[40px]">What I've built</h2>
-          <p className="text-muted mt-3">Apps I've shipped to production, alongside smaller projects that mark milestones in my growth as a developer.</p>
+          <span className="eyebrow">{t.projects.eyebrow}</span>
+          <h2 className="text-3xl md:text-[40px]">{t.projects.heading}</h2>
+          <p className="text-muted mt-3">{t.projects.intro}</p>
         </Reveal>
 
         <Reveal delay={0.05} className="flex flex-nowrap justify-safe-center gap-1.5 sm:gap-2.5 mb-10 py-1.5 overflow-x-auto scrollbar-none">
@@ -105,7 +109,7 @@ export default function Projects() {
                       ? 'text-white'
                       : 'bg-surface text-muted shadow-[0_4px_0_0_var(--ghost-shadow)] hover:text-ink'}`}
                 >
-                  {f.label}
+                  {f.label[lang]}
                 </button>
               </div>
             )
@@ -116,7 +120,8 @@ export default function Projects() {
           {filtered.map((p, i) => {
             const isPlayStore = p.link.includes('play.google.com')
             const LinkIcon = isPlayStore ? PlayStoreLogo : GithubIcon
-            const linkLabel = isPlayStore ? 'Play Store' : 'Github'
+            const linkLabel = isPlayStore ? t.projects.playStore : t.projects.github
+            const categoryLabel = projectFilters.find((f) => f.key === p.category)?.label[lang]
 
             return (
               <Reveal key={p.id} delay={(i % 3) * 0.08} mount={hasFiltered}>
@@ -131,19 +136,19 @@ export default function Projects() {
                       className="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-110"
                     />
                     <div className={`absolute top-3.5 left-3.5 text-[11px] font-bold px-2.5 py-1 rounded-full capitalize ${categoryColor[p.category]}`}>
-                      {p.category}
+                      {categoryLabel}
                     </div>
                     {isPlayStore && (
                       <div className="absolute top-3.5 right-3.5 inline-flex items-center gap-1 text-[11px] font-bold px-2.5 py-1 rounded-full bg-[var(--accent2)] text-white">
                         <Rocket size={11} />
-                        Published
+                        {t.projects.published}
                       </div>
                     )}
                   </div>
                   <div className="p-6 flex flex-col gap-2 flex-1">
                     <h3 className="text-[19px]">{p.title}</h3>
                     {p.description && (
-                      <p className="text-muted text-[13.5px] leading-relaxed line-clamp-3">{p.description}</p>
+                      <p className="text-muted text-[13.5px] leading-relaxed line-clamp-3">{p.description[lang]}</p>
                     )}
                     {p.skills && <SkillsRow skills={p.skills} />}
                     <div className="flex gap-4 mt-auto pt-2">
@@ -162,7 +167,7 @@ export default function Projects() {
                           rel="noreferrer"
                           className="text-[13.5px] font-bold text-primary flex items-center gap-1.5"
                         >
-                          <Award size={14} /> Certificate
+                          <Award size={14} /> {t.projects.certificate}
                         </a>
                       )}
                     </div>

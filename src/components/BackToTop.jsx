@@ -3,8 +3,12 @@ import { AnimatePresence, motion } from 'framer-motion'
 import { ArrowUp } from 'lucide-react'
 import { smoothScrollTo } from '../utils/smoothScroll'
 import { useIsScrolling } from '../hooks/useIsScrolling'
+import { translations } from '../data/translations'
+import { useLanguage } from '../context/LanguageContext'
 
 export default function BackToTop() {
+  const { lang } = useLanguage()
+  const t = translations[lang]
   const [pastThreshold, setPastThreshold] = useState(false)
   const scrolling = useIsScrolling()
   // Only show once scrolled past the hero AND scrolling has settled —
@@ -29,7 +33,7 @@ export default function BackToTop() {
       {visible && (
         <motion.button
           onClick={scrollTop}
-          aria-label="Kembali ke atas"
+          aria-label={t.backToTop.label}
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: 12 }}
