@@ -58,11 +58,11 @@ export default function Navbar() {
       className={`sticky top-0 z-[100] transition-transform duration-300 ease-out
         ${hidden ? '-translate-y-[calc(100%+1rem)]' : 'translate-y-0'}`}
     >
-      <div className="wrap pt-3.5">
-        <nav className="flex items-center justify-between h-[76px] px-4 md:px-5
-          bg-surface rounded-2xl shadow-[0_5px_0_0_var(--ghost-shadow)]">
-          <a href="#home" onClick={(e) => handleNavClick(e, 'home')} className="font-display font-extrabold text-lg flex items-center gap-2.5">
-            <span className="w-2.5 h-2.5 rounded-full bg-primary" />
+      <div className="wrap pt-2.5 md:pt-3.5">
+        <nav className="flex items-center justify-between h-[58px] md:h-[76px] px-3.5 md:px-5
+          bg-surface rounded-[var(--radius-md)] shadow-[0_5px_0_0_var(--ghost-shadow)]">
+          <a href="#home" onClick={(e) => handleNavClick(e, 'home')} className="font-display font-extrabold text-base md:text-lg flex items-center gap-2 md:gap-2.5">
+            <span className="w-2 h-2 md:w-2.5 md:h-2.5 rounded-full bg-primary" />
             {profile.shortName}
             <span className="text-primary">{profile.handle}</span>
           </a>
@@ -74,14 +74,14 @@ export default function Navbar() {
                 {active === link.id && (
                   <motion.span
                     layoutId="nav-active-pill"
-                    className="absolute inset-0 rounded-xl bg-[var(--primary-fill)]"
+                    className="absolute inset-0 rounded-lg bg-[var(--primary-fill)]"
                     transition={{ type: 'spring', stiffness: 380, damping: 32 }}
                   />
                 )}
                 <a
                   href={`#${link.id}`}
                   onClick={(e) => handleNavClick(e, link.id)}
-                  className={`relative z-10 text-sm font-bold px-3.5 py-2 rounded-xl block transition-colors
+                  className={`relative z-10 text-sm font-bold px-3.5 py-2 rounded-lg block transition-colors
                     ${active === link.id ? 'text-white' : 'text-muted hover:text-primary hover:bg-[var(--primary-tint)]'}`}
                 >
                   {link.label}
@@ -90,12 +90,12 @@ export default function Navbar() {
             ))}
           </ul>
 
-          <div className="flex items-center gap-2.5">
+          <div className="flex items-center gap-2 md:gap-2.5">
             <motion.button
               onClick={toggleTheme}
               aria-label="Toggle tema"
               whileTap={{ scale: 0.88 }}
-              className="w-10 h-10 rounded-xl border-2 border-line bg-surface flex items-center justify-center overflow-hidden"
+              className="w-8 h-8 md:w-10 md:h-10 rounded-lg border-2 border-line bg-surface flex items-center justify-center overflow-hidden"
             >
               <AnimatePresence mode="wait" initial={false}>
                 <motion.span
@@ -106,7 +106,8 @@ export default function Navbar() {
                   transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
                   className="flex items-center justify-center"
                 >
-                  {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
+                  {theme === 'dark' ? <Sun size={16} className="md:hidden" /> : <Moon size={16} className="md:hidden" />}
+                  {theme === 'dark' ? <Sun size={18} className="hidden md:block" /> : <Moon size={18} className="hidden md:block" />}
                 </motion.span>
               </AnimatePresence>
             </motion.button>
@@ -114,9 +115,9 @@ export default function Navbar() {
               onClick={() => setOpen((o) => !o)}
               aria-label="Menu"
               whileTap={{ scale: 0.88 }}
-              className="md:hidden w-10 h-10 rounded-xl border-2 border-line bg-surface flex items-center justify-center"
+              className="md:hidden w-8 h-8 rounded-lg border-2 border-line bg-surface flex items-center justify-center"
             >
-              {open ? <X size={18} /> : <Menu size={18} />}
+              {open ? <X size={16} /> : <Menu size={16} />}
             </motion.button>
           </div>
         </nav>
@@ -128,14 +129,14 @@ export default function Navbar() {
           ${open ? 'opacity-100 scale-y-100 pointer-events-auto mt-3' : 'opacity-0 scale-y-95 pointer-events-none mt-0'}`}
       >
         <div className="wrap">
-          <ul className="flex flex-col gap-3 p-4 bg-surface rounded-2xl
+          <ul className="flex flex-col gap-2 p-3 bg-surface rounded-[var(--radius-md)]
             shadow-[0_5px_0_0_var(--ghost-shadow)] list-none">
             {navLinks.map((link) => (
               <li key={link.id}>
                 <a
                   href={`#${link.id}`}
                   onClick={(e) => handleNavClick(e, link.id)}
-                  className={`block text-[15px] font-bold px-5 py-4 rounded-xl transition-colors
+                  className={`block text-[13.5px] font-bold px-4 py-3 rounded-lg transition-colors
                     ${active === link.id ? 'text-white bg-[var(--primary-fill)]' : 'text-muted hover:text-primary hover:bg-[var(--primary-tint)]'}`}
                 >
                   {link.label}

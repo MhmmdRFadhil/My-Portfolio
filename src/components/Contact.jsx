@@ -65,7 +65,7 @@ export default function Contact() {
                   const Icon = iconMap[c.icon]
                   const inner = (
                     <>
-                      <span className="w-9 h-9 rounded-xl bg-white/15 border-2 border-white/25 flex items-center justify-center flex-shrink-0">
+                      <span className="w-9 h-9 rounded-lg bg-white/15 border-2 border-white/25 flex items-center justify-center flex-shrink-0">
                         <Icon size={16} />
                       </span>
                       <span className="text-[14.5px] text-white/90">{c.text}</span>

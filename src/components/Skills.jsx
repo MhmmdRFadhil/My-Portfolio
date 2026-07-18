@@ -124,7 +124,7 @@ function FeaturedSkillCard({ s }) {
   const Icon = iconMap[s.icon]
 
   return (
-    <div className="card-chunky !rounded-2xl h-full p-4 sm:p-5 flex flex-col justify-between transition-transform duration-150 ease-out hover:-translate-y-1">
+    <div className="card-chunky !rounded-[var(--radius-md)] h-full p-4 sm:p-5 flex flex-col justify-between transition-transform duration-150 ease-out hover:-translate-y-1">
       <div>
         <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-lg flex items-center justify-center mb-2.5 text-primary bg-[var(--primary-tint)]">
           <Icon size={16} />
@@ -148,9 +148,9 @@ export default function Skills() {
         </Reveal>
 
         <Reveal delay={0.1}>
-          <div className="flex items-center gap-5 bg-[var(--primary-fill)] text-white rounded-3xl p-7 mb-9
+          <div className="flex items-center gap-5 bg-[var(--primary-fill)] text-white rounded-[var(--radius-lg)] p-7 mb-9
             shadow-[0_6px_0_0_var(--primary-fill-shadow)] relative overflow-hidden">
-            <div className="w-14 h-14 rounded-2xl bg-white/15 border-2 border-white/30 flex items-center justify-center flex-shrink-0">
+            <div className="w-14 h-14 rounded-lg bg-white/15 border-2 border-white/30 flex items-center justify-center flex-shrink-0">
               <Layers3 size={26} />
             </div>
             <div>
