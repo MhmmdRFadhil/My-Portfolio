@@ -75,7 +75,8 @@ export default function Contact() {
       if (!res.ok) throw new Error('Request failed')
       setStatus('sent')
       form.reset()
-    } catch {
+    } catch (err) {
+      console.error('Contact form submission failed:', err)
       setStatus('error')
     }
   }

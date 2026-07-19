@@ -18,7 +18,13 @@ function StatNumber({ num }) {
   const [value, setValue] = useState(prefersReduced ? target : 0)
 
   useEffect(() => {
-    if (!inView || prefersReduced || !Number.isFinite(target)) return
+    if (!Number.isFinite(target)) return
+    // Reduced motion can also turn on mid-animation (not just be the
+    // starting state) — snap straight to the target instead of just
+    // bailing, otherwise the counter freezes on whatever partial value
+    // it had reached when the in-flight animation frame gets cancelled.
+    if (prefersReduced) { setValue(target); return }
+    if (!inView) return
     const duration = 1100
     const start = performance.now()
     let raf
