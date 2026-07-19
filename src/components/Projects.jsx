@@ -5,6 +5,7 @@ import { projects, projectFilters } from '../data/site'
 import { translations } from '../data/translations'
 import { useLanguage } from '../context/LanguageContext'
 import Reveal from './ui/Reveal'
+import TiltWrap from './ui/TiltWrap'
 
 // Google Play's official brand mark (simple-icons, MIT licensed), not a
 // generic phone glyph — this link specifically points to the Play Store.
@@ -124,7 +125,8 @@ export default function Projects() {
             const categoryLabel = projectFilters.find((f) => f.key === p.category)?.label[lang]
 
             return (
-              <Reveal key={p.id} delay={(i % 3) * 0.08} mount={hasFiltered}>
+              <Reveal key={p.id} delay={(i % 3) * 0.08} mount={hasFiltered} className="h-full">
+                <TiltWrap max={5} className="h-full">
                 <div className="group card-chunky flex flex-col h-full overflow-hidden transition-all duration-200
                   hover:-translate-y-1 hover:shadow-[0_9px_0_0_var(--ghost-shadow)]">
                   <div className="aspect-[3/2] bg-surfaceAlt border-b-2 border-line relative overflow-hidden">
@@ -173,6 +175,7 @@ export default function Projects() {
                     </div>
                   </div>
                 </div>
+                </TiltWrap>
               </Reveal>
             )
           })}

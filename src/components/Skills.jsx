@@ -3,6 +3,7 @@ import { skills } from '../data/site'
 import { translations } from '../data/translations'
 import { useLanguage } from '../context/LanguageContext'
 import Reveal from './ui/Reveal'
+import TiltWrap from './ui/TiltWrap'
 import {
   Layers, Layers3, Zap, GitBranch, Cpu, Database, Globe, GitMerge, Flame, LayoutGrid,
 } from 'lucide-react'
@@ -129,16 +130,18 @@ function FeaturedSkillCard({ s, lang }) {
   const Icon = iconMap[s.icon]
 
   return (
-    <div className="card-chunky !rounded-[var(--radius-md)] h-full p-4 sm:p-5 flex flex-col justify-between transition-[transform,box-shadow] duration-150 ease-out hover:-translate-y-1 hover:shadow-[0_9px_0_0_var(--ghost-shadow)]">
-      <div>
-        <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-lg flex items-center justify-center mb-2.5 text-primary bg-[var(--primary-tint)]">
-          <Icon size={16} />
+    <TiltWrap max={6} className="h-full">
+      <div className="card-chunky !rounded-[var(--radius-md)] h-full p-4 sm:p-5 flex flex-col justify-between transition-[transform,box-shadow] duration-150 ease-out hover:-translate-y-1 hover:shadow-[0_9px_0_0_var(--ghost-shadow)]">
+        <div>
+          <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-lg flex items-center justify-center mb-2.5 text-primary bg-[var(--primary-tint)]">
+            <Icon size={16} />
+          </div>
+          <h4 className="text-[13px] sm:text-[14px] font-bold leading-tight">{s.name}</h4>
+          <span className="text-[10px] sm:text-[10.5px] text-muted font-semibold">{s.tag[lang]}</span>
         </div>
-        <h4 className="text-[13px] sm:text-[14px] font-bold leading-tight">{s.name}</h4>
-        <span className="text-[10px] sm:text-[10.5px] text-muted font-semibold">{s.tag[lang]}</span>
+        <p className="text-[10.5px] sm:text-[11.5px] text-muted leading-snug mt-2 line-clamp-2">{s.blurb[lang]}</p>
       </div>
-      <p className="text-[10.5px] sm:text-[11.5px] text-muted leading-snug mt-2 line-clamp-2">{s.blurb[lang]}</p>
-    </div>
+    </TiltWrap>
   )
 }
 
@@ -158,6 +161,7 @@ export default function Skills() {
         <Reveal delay={0.1}>
           <div className="flex items-center gap-5 bg-[var(--primary-fill)] text-white rounded-[var(--radius-lg)] p-7 mb-9
             shadow-[0_6px_0_0_var(--primary-fill-shadow)] relative overflow-hidden">
+            <span className="shimmer-sweep" aria-hidden="true" />
             <div className="w-14 h-14 rounded-lg bg-white/15 border-2 border-white/30 flex items-center justify-center flex-shrink-0">
               <Layers3 size={26} />
             </div>

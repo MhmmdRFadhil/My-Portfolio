@@ -4,6 +4,7 @@ import { aboutText, stats } from '../data/site'
 import { translations } from '../data/translations'
 import { useLanguage } from '../context/LanguageContext'
 import Reveal from './ui/Reveal'
+import TiltWrap from './ui/TiltWrap'
 
 // Counts up from 0 to the numeric part of `num` (e.g. "10+" -> 10, "100%"
 // -> 100) once it scrolls into view, keeping whatever non-numeric prefix/
@@ -63,10 +64,12 @@ export default function About() {
         <div className="grid grid-cols-2 gap-4">
           {stats.map((s, i) => (
             <Reveal key={i} delay={0.15 + i * 0.08}>
-              <div className="card-chunky p-6 transition-[transform,box-shadow] duration-200 hover:-translate-y-1 hover:shadow-[0_9px_0_0_var(--ghost-shadow)]">
-                <StatNumber num={s.num} />
-                <div className="text-[13.5px] text-muted mt-1">{s.label[lang]}</div>
-              </div>
+              <TiltWrap max={4}>
+                <div className="card-chunky p-6 transition-[transform,box-shadow] duration-200 hover:-translate-y-1 hover:shadow-[0_9px_0_0_var(--ghost-shadow)]">
+                  <StatNumber num={s.num} />
+                  <div className="text-[13.5px] text-muted mt-1">{s.label[lang]}</div>
+                </div>
+              </TiltWrap>
             </Reveal>
           ))}
         </div>

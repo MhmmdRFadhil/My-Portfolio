@@ -317,6 +317,23 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
 @keyframes typewriter-blink { 50% { opacity: 0; } }
 @media (prefers-reduced-motion: reduce) { .typewriter-cursor { animation: none; } }
 
+/* Periodic diagonal light sweep across a relatively-positioned, overflow-
+   hidden container (e.g. the Skills banner) — a thin bright band drifts
+   left-to-right every few seconds, pausing in between rather than looping
+   continuously, so it reads as an occasional shine rather than a constant
+   distraction. */
+.shimmer-sweep {
+  position: absolute; inset: 0; pointer-events: none;
+  background: linear-gradient(115deg, transparent 40%, rgba(255,255,255,.22) 50%, transparent 60%);
+  background-size: 250% 100%;
+  animation: shimmer-sweep-move 5s ease-in-out infinite;
+}
+@keyframes shimmer-sweep-move {
+  0%, 15% { background-position: 130% 0; }
+  40%, 100% { background-position: -30% 0; }
+}
+@media (prefers-reduced-motion: reduce) { .shimmer-sweep { animation: none; display: none; } }
+
 ::selection { background: var(--primary-fill); color: #fff; }
 
 input::placeholder, textarea::placeholder { color: var(--muted); opacity: .8; }

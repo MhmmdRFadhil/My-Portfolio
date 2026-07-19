@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
-import { Instagram, MapPin, Mail, Send } from 'lucide-react'
+import { Instagram, MapPin, Mail, Send, Loader2 } from 'lucide-react'
 import { contactInfo } from '../data/site'
 import { translations } from '../data/translations'
 import { useLanguage } from '../context/LanguageContext'
@@ -136,7 +136,7 @@ export default function Contact() {
           <form onSubmit={handleSubmit} noValidate className="p-6 md:p-8 flex flex-col">
             <div className="mb-4">
               <label htmlFor="name" className="block text-[13.5px] font-bold mb-1.5">{t.contact.nameLabel}</label>
-              <div className={`rounded-[var(--radius-sm)] border-2 bg-[var(--surface)] transition-colors focus-within:border-[var(--primary)] ${errors.name ? 'border-red-500' : 'border-[var(--border-soft)]'}`}>
+              <div className={`rounded-[var(--radius-sm)] border-2 bg-[var(--surface)] transition-[border-color,box-shadow] focus-within:border-[var(--primary)] focus-within:shadow-[0_0_0_4px_var(--primary-tint)] ${errors.name ? 'border-red-500' : 'border-[var(--border-soft)]'}`}>
                 <input
                   id="name" name="name" type="text" required placeholder={t.contact.namePlaceholder}
                   aria-invalid={!!errors.name}
@@ -148,7 +148,7 @@ export default function Contact() {
             </div>
             <div className="mb-4">
               <label htmlFor="email" className="block text-[13.5px] font-bold mb-1.5">{t.contact.emailLabel}</label>
-              <div className={`rounded-[var(--radius-sm)] border-2 bg-[var(--surface)] transition-colors focus-within:border-[var(--primary)] ${errors.email ? 'border-red-500' : 'border-[var(--border-soft)]'}`}>
+              <div className={`rounded-[var(--radius-sm)] border-2 bg-[var(--surface)] transition-[border-color,box-shadow] focus-within:border-[var(--primary)] focus-within:shadow-[0_0_0_4px_var(--primary-tint)] ${errors.email ? 'border-red-500' : 'border-[var(--border-soft)]'}`}>
                 <input
                   id="email" name="email" type="email" required placeholder={t.contact.emailPlaceholder}
                   aria-invalid={!!errors.email}
@@ -160,7 +160,7 @@ export default function Contact() {
             </div>
             <div className="mb-2">
               <label htmlFor="message" className="block text-[13.5px] font-bold mb-1.5">{t.contact.messageLabel}</label>
-              <div className={`rounded-[var(--radius-sm)] border-2 bg-[var(--surface)] transition-colors focus-within:border-[var(--primary)] ${errors.message ? 'border-red-500' : 'border-[var(--border-soft)]'}`}>
+              <div className={`rounded-[var(--radius-sm)] border-2 bg-[var(--surface)] transition-[border-color,box-shadow] focus-within:border-[var(--primary)] focus-within:shadow-[0_0_0_4px_var(--primary-tint)] ${errors.message ? 'border-red-500' : 'border-[var(--border-soft)]'}`}>
                 <textarea
                   id="message" name="message" required placeholder={t.contact.messagePlaceholder}
                   aria-invalid={!!errors.message}
@@ -175,8 +175,11 @@ export default function Contact() {
               type="submit"
               variant="primary"
               disabled={status === 'sending'}
-              className="mt-4 w-full sm:w-fit disabled:opacity-60 disabled:cursor-not-allowed"
+              className="group mt-4 w-full sm:w-fit disabled:opacity-60 disabled:cursor-not-allowed"
             >
+              {status === 'sending'
+                ? <Loader2 size={16} className="animate-spin" />
+                : <Send size={15} className="transition-transform duration-200 group-hover:translate-x-1 group-hover:-translate-y-0.5" />}
               {status === 'sending' ? t.contact.sending : t.contact.sendButton}
             </Button>
             <AnimatePresence mode="wait">

@@ -1,10 +1,11 @@
 import { useEffect, useRef, useState } from 'react'
-import { motion, useMotionTemplate, useMotionValue, useReducedMotion, useSpring, useTransform } from 'framer-motion'
+import { motion, useMotionTemplate, useMotionValue, useReducedMotion, useScroll, useSpring, useTransform } from 'framer-motion'
 import { Github, Linkedin, Instagram } from 'lucide-react'
 import { profile, socials } from '../data/site'
 import { translations } from '../data/translations'
 import { useLanguage } from '../context/LanguageContext'
 import Button from './ui/Button'
+import Magnetic from './ui/Magnetic'
 import cvFile from '../assets/CV - MUHAMMAD RIZQAN FADHIL.pdf'
 
 const socialIcons = { github: Github, linkedin: Linkedin, instagram: Instagram }
@@ -46,6 +47,16 @@ export default function Hero() {
   const t = translations[lang]
   const prefersReduced = useReducedMotion()
   const anim = prefersReduced ? {} : { variants: container, initial: 'hidden', animate: 'show' }
+
+  // Scroll-linked parallax as the hero scrolls out of view — the code
+  // card drifts down slower than the page (reads as "further back"),
+  // the two floating tags drift a bit faster in the opposite direction
+  // for a subtle layered-depth feel.
+  const sectionRef = useRef(null)
+  const { scrollYProgress } = useScroll({ target: sectionRef, offset: ['start start', 'end start'] })
+  const cardY = useTransform(scrollYProgress, [0, 1], [0, 60])
+  const tagTopY = useTransform(scrollYProgress, [0, 1], [0, -30])
+  const tagBottomY = useTransform(scrollYProgress, [0, 1], [0, 90])
 
   // Highlight only the last word of the name (mirrors the old pattern of
   // highlighting just "Developer" in "Android Developer").
@@ -89,7 +100,7 @@ export default function Hero() {
   const resetPhotoTilt = () => { px.set(0.5); py.set(0.5); spotlightOpacity.set(0) }
 
   return (
-    <section id="home" className="pt-8 md:pt-16 pb-24 md:pb-32 relative">
+    <section id="home" ref={sectionRef} className="pt-8 md:pt-16 pb-24 md:pb-32 relative">
       <div className="wrap grid grid-cols-1 md:grid-cols-[1.05fr_0.95fr] gap-12 items-center">
         <motion.div {...anim}>
           {/* Photo with name/role stacked below it, same on desktop as
@@ -166,8 +177,8 @@ export default function Hero() {
                 </motion.p>
 
                 <motion.div variants={item} className="flex flex-wrap gap-3.5 mt-6 md:mt-8">
-                  <Button href="#projects" variant="primary">{t.hero.viewProjects}</Button>
-                  <Button href={cvFile} download="Muhammad Rizqan Fadhil - CV.pdf" variant="ghost">{t.hero.downloadCV}</Button>
+                  <Magnetic axis="y"><Button href="#projects" variant="primary">{t.hero.viewProjects}</Button></Magnetic>
+                  <Magnetic axis="y"><Button href={cvFile} download="Muhammad Rizqan Fadhil - CV.pdf" variant="ghost">{t.hero.downloadCV}</Button></Magnetic>
                 </motion.div>
               </div>
             </div>
@@ -178,6 +189,7 @@ export default function Hero() {
           initial={prefersReduced ? false : { opacity: 0, scale: 0.92, rotate: -2 }}
           animate={{ opacity: 1, scale: 1, rotate: 0 }}
           transition={{ duration: 0.7, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
+          style={{ y: prefersReduced ? 0 : cardY }}
           className="flex flex-col"
         >
           {/* "fun main()" tag above the card at every size — this used to
@@ -187,10 +199,12 @@ export default function Hero() {
               flow (the same approach mobile already used) keeps it
               directly above the card regardless of the card's size. */}
           <div className="flex justify-start pl-4 mb-3">
-            <span className="font-mono text-[11px] font-bold bg-surface
+            <motion.span
+              style={{ y: prefersReduced ? 0 : tagTopY }}
+              className="font-mono text-[11px] font-bold bg-surface
               px-3 py-1.5 rounded-lg shadow-[0_4px_0_0_var(--ghost-shadow)] text-primary rotate-[-3deg] inline-block">
               fun main()
-            </span>
+            </motion.span>
           </div>
 
           <div className="flex md:justify-center">
@@ -222,10 +236,12 @@ export default function Hero() {
               this sits in normal document flow underneath the card
               instead, the same way it already worked on mobile. */}
           <div className="flex justify-end pr-4 mt-3">
-            <span className="font-mono text-[11px] font-bold bg-[var(--primary-fill)] text-white
+            <motion.span
+              style={{ y: prefersReduced ? 0 : tagBottomY }}
+              className="font-mono text-[11px] font-bold bg-[var(--primary-fill)] text-white
               px-3 py-1.5 rounded-lg shadow-[0_4px_0_0_var(--primary-fill-shadow)] rotate-[3deg] inline-block">
               ✓ Published
-            </span>
+            </motion.span>
           </div>
         </motion.div>
       </div>

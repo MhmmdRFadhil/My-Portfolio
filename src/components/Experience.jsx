@@ -1,10 +1,10 @@
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import { Briefcase, GraduationCap, ChevronDown } from 'lucide-react'
 import { experienceTabs, experienceData } from '../data/site'
 import { translations } from '../data/translations'
 import { useLanguage } from '../context/LanguageContext'
 import Reveal from './ui/Reveal'
-import { AnimatePresence, motion } from 'framer-motion'
+import { AnimatePresence, motion, useReducedMotion, useScroll, useTransform } from 'framer-motion'
 
 const tabIcons = { work: Briefcase, education: GraduationCap }
 
@@ -81,9 +81,17 @@ export default function Experience() {
   const { lang } = useLanguage()
   const t = translations[lang]
   const [tab, setTab] = useState('work')
+  const prefersReduced = useReducedMotion()
+
+  // The center spine "draws" itself in as the section scrolls through
+  // view — 0 at the top of the section, full height once it's mostly
+  // scrolled past — instead of being fully drawn from the start.
+  const sectionRef = useRef(null)
+  const { scrollYProgress } = useScroll({ target: sectionRef, offset: ['start end', 'end start'] })
+  const spineScale = useTransform(scrollYProgress, [0.15, 0.85], [0, 1])
 
   return (
-    <section id="experience" className="py-24 md:py-[130px]">
+    <section id="experience" ref={sectionRef} className="py-24 md:py-[130px] relative">
       <div className="wrap">
         <Reveal className="max-w-xl mb-10">
           <span className="eyebrow">{t.experience.eyebrow}</span>
@@ -136,8 +144,22 @@ export default function Experience() {
             exit={{ opacity: 0, y: -12, transition: { duration: 0.15 } }}
             className="relative flex flex-col gap-1 md:gap-1"
           >
-            {/* Center spine — the zigzag alternates cards left/right of it at every size. */}
+            {/* Center spine — the zigzag alternates cards left/right of it at
+                every size. Draws itself in with scroll (spineScale) on top
+                of a static full-height track, so the line is always there
+                but only "fills" with the primary color as you scroll. */}
             <div className="absolute left-1/2 top-2 bottom-2 w-[2px] md:w-[3px] -translate-x-1/2 bg-line" />
+            {/* Framer-motion owns this element's whole `transform` once any
+                motion value (scaleY) is on its style — the Tailwind
+                `-translate-x-1/2` class's translateX would otherwise get
+                silently dropped instead of combined, leaving this div
+                shifted half its own width off from the static track/dots
+                above. `x: '-50%'` folds that same centering into framer's
+                own transform so it stays included alongside scaleY. */}
+            <motion.div
+              style={{ x: '-50%', scaleY: prefersReduced ? 1 : spineScale, transformOrigin: 'top' }}
+              className="absolute left-1/2 top-2 bottom-2 w-[2px] md:w-[3px] bg-primary"
+            />
 
             {experienceData[tab].map((item, i) => {
               const isLeft = i % 2 === 0
