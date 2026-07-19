@@ -15,7 +15,6 @@ export const translations = {
     hero: {
       viewProjects: 'View Projects',
       downloadCV: 'Download CV',
-      published: '✓ Published',
     },
     about: {
       eyebrow: 'About',
@@ -82,7 +81,6 @@ export const translations = {
     hero: {
       viewProjects: 'Lihat Proyek',
       downloadCV: 'Unduh CV',
-      published: '✓ Dipublikasikan',
     },
     about: {
       eyebrow: 'Tentang',

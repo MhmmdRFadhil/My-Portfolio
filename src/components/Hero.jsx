@@ -224,7 +224,7 @@ export default function Hero() {
           <div className="flex justify-end pr-4 mt-3">
             <span className="font-mono text-[11px] font-bold bg-[var(--primary-fill)] text-white
               px-3 py-1.5 rounded-lg shadow-[0_4px_0_0_var(--primary-fill-shadow)] rotate-[3deg] inline-block">
-              {t.hero.published}
+              ✓ Published
             </span>
           </div>
         </motion.div>
