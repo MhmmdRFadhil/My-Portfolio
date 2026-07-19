@@ -12,7 +12,7 @@ const EASE = [0.22, 1, 0.36, 1]
 
 // Description starts hidden — tapping the card reveals it, keeping the
 // timeline compact by default instead of always showing full paragraphs.
-function TimelineCard({ item, index = 0, lang }) {
+function TimelineCard({ item, index = 0, lang, tapHint }) {
   const [expanded, setExpanded] = useState(false)
 
   return (
@@ -46,6 +46,19 @@ function TimelineCard({ item, index = 0, lang }) {
       </motion.div>
       <motion.h4 layout="position" className="text-[11.5px] sm:text-[15px] mb-0.5 leading-snug">{item.title[lang]}</motion.h4>
       <motion.div layout="position" className="text-muted text-[10px] sm:text-[12.5px] font-semibold">{item.org}</motion.div>
+      <AnimatePresence initial={false}>
+        {!expanded && (
+          <motion.div
+            key="hint"
+            initial={{ height: 'auto', opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ height: { duration: 0.35, ease: EASE }, opacity: { duration: 0.25, ease: EASE } }}
+            className="overflow-hidden"
+          >
+            <div className="text-[9px] sm:text-[11px] text-muted opacity-70 mt-1">{tapHint}</div>
+          </motion.div>
+        )}
+      </AnimatePresence>
       <AnimatePresence initial={false}>
         {expanded && (
           <motion.div
@@ -107,13 +120,20 @@ export default function Experience() {
           })}
         </Reveal>
 
+        {/* Overlapping the fades (both tabs' full card lists visible at
+            once, mid-crossfade) read as busier/messier than the original
+            sequential fade — so back to mode="wait" (only one list ever
+            visible). Exit is quick (attention isn't on the outgoing
+            content anyway) so the gap before the new tab appears stays
+            short; enter keeps the original slower duration so the part
+            people actually watch — the new tab settling in — still
+            reads as a real animation, not an instant cut. */}
         <AnimatePresence mode="wait">
           <motion.div
             key={tab}
             initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -12 }}
-            transition={{ duration: 0.3 }}
+            animate={{ opacity: 1, y: 0, transition: { duration: 0.3 } }}
+            exit={{ opacity: 0, y: -12, transition: { duration: 0.15 } }}
             className="relative flex flex-col gap-1 md:gap-1"
           >
             {/* Center spine — the zigzag alternates cards left/right of it at every size. */}
@@ -121,7 +141,7 @@ export default function Experience() {
 
             {experienceData[tab].map((item, i) => {
               const isLeft = i % 2 === 0
-              const card = <TimelineCard item={item} index={i} lang={lang} />
+              const card = <TimelineCard item={item} index={i} lang={lang} tapHint={t.experience.tapHint} />
 
               return (
                 <div key={i} className="relative py-1.5 md:py-1.5">

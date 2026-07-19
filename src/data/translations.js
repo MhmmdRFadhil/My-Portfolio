@@ -31,6 +31,7 @@ export const translations = {
       eyebrow: 'Experience',
       heading: "Where I've worked & learned",
       intro: 'The roles that shaped my Android development skills, and the education that got me started.',
+      tapHint: 'Tap for details',
     },
     projects: {
       eyebrow: 'Projects',
@@ -97,6 +98,7 @@ export const translations = {
       eyebrow: 'Pengalaman',
       heading: 'Tempat saya bekerja & belajar',
       intro: 'Peran-peran yang membentuk kemampuan saya sebagai Android developer, plus latar pendidikan yang jadi titik awalnya.',
+      tapHint: 'Ketuk untuk detail',
     },
     projects: {
       eyebrow: 'Proyek',
