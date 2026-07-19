@@ -52,18 +52,21 @@ function MarqueeText({ text, as: Tag = 'span', className = '', active = false })
     return () => window.removeEventListener('resize', check)
   }, [text])
 
-  if (!overflowing) {
-    return <Tag ref={textRef} className={`${className} truncate block`}>{text}</Tag>
+  // Only swap to the (non-ellipsized) scrolling track once actually
+  // active — otherwise an overflowing-but-idle pill has no ellipsis and
+  // no scroll, just a raw cutoff mid-character.
+  if (overflowing && active) {
+    return (
+      <Tag className={`${className} block overflow-hidden whitespace-nowrap`}>
+        <span className="marquee-text-track marquee-text-track--active">
+          <span>{text}</span>
+          <span aria-hidden="true">{text}</span>
+        </span>
+      </Tag>
+    )
   }
 
-  return (
-    <Tag className={`${className} block overflow-hidden whitespace-nowrap`}>
-      <span className={`marquee-text-track${active ? ' marquee-text-track--active' : ''}`}>
-        <span>{text}</span>
-        <span aria-hidden="true">{text}</span>
-      </span>
-    </Tag>
-  )
+  return <Tag ref={textRef} className={`${className} truncate block`}>{text}</Tag>
 }
 
 function Pill({ s, lang }) {
