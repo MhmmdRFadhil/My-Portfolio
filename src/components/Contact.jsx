@@ -141,7 +141,7 @@ export default function Contact() {
                   id="name" name="name" type="text" required placeholder={t.contact.namePlaceholder}
                   aria-invalid={!!errors.name}
                   onChange={() => errors.name && setErrors((prev) => ({ ...prev, name: undefined }))}
-                  className="w-full px-3.5 py-2.5 border-0 bg-transparent text-ink text-[17px] placeholder:text-[14px] focus:outline-none"
+                  className="w-full appearance-none rounded-[var(--radius-sm)] px-3.5 py-2.5 border-0 bg-transparent text-ink text-[15px] placeholder:text-[14px] focus:outline-none"
                 />
               </div>
               <FieldError message={errors.name && t.contact[errors.name]} />
@@ -153,7 +153,7 @@ export default function Contact() {
                   id="email" name="email" type="email" required placeholder={t.contact.emailPlaceholder}
                   aria-invalid={!!errors.email}
                   onChange={() => errors.email && setErrors((prev) => ({ ...prev, email: undefined }))}
-                  className="w-full px-3.5 py-2.5 border-0 bg-transparent text-ink text-[17px] placeholder:text-[14px] focus:outline-none"
+                  className="w-full appearance-none rounded-[var(--radius-sm)] px-3.5 py-2.5 border-0 bg-transparent text-ink text-[15px] placeholder:text-[14px] focus:outline-none"
                 />
               </div>
               <FieldError message={errors.email && t.contact[errors.email]} />
@@ -165,7 +165,7 @@ export default function Contact() {
                   id="message" name="message" required placeholder={t.contact.messagePlaceholder}
                   aria-invalid={!!errors.message}
                   onChange={() => errors.message && setErrors((prev) => ({ ...prev, message: undefined }))}
-                  className="w-full min-h-[80px] px-3.5 py-2.5 border-0 bg-transparent text-ink text-[17px] placeholder:text-[14px] resize-none focus:outline-none"
+                  className="w-full min-h-[80px] appearance-none rounded-[var(--radius-sm)] px-3.5 py-2.5 border-0 bg-transparent text-ink text-[15px] placeholder:text-[14px] resize-none focus:outline-none"
                 />
               </div>
               <FieldError message={errors.message && t.contact[errors.message]} />

@@ -108,6 +108,29 @@ h1, h2, h3, h4 {
 a { color: inherit; text-decoration: none; }
 img { max-width: 100%; display: block; }
 
+/* Text cursor otherwise defaults to browser-black regardless of theme —
+   invisible-ish against a dark surface. Autofill in particular resets it
+   back to black on its own even with the override below, so it's set
+   unconditionally on every input/textarea, not just the autofill state. */
+input, textarea { caret-color: var(--ink); }
+
+/* Browser autofill (name/email) paints its own background via an
+   internal box-shadow trick that plain background-color can't override
+   — this forces it back to the theme surface color instead of the
+   browser's default white/pale-yellow fill. The absurd transition delay
+   is the standard trick to stop that default color flashing in first. */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus {
+  -webkit-box-shadow: 0 0 0px 1000px var(--surface) inset;
+  -webkit-text-fill-color: var(--ink);
+  caret-color: var(--ink);
+  transition: background-color 5000s ease-in-out 0s;
+}
+
 /* Interactive elements otherwise only communicate state via :hover, which
    keyboard/switch-device users never trigger — a visible focus ring is
    the only way they can tell what's focused. :focus-visible (not
