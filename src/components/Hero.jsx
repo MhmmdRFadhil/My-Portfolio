@@ -49,14 +49,14 @@ export default function Hero() {
   const anim = prefersReduced ? {} : { variants: container, initial: 'hidden', animate: 'show' }
 
   // Scroll-linked parallax as the hero scrolls out of view — the code
-  // card drifts down slower than the page (reads as "further back"),
-  // the two floating tags drift a bit faster in the opposite direction
-  // for a subtle layered-depth feel.
+  // card drifts down slower than the page (reads as "further back").
+  // Both floating tags move with it as one rigid group (not their own
+  // independent transforms) so the tag-to-card gap never changes —
+  // giving each tag its own drift speed used to make them race away
+  // from the card at different rates the longer you scrolled.
   const sectionRef = useRef(null)
   const { scrollYProgress } = useScroll({ target: sectionRef, offset: ['start start', 'end start'] })
   const cardY = useTransform(scrollYProgress, [0, 1], [0, 60])
-  const tagTopY = useTransform(scrollYProgress, [0, 1], [0, -30])
-  const tagBottomY = useTransform(scrollYProgress, [0, 1], [0, 90])
 
   // Highlight only the last word of the name (mirrors the old pattern of
   // highlighting just "Developer" in "Android Developer").
@@ -199,12 +199,10 @@ export default function Hero() {
               flow (the same approach mobile already used) keeps it
               directly above the card regardless of the card's size. */}
           <div className="flex justify-start pl-4 mb-3">
-            <motion.span
-              style={{ y: prefersReduced ? 0 : tagTopY }}
-              className="font-mono text-[11px] font-bold bg-surface
+            <span className="font-mono text-[11px] font-bold bg-surface
               px-3 py-1.5 rounded-lg shadow-[0_4px_0_0_var(--ghost-shadow)] text-primary rotate-[-3deg] inline-block">
               fun main()
-            </motion.span>
+            </span>
           </div>
 
           <div className="flex md:justify-center">
@@ -236,12 +234,10 @@ export default function Hero() {
               this sits in normal document flow underneath the card
               instead, the same way it already worked on mobile. */}
           <div className="flex justify-end pr-4 mt-3">
-            <motion.span
-              style={{ y: prefersReduced ? 0 : tagBottomY }}
-              className="font-mono text-[11px] font-bold bg-[var(--primary-fill)] text-white
+            <span className="font-mono text-[11px] font-bold bg-[var(--primary-fill)] text-white
               px-3 py-1.5 rounded-lg shadow-[0_4px_0_0_var(--primary-fill-shadow)] rotate-[3deg] inline-block">
               ✓ Published
-            </motion.span>
+            </span>
           </div>
         </motion.div>
       </div>
