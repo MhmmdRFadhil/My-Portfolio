@@ -1,8 +1,6 @@
 import { useRef } from 'react'
 import { motion, useMotionValue, useReducedMotion, useSpring } from 'framer-motion'
-
-const supportsHover = () =>
-  typeof window !== 'undefined' && window.matchMedia('(hover: hover) and (pointer: fine)').matches
+import { supportsHover } from '../../utils/pointer'
 
 /**
  * Pulls its child a few px toward the cursor within its own bounds, then

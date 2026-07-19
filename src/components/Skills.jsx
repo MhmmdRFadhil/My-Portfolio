@@ -4,6 +4,7 @@ import { translations } from '../data/translations'
 import { useLanguage } from '../context/LanguageContext'
 import Reveal from './ui/Reveal'
 import TiltWrap from './ui/TiltWrap'
+import { supportsHover } from '../utils/pointer'
 import {
   Layers, Layers3, Zap, GitBranch, Cpu, Database, Globe, GitMerge, Flame, LayoutGrid,
 } from 'lucide-react'
@@ -12,15 +13,6 @@ const iconMap = {
   compose: Layers, zap: Zap, branch: GitBranch, cpu: Cpu, db: Database,
   globe: Globe, git: GitMerge, flame: Flame, layout: LayoutGrid, kotlin: KotlinLogo,
 }
-
-// WebKit (iOS Safari and anything built on it) fires a synthetic
-// pointerenter with pointerType "mouse" ~300ms after a tap, for :hover
-// compatibility — with no real pointer, no leave event ever follows, so
-// filtering on pointerType alone still leaves the marquee stuck on after
-// a tap. `(hover: hover)` reflects the primary input's real capability
-// and isn't fooled by that synthetic event, unlike pointerType.
-const supportsHover = () =>
-  typeof window !== 'undefined' && window.matchMedia('(hover: hover) and (pointer: fine)').matches
 
 // Kotlin's official brand mark (simple-icons, MIT licensed), not a generic
 // icon-set glyph — this banner is specifically about the language.
