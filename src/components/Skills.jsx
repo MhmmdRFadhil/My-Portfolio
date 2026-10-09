@@ -28,12 +28,16 @@ function SkillCard({ s, lang }) {
   return (
     <TiltWrap max={3} className="h-full">
       <div className="card-chunky h-full p-5">
-        <div className="skill-icon w-10 h-10 rounded-xl flex items-center justify-center mb-4 text-primary bg-[var(--primary-tint)]">
-          <Icon size={19} />
+        <div className="flex items-start gap-3">
+          <div className="skill-icon w-10 h-10 shrink-0 rounded-xl flex items-center justify-center text-primary bg-[var(--primary-tint)]">
+            <Icon size={19} />
+          </div>
+          <div className="min-w-0">
+            <h3 className="text-base leading-snug break-words">{s.name}</h3>
+            <p className="text-[13px] text-muted mt-1">{s.tag[lang]}</p>
+          </div>
         </div>
-        <h3 className="text-base leading-snug break-words">{s.name}</h3>
-        <p className="text-[13px] text-muted mt-1">{s.tag[lang]}</p>
-        {s.blurb && <p className="text-sm text-muted leading-relaxed mt-3">{s.blurb[lang]}</p>}
+        {s.blurb && <p className="text-sm text-muted leading-relaxed mt-4">{s.blurb[lang]}</p>}
       </div>
     </TiltWrap>
   )

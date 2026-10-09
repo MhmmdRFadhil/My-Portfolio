@@ -58,7 +58,13 @@ export const aboutText = [
 // in the Skills bento grid — picked because they recur most across real
 // shipped projects' skill tags.
 export const skills = [
-  { icon: 'kotlin', name: 'Kotlin', tag: { en: 'Primary Language', id: 'Bahasa Utama' } },
+  {
+    icon: 'kotlin', name: 'Kotlin', tag: { en: 'Primary Language', id: 'Bahasa Utama' },
+    blurb: {
+      en: 'The language I use for Android, from handling user input to writing app logic.',
+      id: 'Bahasa yang saya pakai buat Android, dari menangani input pengguna sampai menulis logika aplikasi.',
+    },
+  },
   {
     icon: 'compose', name: 'Jetpack Compose', tag: { en: 'Declarative UI', id: 'UI Deklaratif' },
     featured: true, blurb: {
@@ -66,7 +72,13 @@ export const skills = [
       id: "Andalan saya buat bikin tampilan yang ngikutin perubahan data aplikasi.",
     },
   },
-  { icon: 'zap', name: 'Coroutines & Flow', tag: { en: 'Async', id: 'Asinkron' } },
+  {
+    icon: 'zap', name: 'Coroutines & Flow', tag: { en: 'Async', id: 'Asinkron' },
+    blurb: {
+      en: 'For loading data without freezing the screen and passing updates to the UI.',
+      id: 'Buat mengambil data tanpa bikin layar macet dan meneruskan pembaruan ke tampilan.',
+    },
+  },
   {
     icon: 'branch', name: 'MVVM · MVI', tag: { en: 'Architecture', id: 'Arsitektur' },
     featured: true, blurb: {
@@ -74,10 +86,34 @@ export const skills = [
       id: "Biar kode tampilan dan logika aplikasi nggak campur, jadi lebih gampang diubah.",
     },
   },
-  { icon: 'cpu', name: 'Hilt', tag: { en: 'Dependency Injection', id: 'Dependency Injection' } },
-  { icon: 'db', name: 'Room · DataStore · SharedPreferences', tag: { en: 'Local Storage', id: 'Penyimpanan Lokal' } },
-  { icon: 'globe', name: 'Retrofit', tag: { en: 'Networking', id: 'Jaringan' } },
-  { icon: 'git', name: 'Git & Code Review', tag: { en: 'Collaboration', id: 'Kolaborasi' } },
+  {
+    icon: 'cpu', name: 'Hilt', tag: { en: 'Dependency Injection', id: 'Dependency Injection' },
+    blurb: {
+      en: 'Connects the classes an app needs, so I can swap implementations more easily when testing.',
+      id: 'Bantu menyiapkan objek yang dibutuhkan aplikasi, jadi implementasinya lebih gampang diganti saat testing.',
+    },
+  },
+  {
+    icon: 'db', name: 'Room · DataStore · SharedPreferences', tag: { en: 'Local Storage', id: 'Penyimpanan Lokal' },
+    blurb: {
+      en: 'For saving app data and preferences on the device. I pick the tool to suit the data.',
+      id: 'Buat menyimpan data dan pengaturan di perangkat. Saya pilih tools sesuai jenis data yang disimpan.',
+    },
+  },
+  {
+    icon: 'globe', name: 'Retrofit', tag: { en: 'Networking', id: 'Jaringan' },
+    blurb: {
+      en: 'Connects the app to REST APIs, from sending requests to reading server responses.',
+      id: 'Menghubungkan aplikasi ke REST API, dari kirim request sampai membaca respons server.',
+    },
+  },
+  {
+    icon: 'git', name: 'Git & Code Review', tag: { en: 'Collaboration', id: 'Kolaborasi' },
+    blurb: {
+      en: 'For tracking changes, working on branches, and checking code together before merging.',
+      id: 'Buat melacak perubahan, kerja lewat branch, dan cek kode bareng sebelum digabung.',
+    },
+  },
   {
     icon: 'flame', name: 'Firebase', tag: { en: 'Backend Services', id: 'Layanan Backend' },
     featured: true, blurb: {
@@ -85,8 +121,20 @@ export const skills = [
       id: "Saya pakai buat login, simpan data, dan sinkronisasi perubahan.",
     },
   },
-  { icon: 'layout', name: 'Material Design 3', tag: { en: 'UI System', id: 'Sistem UI' } },
-  { icon: 'zap', name: 'Performance Profiling', tag: { en: 'Optimization', id: 'Optimasi' } },
+  {
+    icon: 'layout', name: 'Material Design 3', tag: { en: 'UI System', id: 'Sistem UI' },
+    blurb: {
+      en: 'My starting point for components, colors, and typography that feel consistent across screens.',
+      id: 'Acuan saya buat komponen, warna, dan tipografi supaya tampilan tiap halaman terasa konsisten.',
+    },
+  },
+  {
+    icon: 'zap', name: 'Performance Profiling', tag: { en: 'Optimization', id: 'Optimasi' },
+    blurb: {
+      en: 'Helps me find slow frames and memory issues, then check whether a fix actually helps.',
+      id: 'Bantu nyari penyebab frame lambat dan masalah memori, lalu cek apakah perbaikannya benar membantu.',
+    },
+  },
 ]
 
 export const projectFilters = [
