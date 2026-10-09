@@ -5,6 +5,10 @@
  * so every jump feels equally snappy regardless of distance.
  */
 export function smoothScrollTo(targetY, duration = 500) {
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches || duration <= 0) {
+    window.scrollTo({ top: targetY, left: 0, behavior: 'instant' })
+    return
+  }
   const startY = window.scrollY
   const diff = targetY - startY
   if (Math.abs(diff) < 1) return

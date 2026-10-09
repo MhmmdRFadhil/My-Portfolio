@@ -1,246 +1,54 @@
-import { useEffect, useRef, useState } from 'react'
-import { motion, useMotionTemplate, useMotionValue, useReducedMotion, useScroll, useSpring, useTransform } from 'framer-motion'
-import { Github, Linkedin, Instagram } from 'lucide-react'
+import { ArrowUpRight, Download, Github, Linkedin, Instagram, MapPin, Code2 } from 'lucide-react'
 import { profile, socials } from '../data/site'
 import { translations } from '../data/translations'
 import { useLanguage } from '../context/LanguageContext'
 import Button from './ui/Button'
-import Magnetic from './ui/Magnetic'
+import Reveal from './ui/Reveal'
 import cvFile from '../assets/CV - MUHAMMAD RIZQAN FADHIL.pdf'
 
 const socialIcons = { github: Github, linkedin: Linkedin, instagram: Instagram }
 
-const container = {
-  hidden: {},
-  show: { transition: { staggerChildren: 0.1, delayChildren: 0.1 } },
-}
-const item = {
-  hidden: { opacity: 0, y: 22 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] } },
-}
-
-// Types `text` out one character at a time. Reduced-motion users get the
-// full text immediately instead of the animation.
-function useTypewriter(text, { speed = 65, startDelay = 500, prefersReduced = false } = {}) {
-  const [count, setCount] = useState(prefersReduced ? text.length : 0)
-
-  useEffect(() => {
-    if (prefersReduced) { setCount(text.length); return }
-    setCount(0)
-    let i = 0
-    let interval
-    const start = setTimeout(() => {
-      interval = setInterval(() => {
-        i += 1
-        setCount(i)
-        if (i >= text.length) clearInterval(interval)
-      }, speed)
-    }, startDelay)
-    return () => { clearTimeout(start); clearInterval(interval) }
-  }, [text, prefersReduced, speed, startDelay])
-
-  return { count, done: count >= text.length }
-}
-
 export default function Hero() {
   const { lang } = useLanguage()
   const t = translations[lang]
-  const prefersReduced = useReducedMotion()
-  const anim = prefersReduced ? {} : { variants: container, initial: 'hidden', animate: 'show' }
-
-  // Scroll-linked parallax as the hero scrolls out of view — the code
-  // card drifts down slower than the page (reads as "further back").
-  // Both floating tags move with it as one rigid group (not their own
-  // independent transforms) so the tag-to-card gap never changes —
-  // giving each tag its own drift speed used to make them race away
-  // from the card at different rates the longer you scrolled.
-  const sectionRef = useRef(null)
-  const { scrollYProgress } = useScroll({ target: sectionRef, offset: ['start start', 'end start'] })
-  const cardY = useTransform(scrollYProgress, [0, 1], [0, 60])
-
-  // Highlight only the last word of the name (mirrors the old pattern of
-  // highlighting just "Developer" in "Android Developer").
   const nameWords = profile.name.split(' ')
-  const nameLast = nameWords.pop()
-  const nameLead = nameWords.join(' ')
-  const nameFull = `${nameLead} ${nameLast}`
-
-  const { count: typedCount } = useTypewriter(nameFull, { prefersReduced })
-  const typedLead = nameFull.slice(0, Math.min(typedCount, nameLead.length))
-  const spaceShown = typedCount > nameLead.length
-  const typedLast = spaceShown ? nameLast.slice(0, typedCount - nameLead.length - 1) : ''
-  const highlightRevealed = typedLast === nameLast
-
-  // Photo tilt + cursor spotlight — mouse position (0-1 within the photo)
-  // drives both a subtle 3D tilt and a radial-gradient highlight that
-  // follows the cursor. Only real mouse pointers trigger it (touch has
-  // no hover concept, and gating on pointerType keeps a stray touch-drag
-  // from leaving the tilt stuck mid-rotation).
-  const photoRef = useRef(null)
-  const px = useMotionValue(0.5)
-  const py = useMotionValue(0.5)
-  // Spotlight only fades in while actually hovering — without this it
-  // rendered permanently at dead-center (px/py start at 0.5), reading as
-  // a constant bright glow over the photo instead of a hover effect.
-  const spotlightOpacity = useSpring(0, { stiffness: 250, damping: 30 })
-  const springConfig = { stiffness: 150, damping: 18, mass: 0.4 }
-  const tiltX = useSpring(useTransform(py, [0, 1], [10, -10]), springConfig)
-  const tiltY = useSpring(useTransform(px, [0, 1], [-10, 10]), springConfig)
-  const spotlightX = useTransform(px, (v) => `${v * 100}%`)
-  const spotlightY = useTransform(py, (v) => `${v * 100}%`)
-  const spotlightBackground = useMotionTemplate`radial-gradient(120px circle at ${spotlightX} ${spotlightY}, rgba(255,255,255,0.45), transparent 70%)`
-
-  const handlePhotoPointerMove = (e) => {
-    if (e.pointerType !== 'mouse' || prefersReduced || !photoRef.current) return
-    const rect = photoRef.current.getBoundingClientRect()
-    px.set((e.clientX - rect.left) / rect.width)
-    py.set((e.clientY - rect.top) / rect.height)
-    spotlightOpacity.set(1)
-  }
-  const resetPhotoTilt = () => { px.set(0.5); py.set(0.5); spotlightOpacity.set(0) }
+  const lastName = nameWords.pop()
 
   return (
-    <section id="home" ref={sectionRef} className="pt-8 md:pt-16 pb-24 md:pb-32 relative">
-      <div className="wrap grid grid-cols-1 md:grid-cols-[1.05fr_0.95fr] gap-12 items-center">
-        <motion.div {...anim}>
-          {/* Photo with name/role stacked below it, same on desktop as
-              mobile — name (not the role) carries the highlight mark. */}
-          <motion.div variants={item} className="flex flex-col gap-6 md:gap-8 mb-5 md:mb-8">
-            <motion.div
-              ref={photoRef}
-              onPointerMove={handlePhotoPointerMove}
-              onPointerLeave={resetPhotoTilt}
-              style={{ perspective: 600 }}
-              className="relative w-[130px] h-[130px] md:w-[220px] md:h-[220px] flex-shrink-0"
-            >
-              <motion.div
-                style={{
-                  borderRadius: '42% 58% 65% 35% / 45% 40% 60% 55%',
-                  rotateX: tiltX,
-                  rotateY: tiltY,
-                  transformStyle: 'preserve-3d',
-                }}
-                className="relative w-full h-full overflow-hidden shadow-[0_6px_0_0_var(--ghost-shadow)]"
-              >
-                <img
-                  src={profile.avatar}
-                  alt={profile.name}
-                  className="w-full h-full object-cover object-[center_15%]"
-                  loading="eager"
-                  fetchpriority="high"
-                  decoding="async"
-                />
-                <motion.div
-                  aria-hidden="true"
-                  className="absolute inset-0 pointer-events-none mix-blend-overlay"
-                  style={{ background: spotlightBackground, opacity: spotlightOpacity }}
-                />
-              </motion.div>
-            </motion.div>
-
-            {/* Socials as a vertical stack, running alongside name, role,
-                and the tagline together. */}
-            <div className="flex items-start gap-3 md:gap-4">
-              <div className="flex flex-col gap-1.5 md:gap-2 flex-shrink-0 mt-1 md:mt-2">
-                {socials.map((s) => {
-                  const Icon = socialIcons[s.icon]
-                  return (
-                    <a
-                      key={s.label}
-                      href={s.href}
-                      target="_blank"
-                      rel="noreferrer"
-                      aria-label={s.label}
-                      className="w-7 h-7 md:w-9 md:h-9 rounded-lg border-2 border-line bg-surface flex items-center justify-center
-                        text-ink hover:-translate-y-1 hover:bg-[var(--primary-fill)] hover:text-white transition-transform"
-                    >
-                      <Icon size={13} className="md:hidden" />
-                      <Icon size={15} className="hidden md:block" />
-                    </a>
-                  )
-                })}
-              </div>
-
-              <div>
-                <h1 className="text-[22px] md:text-[36px] leading-tight whitespace-nowrap" aria-label={nameFull}>
-                  <span aria-hidden="true">
-                    {typedLead}
-                    {spaceShown && ' '}
-                    <span className={`highlight${highlightRevealed ? ' highlight--reveal' : ''}`}>{typedLast}</span>
-                    <span className="typewriter-cursor" />
-                  </span>
-                </h1>
-                <p className="text-muted font-semibold text-sm md:text-xl mt-1.5 md:mt-2">{profile.role}</p>
-
-                <motion.p variants={item} className="text-muted text-[15px] md:text-[18px] max-w-md md:max-w-lg mt-3 md:mt-4">
-                  {profile.tagline[lang]}
-                </motion.p>
-
-                <motion.div variants={item} className="flex flex-wrap gap-3.5 mt-6 md:mt-8">
-                  <Magnetic axis="y"><Button href="#projects" variant="primary">{t.hero.viewProjects}</Button></Magnetic>
-                  <Magnetic axis="y"><Button href={cvFile} download="Muhammad Rizqan Fadhil - CV.pdf" variant="ghost">{t.hero.downloadCV}</Button></Magnetic>
-                </motion.div>
-              </div>
-            </div>
-          </motion.div>
-        </motion.div>
-
-        <motion.div
-          initial={prefersReduced ? false : { opacity: 0, scale: 0.92, rotate: -2 }}
-          animate={{ opacity: 1, scale: 1, rotate: 0 }}
-          transition={{ duration: 0.7, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
-          style={{ y: prefersReduced ? 0 : cardY }}
-          className="flex flex-col"
-        >
-          {/* "fun main()" tag above the card at every size — this used to
-              be an absolutely positioned corner sticker on desktop only,
-              but that drifted into a disconnected floating label once the
-              card grew wider/taller with the new snippet. Normal document
-              flow (the same approach mobile already used) keeps it
-              directly above the card regardless of the card's size. */}
-          <div className="flex justify-start pl-4 mb-3">
-            <span className="font-mono text-[11px] font-bold bg-surface
-              px-3 py-1.5 rounded-lg shadow-[0_4px_0_0_var(--ghost-shadow)] text-primary rotate-[-3deg] inline-block">
-              fun main()
-            </span>
+    <section id="home" className="hero-section">
+      <div className="wrap hero-grid">
+        <div className="hero-copy hero-entrance">
+          <span className="hero-role"><span aria-hidden="true" />{profile.role}</span>
+          <p className="hero-greeting">{t.hero.greeting}</p>
+          <h1><span className="block">{nameWords[0]}</span>{nameWords.slice(1).join(' ')} <span className="hero-name text-primary">{lastName}.</span></h1>
+          <p className="hero-description">{profile.tagline[lang]}</p>
+          <div className="flex flex-wrap gap-3 mt-8">
+            <Button href="#projects">{t.hero.viewProjects}<ArrowUpRight size={17} /></Button>
+            <Button href={cvFile} download="Muhammad Rizqan Fadhil - CV.pdf" variant="ghost"><Download size={16} />{t.hero.downloadCV}</Button>
           </div>
-
-          <div className="flex md:justify-center">
-            <div className="w-full md:w-[390px] card-chunky overflow-hidden">
-              <div className="flex items-center gap-1.5 px-4 py-3.5 border-b-2 border-line">
-                <span className="w-2.5 h-2.5 rounded-full bg-[#FF6159]" />
-                <span className="w-2.5 h-2.5 rounded-full bg-[#FFBD2E]" />
-                <span className="w-2.5 h-2.5 rounded-full bg-accent2" />
-                <em className="not-italic font-mono text-[11px] text-muted ml-2">MainActivity.kt</em>
-              </div>
-              <div className="p-5 font-mono text-[12.5px] leading-[1.9] text-muted whitespace-nowrap overflow-x-auto scrollbar-none">
-                <div><span className="text-primary">data class</span> <span className="text-accent2">Developer</span>(</div>
-                <div>&nbsp;&nbsp;val name = "rzqnfdhl",</div>
-                <div>&nbsp;&nbsp;val stack = listOf("Kotlin", "Compose"),</div>
-                <div>&nbsp;&nbsp;val focus = "Clean Arch"</div>
-                <div>)</div>
-                <div><span className="text-primary">fun</span> Developer.<span className="text-accent2">ship</span>() = println("🚀 Shipped")</div>
-                <div className="flex flex-wrap gap-1.5 mt-3">
-                  <span className="font-mono text-[10.5px] bg-[var(--primary-fill)] text-white px-2.5 py-1 rounded-full">✓ null-safe</span>
-                  <span className="font-mono text-[10.5px] bg-surfaceAlt text-primary px-2.5 py-1 rounded-full">100% Kotlin</span>
-                </div>
-              </div>
-            </div>
+          <div className="hero-socials">
+            <span className="flex items-center gap-1.5 text-muted text-xs"><MapPin size={14} />Indonesia</span>
+            <span className="hero-social-divider" aria-hidden="true" />
+            {socials.map((social) => {
+              const Icon = socialIcons[social.icon]
+              return <a key={social.label} href={social.href} target="_blank" rel="noreferrer" aria-label={social.label} className="social-link"><Icon size={18} /></a>
+            })}
           </div>
+        </div>
 
-          {/* "✓ Published" tag below the card at every size — an absolutely
-              positioned corner sticker kept drifting onto the in-card
-              badges whenever the code snippet's line count changed, so
-              this sits in normal document flow underneath the card
-              instead, the same way it already worked on mobile. */}
-          <div className="flex justify-end pr-4 mt-3">
-            <span className="font-mono text-[11px] font-bold bg-[var(--primary-fill)] text-white
-              px-3 py-1.5 rounded-lg shadow-[0_4px_0_0_var(--primary-fill-shadow)] rotate-[3deg] inline-block">
-              ✓ Published
-            </span>
+        <Reveal delay={0.15} className="hero-visual">
+          <div className="portrait-frame">
+            <div className="portrait-label"><Code2 size={15} /><span>Kotlin & Jetpack Compose</span></div>
+            <img src={profile.avatar} alt={profile.name} loading="eager" fetchpriority="high" decoding="async" className="hero-portrait" />
+            <div className="portrait-caption">{t.hero.craft}</div>
           </div>
-        </motion.div>
+          <div className="hero-code" aria-label="Kotlin">
+            <div className="flex items-center justify-between text-muted text-[11px] mb-3"><span>MainActivity.kt</span><span>KOTLIN</span></div>
+            <code><span className="text-primary">fun</span> main() {'{'}<br /><span className="text-muted">&nbsp;&nbsp;println</span>(<span className="text-primary">"Hello, Android!"</span>)<br />{'}'}</code>
+          </div>
+        </Reveal>
       </div>
+      <div className="wrap"><div className="hero-bottom"><span>{t.hero.focus}</span><span>Kotlin <span aria-hidden="true">/</span> Jetpack Compose <span aria-hidden="true">/</span> Clean Architecture</span></div></div>
     </section>
   )
 }

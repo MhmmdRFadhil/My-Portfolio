@@ -46,6 +46,7 @@ const VISIBLE_SKILLS = 3
 // Caps the tag row at 3 skills, folding the rest behind a "+N" pill —
 // tapping it reveals the remaining skills inline, in the card itself.
 function SkillsRow({ skills }) {
+  const { lang } = useLanguage()
   const [expanded, setExpanded] = useState(false)
   const sorted = sortedSkills(skills)
   const hidden = sorted.length - VISIBLE_SKILLS
@@ -64,6 +65,7 @@ function SkillsRow({ skills }) {
       {!expanded && hidden > 0 && (
         <button
           type="button"
+          aria-label={lang === 'id' ? `Tampilkan ${hidden} teknologi lainnya` : `Show ${hidden} more technologies`}
           onClick={() => setExpanded(true)}
           className="inline-flex items-center justify-center text-[11px] font-bold text-primary bg-surfaceAlt px-2.5 py-1 rounded-full hover:bg-[var(--primary-tint)] transition-colors"
         >
@@ -91,7 +93,7 @@ export default function Projects() {
           <p className="text-muted mt-3">{t.projects.intro}</p>
         </Reveal>
 
-        <Reveal delay={0.05} className="flex flex-nowrap justify-safe-center gap-1.5 sm:gap-2.5 mb-10 py-1.5 overflow-x-auto scrollbar-none">
+        <Reveal delay={0.05} className="project-filters flex flex-nowrap gap-1.5 sm:gap-2.5 mb-10 py-1.5 overflow-x-auto scrollbar-none">
           {projectFilters.map((f) => {
             const isActive = filter === f.key
             return (
@@ -104,6 +106,7 @@ export default function Projects() {
                   />
                 )}
                 <button
+                  aria-pressed={isActive}
                   onClick={() => { setFilter(f.key); setHasFiltered(true) }}
                   className={`relative z-10 text-[12.5px] sm:text-sm font-bold px-4 sm:px-5 py-2 sm:py-3 rounded-lg whitespace-nowrap transition-colors active:shadow-none
                     ${isActive
@@ -127,9 +130,8 @@ export default function Projects() {
             return (
               <Reveal key={p.id} delay={(i % 3) * 0.08} mount={hasFiltered} className="h-full">
                 <TiltWrap max={5} className="h-full">
-                <div className="group card-chunky flex flex-col h-full overflow-hidden transition-all duration-200
-                  hover:-translate-y-1 hover:shadow-[0_9px_0_0_var(--ghost-shadow)]">
-                  <div className="aspect-[3/2] bg-surfaceAlt border-b-2 border-line relative overflow-hidden">
+                <div className="project-card group card-chunky flex flex-col h-full overflow-hidden hover:-translate-y-1">
+                  <div className="aspect-[3/2] bg-surfaceAlt border-b border-line relative overflow-hidden">
                     <img
                       src={p.image}
                       alt={p.title}
@@ -141,7 +143,7 @@ export default function Projects() {
                       {categoryLabel}
                     </div>
                     {isPlayStore && (
-                      <div className="absolute top-3.5 right-3.5 inline-flex items-center gap-1 text-[11px] font-bold px-2.5 py-1 rounded-full bg-[var(--accent2)] text-white">
+                      <div className="absolute top-3.5 right-3.5 inline-flex items-center gap-1 text-[11px] font-bold px-2.5 py-1 rounded-full bg-[var(--accent2-fill)] text-white">
                         <Rocket size={11} />
                         {t.projects.published}
                       </div>
@@ -150,7 +152,7 @@ export default function Projects() {
                   <div className="p-6 flex flex-col gap-2 flex-1">
                     <h3 className="text-[19px]">{p.title}</h3>
                     {p.description && (
-                      <p className="text-muted text-[13.5px] leading-relaxed line-clamp-3">{p.description[lang]}</p>
+                      <p className="text-muted text-sm leading-relaxed">{p.description[lang]}</p>
                     )}
                     {p.skills && <SkillsRow skills={p.skills} />}
                     <div className="flex gap-4 mt-auto pt-2">

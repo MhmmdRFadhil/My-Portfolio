@@ -22,8 +22,8 @@ export const profile = {
   role: 'Android Developer',
   handle: '.dev',
   tagline: {
-    en: 'Android Developer specializing in Kotlin and Jetpack Compose — from banking and fintech features to image-recognition tools and customer service platforms, I focus on clean architecture, thoughtful UX, and reliable releases, from first commit to Play Store launch.',
-    id: 'Android Developer yang fokus di Kotlin dan Jetpack Compose — mulai dari fitur perbankan dan fintech, tools pengenalan gambar, sampai platform layanan pelanggan, saya selalu mengutamakan arsitektur yang bersih, UX yang matang, dan rilis yang bisa diandalkan, dari commit pertama sampai naik ke Play Store.',
+    en: "I make Android apps with Kotlin and Jetpack Compose. Most days, you'll find me working on banking features, fixing bugs, or figuring out how to make an app easier to use.",
+    id: "Saya bikin aplikasi Android pakai Kotlin dan Jetpack Compose. Biasanya saya sibuk ngulik fitur perbankan, beresin bug, atau cari cara supaya aplikasinya lebih gampang dipakai.",
   },
   avatar: profilePhoto,
 }
@@ -31,8 +31,8 @@ export const profile = {
 export const navLinks = [
   { id: 'home', label: { en: 'Home', id: 'Beranda' } },
   { id: 'about', label: { en: 'About', id: 'Tentang' } },
-  { id: 'skills', label: { en: 'Skills', id: 'Keahlian' } },
   { id: 'projects', label: { en: 'Projects', id: 'Proyek' } },
+  { id: 'skills', label: { en: 'Skills', id: 'Keahlian' } },
   { id: 'experience', label: { en: 'Experience', id: 'Pengalaman' } },
   { id: 'contact', label: { en: 'Contact', id: 'Kontak' } },
 ]
@@ -45,12 +45,12 @@ export const socials = [
 
 export const aboutText = [
   {
-    en: "I'm an Android Developer with experience building and maintaining applications across fintech and consumer products — from banking features like bill payments and top-ups, to image-recognition tools, to customer service platforms with live chat and ticketing. My work is grounded in Kotlin and Jetpack Compose, backed by clean, testable architecture.",
-    id: 'Saya seorang Android Developer dengan pengalaman membangun dan merawat aplikasi di berbagai produk fintech dan konsumen — mulai dari fitur perbankan seperti pembayaran tagihan dan top-up, tools pengenalan gambar, sampai platform layanan pelanggan dengan live chat dan tiket. Semua pekerjaan saya bertumpu pada Kotlin dan Jetpack Compose, didukung arsitektur yang bersih dan gampang diuji.',
+    en: "I'm an Android developer, mostly working on banking and consumer apps. I've built bill payments, image recognition, and customer support features with chat and ticketing.",
+    id: "Saya Android developer yang banyak ngerjain aplikasi perbankan dan kebutuhan sehari hari. Proyeknya macam macam, dari pembayaran tagihan dan pengenalan gambar sampai fitur chat dan tiket bantuan pelanggan.",
   },
   {
-    en: "Beyond feature delivery, I place equal weight on code quality and maintainability — sensible state management, thorough testing, and documentation that keeps collaboration smooth, whether I'm working solo or alongside a team in production.",
-    id: 'Selain soal fitur, saya juga sama seriusnya soal kualitas kode dan kemudahan perawatannya — state management yang masuk akal, testing yang menyeluruh, dan dokumentasi yang bikin kolaborasi tetap lancar, baik kerja sendiri maupun bareng tim di production.',
+    en: "I like code that's easy to read and change. I make time for tests and documentation so the next person working on it doesn't have to guess what's going on.",
+    id: "Saya suka kode yang gampang dibaca dan diubah. Testing dan dokumentasi juga saya kerjakan supaya orang berikutnya yang pegang kode ini nggak perlu nebak maksudnya.",
   },
 ]
 
@@ -62,16 +62,16 @@ export const skills = [
   {
     icon: 'compose', name: 'Jetpack Compose', tag: { en: 'Declarative UI', id: 'UI Deklaratif' },
     featured: true, blurb: {
-      en: 'My daily driver for building declarative, state-driven UI.',
-      id: 'Tools andalan saya sehari-hari buat bikin UI yang deklaratif dan berbasis state.',
+      en: "What I use to build screens and keep them in sync with app data.",
+      id: "Andalan saya buat bikin tampilan yang ngikutin perubahan data aplikasi.",
     },
   },
   { icon: 'zap', name: 'Coroutines & Flow', tag: { en: 'Async', id: 'Asinkron' } },
   {
     icon: 'branch', name: 'MVVM · MVI', tag: { en: 'Architecture', id: 'Arsitektur' },
     featured: true, blurb: {
-      en: 'The architecture backbone behind every app I ship.',
-      id: 'Fondasi arsitektur yang saya pakai di hampir semua aplikasi yang saya bangun.',
+      en: "Keeps the UI and app logic apart, so changes are easier to follow.",
+      id: "Biar kode tampilan dan logika aplikasi nggak campur, jadi lebih gampang diubah.",
     },
   },
   { icon: 'cpu', name: 'Hilt', tag: { en: 'Dependency Injection', id: 'Dependency Injection' } },
@@ -81,8 +81,8 @@ export const skills = [
   {
     icon: 'flame', name: 'Firebase', tag: { en: 'Backend Services', id: 'Layanan Backend' },
     featured: true, blurb: {
-      en: 'Handles auth, storage, and real-time data behind the scenes.',
-      id: 'Menangani autentikasi, penyimpanan, dan data real-time di balik layar.',
+      en: "My go to for sign in, storage, and keeping data up to date.",
+      id: "Saya pakai buat login, simpan data, dan sinkronisasi perubahan.",
     },
   },
   { icon: 'layout', name: 'Material Design 3', tag: { en: 'UI System', id: 'Sistem UI' } },
@@ -104,8 +104,8 @@ export const projects = [
     category: 'company',
     link: 'https://play.google.com/store/apps/details?id=id.co.cimbniaga.mobile.android&pcampaignid=web_share',
     description: {
-      en: "Contributed to CIMB Niaga's banking super-app — bill payment and top-up features, architecture improvements, and production support.",
-      id: 'Ikut membangun fitur pembayaran tagihan dan top-up di super-app CIMB Niaga, sekaligus penguatan arsitektur dan dukungan production.',
+      en: "I help build bill payments and top ups for CIMB Niaga's banking app. I also work on the code structure and fix issues after release.",
+      id: "Saya ikut ngerjain fitur bayar tagihan dan isi saldo di aplikasi CIMB Niaga, merapikan kode, dan menangani masalah setelah rilis.",
     },
     skills: ['Kotlin', 'MVVM', 'MVI', 'Jetpack Compose', 'REST API', 'Firebase'],
   },
@@ -116,8 +116,8 @@ export const projects = [
     category: 'company',
     link: 'https://play.google.com/store/apps/details?id=com.uninet.umscustomerapp&pcampaignid=web_share',
     description: {
-      en: "A customer portal for Uninet — manage transactions, ticketing, live chat, WhatsApp integration, speed test, and bill checking, all in one app.",
-      id: 'Portal pelanggan untuk Uninet — kelola transaksi, tiket, live chat, integrasi WhatsApp, speed test, dan cek tagihan, semua dalam satu aplikasi.',
+      en: "An app for Uninet customers to check bills, manage transactions, and get help through tickets or chat. It also connects to WhatsApp and includes a speed test.",
+      id: "Aplikasi buat pelanggan Uninet cek tagihan, kelola transaksi, dan minta bantuan lewat tiket atau chat. Ada juga WhatsApp dan tes kecepatan internet.",
     },
     skills: ['Kotlin', 'MVVM', 'REST API'],
   },
@@ -128,8 +128,8 @@ export const projects = [
     category: 'college',
     link: 'https://play.google.com/store/apps/details?id=com.ryz.nutrilicious',
     description: {
-      en: 'Detects fruits and vegetables with on-device image recognition, built in Kotlin with MVVM, backed by Firebase for scan history and nutrition data.',
-      id: 'Mendeteksi buah dan sayur pakai pengenalan gambar on-device, dibangun dengan Kotlin dan MVVM, didukung Firebase untuk riwayat scan dan data nutrisi.',
+      en: "Point the camera at a fruit or vegetable to find out what it is. I built it with Kotlin and MVVM, with Firebase for scan history and nutrition info.",
+      id: "Arahkan kamera ke buah atau sayur buat mengenalinya. Saya bikin pakai Kotlin dan MVVM, lalu pakai Firebase buat riwayat scan dan info nutrisi.",
     },
     skills: ['Kotlin', 'Firebase', 'Machine Learning', 'MVVM'],
     certificate: 'https://drive.google.com/file/d/1bxglVFCWqk5BNLuE4P9WtBBQt7Rv2jQH/view?usp=sharing',
@@ -141,8 +141,8 @@ export const projects = [
     category: 'other',
     link: 'https://github.com/MhmmdRFadhil/MyStore',
     description: {
-      en: "Final project for a Dicoding course — an e-commerce app with deep links straight to product details and a REST API for catalog and order data.",
-      id: 'Proyek akhir kursus Dicoding — aplikasi e-commerce dengan deep link langsung ke detail produk dan REST API untuk data katalog dan pesanan.',
+      en: "A shopping app I made for a Dicoding course. Product links open straight to the details, while a REST API handles the catalog and orders.",
+      id: "Aplikasi belanja buat tugas akhir kursus Dicoding. Link produk bisa langsung buka halaman detail, sedangkan katalog dan pesanan terhubung lewat REST API.",
     },
     skills: ['Kotlin', 'REST API', 'Deeplink'],
     certificate: 'https://www.dicoding.com/certificates/EYX4JQR8JZDL',
@@ -154,8 +154,8 @@ export const projects = [
     category: 'college',
     link: 'https://github.com/MhmmdRFadhil/TernaKu',
     description: {
-      en: 'A livestock marketplace for Dermaji Village, built in Kotlin with a RESTful API to connect local farmers with buyers and streamline order tracking.',
-      id: 'Marketplace ternak untuk Desa Dermaji, dibangun dengan Kotlin dan RESTful API buat menghubungkan peternak lokal dengan pembeli dan pelacakan pesanan.',
+      en: "An app that connects livestock farmers in Dermaji Village with buyers. I used Kotlin and a REST API for listings and order tracking.",
+      id: "Aplikasi jual beli ternak buat mempertemukan peternak Desa Dermaji dengan pembeli. Saya pakai Kotlin dan REST API buat daftar ternak dan status pesanan.",
     },
     skills: ['Kotlin', 'REST API'],
   },
@@ -166,8 +166,8 @@ export const projects = [
     category: 'other',
     link: 'https://github.com/MhmmdRFadhil/Kryption',
     description: {
-      en: 'A learning project exploring encryption and cryptography in Kotlin — symmetric and asymmetric algorithms, key management, and secure text encoding.',
-      id: 'Proyek belajar eksplorasi enkripsi dan kriptografi pakai Kotlin — algoritma simetris dan asimetris, manajemen kunci, dan enkripsi teks yang aman.',
+      en: "My place to try out encryption in Kotlin, from symmetric and asymmetric algorithms to working with keys and encrypting text.",
+      id: "Tempat saya nyobain enkripsi pakai Kotlin, mulai dari algoritma simetris dan asimetris sampai mengelola kunci dan mengenkripsi teks.",
     },
     skills: ['Kotlin'],
   },
@@ -178,8 +178,8 @@ export const projects = [
     category: 'college',
     link: 'https://github.com/MhmmdRFadhil/UrSkripsi',
     description: {
-      en: 'A capstone app for tracking thesis progress, built with Kotlin and Firebase to help students manage milestones, advisor consultations, and deadlines.',
-      id: 'Aplikasi capstone buat memantau progres skripsi, dibangun dengan Kotlin dan Firebase untuk membantu mahasiswa mengatur milestone, konsultasi, dan deadline.',
+      en: "An app to keep thesis progress, advisor meetings, and deadlines in one place. I made it with Kotlin and Firebase for a capstone project.",
+      id: "Aplikasi buat nyatet progres skripsi, jadwal bimbingan, dan tenggat tugas. Saya bikin pakai Kotlin dan Firebase buat proyek capstone.",
     },
     skills: ['Kotlin', 'Firebase'],
   },
@@ -190,8 +190,8 @@ export const projects = [
     category: 'other',
     link: 'https://github.com/MhmmdRFadhil/BAJP-Final-Submission',
     description: {
-      en: "Final project for the 'Belajar Android Jetpack Pro' course — browse, search, and view detailed info on movies and TV shows via a REST API.",
-      id: "Proyek akhir kursus 'Belajar Android Jetpack Pro' — jelajah, cari, dan lihat detail film serta serial TV lewat REST API.",
+      en: "A movie and TV catalog I made for the Belajar Android Jetpack Pro course. You can browse titles, search, and read the details from a REST API.",
+      id: "Katalog film dan serial TV buat tugas kursus Belajar Android Jetpack Pro. Bisa cari judul dan baca detailnya dari REST API.",
     },
     skills: ['Kotlin', 'REST API'],
     certificate: 'https://www.dicoding.com/certificates/MRZMKVK90PYQ',
@@ -203,8 +203,8 @@ export const projects = [
     category: 'other',
     link: 'https://github.com/MhmmdRFadhil/BFAA-Final-Submission',
     description: {
-      en: "Final project for the 'Fundamental Android Development' course — search GitHub users and view their profiles, repositories, and followers.",
-      id: "Proyek akhir kursus 'Fundamental Android Development' — cari pengguna GitHub dan lihat profil, repository, serta followernya.",
+      en: "A course project for looking up GitHub users. You can check their profiles, repositories, and followers.",
+      id: "Proyek kursus buat cari pengguna GitHub dan lihat profil, repository, serta pengikutnya.",
     },
     skills: ['Kotlin', 'REST API'],
     certificate: 'https://www.dicoding.com/certificates/98XWK0WMLXM3',
@@ -216,8 +216,8 @@ export const projects = [
     category: 'college',
     link: 'https://github.com/MhmmdRFadhil/Coffee-Shop-App',
     description: {
-      en: 'A simple e-commerce app for selling coffee beans, with separate admin and customer access, built in Kotlin and Firebase with real-time inventory.',
-      id: 'Aplikasi e-commerce sederhana buat jual biji kopi, dengan akses terpisah admin dan pelanggan, dibangun pakai Kotlin dan Firebase dengan stok real-time.',
+      en: "A small shop app for coffee beans, built with Kotlin and Firebase. Customers and admins have their own access, and stock updates as it changes.",
+      id: "Aplikasi toko biji kopi pakai Kotlin dan Firebase. Pelanggan dan admin punya akses masing masing, dengan stok yang langsung diperbarui saat berubah.",
     },
     skills: ['Kotlin', 'Firebase'],
   },
@@ -230,7 +230,7 @@ const appsShippedCount = projects.filter((p) =>
 export const stats = [
   { num: String(appsShippedCount), label: { en: 'Apps shipped', id: 'Aplikasi dirilis' } },
   { num: '3+', label: { en: 'Years experience', id: 'Tahun pengalaman' } },
-  { num: String(projects.length), label: { en: 'Featured projects', id: 'Proyek unggulan' } },
+  { num: String(projects.length), label: { en: 'Projects so far', id: 'Proyek sejauh ini' } },
   { num: '100%', label: { en: 'Kotlin & Compose', id: 'Kotlin & Compose' } },
 ]
 
@@ -246,8 +246,8 @@ export const experienceData = {
       title: { en: 'Android Developer', id: 'Android Developer' },
       org: 'CIMB Niaga',
       desc: {
-        en: 'Building bill payment and top-up features for the OCTO Mobile app in Kotlin, implementing MVVM architecture, and collaborating closely with the Bills & Top Up team.',
-        id: 'Membangun fitur pembayaran tagihan dan top-up untuk aplikasi OCTO Mobile menggunakan Kotlin, menerapkan arsitektur MVVM, dan berkolaborasi erat dengan tim Bills & Top Up.',
+        en: "I work with the Bills & Top Up team on bill payments and top ups in OCTO Mobile, using Kotlin and MVVM.",
+        id: "Saya ngerjain fitur bayar tagihan dan isi saldo di OCTO Mobile bareng tim Bills & Top Up, pakai Kotlin dan MVVM.",
       },
     },
     {
@@ -255,8 +255,8 @@ export const experienceData = {
       title: { en: 'Android Developer', id: 'Android Developer' },
       org: 'PT Uninet Media Sakti',
       desc: {
-        en: 'Built three Android apps — Mudita (lodging), UnApp (internet service booking), and MettaDC (visit requests) — using Kotlin, MVVM, and RESTful API integration.',
-        id: 'Membangun tiga aplikasi Android — Mudita (penginapan), UnApp (pemesanan layanan internet), dan MettaDC (permintaan kunjungan) — menggunakan Kotlin, MVVM, dan integrasi RESTful API.',
+        en: "I built Mudita for lodging, UnApp for internet service bookings, and MettaDC for visit requests. All three use Kotlin, MVVM, and REST APIs.",
+        id: "Saya bikin Mudita buat penginapan, UnApp buat pemesanan layanan internet, dan MettaDC buat permintaan kunjungan. Ketiganya pakai Kotlin, MVVM, dan REST API.",
       },
     },
     {
@@ -264,8 +264,8 @@ export const experienceData = {
       title: { en: 'Android Developer', id: 'Android Developer' },
       org: 'PT Aplikasi Bisnis Sejahtera',
       desc: {
-        en: 'Developed SiLancar, a home-industry Android app, from UI design to backend integration using Kotlin and MVVM architecture.',
-        id: 'Mengembangkan SiLancar, aplikasi Android untuk industri rumahan, mulai dari desain UI hingga integrasi backend menggunakan Kotlin dan arsitektur MVVM.',
+        en: "I worked on SiLancar, an app for home businesses. I handled the UI and connected it to the backend using Kotlin and MVVM.",
+        id: "Saya ngerjain SiLancar, aplikasi buat usaha rumahan. Mulai dari bikin tampilan sampai menghubungkannya ke backend pakai Kotlin dan MVVM.",
       },
     },
     {
@@ -273,8 +273,8 @@ export const experienceData = {
       title: { en: 'Assistant of Mobile Programming', id: 'Asisten Praktikum Pemrograman Mobile' },
       org: 'Telkom Purwokerto Institute of Technology',
       desc: {
-        en: 'Mentored students in Android and Kotlin fundamentals, prepared practicum materials, and helped debug their coursework projects.',
-        id: 'Membimbing mahasiswa dalam dasar-dasar Android dan Kotlin, menyiapkan materi praktikum, dan membantu debugging proyek tugas kuliah mereka.',
+        en: "I helped students learn Android and Kotlin, put together practice materials, and worked through bugs in their assignments.",
+        id: "Saya bantu mahasiswa belajar Android dan Kotlin, nyiapin bahan praktikum, dan cari solusi buat bug di tugas mereka.",
       },
     },
     {
@@ -282,8 +282,8 @@ export const experienceData = {
       title: { en: 'Mobile Developer', id: 'Mobile Developer' },
       org: 'Telkom Purwokerto Institute of Technology',
       desc: {
-        en: 'Built TernaKu, an Android livestock sales app for Dermaji Village, from Figma design through to a tested, working application.',
-        id: 'Membangun TernaKu, aplikasi Android jual-beli ternak untuk Desa Dermaji, mulai dari desain Figma hingga jadi aplikasi yang teruji dan berjalan lancar.',
+        en: "I built TernaKu for livestock sales in Dermaji Village, starting with the Figma designs and taking it through development and testing.",
+        id: "Saya bikin TernaKu buat jual beli ternak di Desa Dermaji, dari desain di Figma sampai pengembangan dan pengujian aplikasinya.",
       },
     },
     {
@@ -291,8 +291,8 @@ export const experienceData = {
       title: { en: 'Assistant of Mobile Programming', id: 'Asisten Praktikum Pemrograman Mobile' },
       org: 'Telkom Purwokerto Institute of Technology',
       desc: {
-        en: 'Mentored students in Android and Kotlin fundamentals, prepared practicum materials, and helped debug their coursework projects.',
-        id: 'Membimbing mahasiswa dalam dasar-dasar Android dan Kotlin, menyiapkan materi praktikum, dan membantu debugging proyek tugas kuliah mereka.',
+        en: "I helped students learn Android and Kotlin, put together practice materials, and worked through bugs in their assignments.",
+        id: "Saya bantu mahasiswa belajar Android dan Kotlin, nyiapin bahan praktikum, dan cari solusi buat bug di tugas mereka.",
       },
     },
     {
@@ -300,8 +300,8 @@ export const experienceData = {
       title: { en: 'Assistant of Programming Algorithm', id: 'Asisten Praktikum Algoritma Pemrograman' },
       org: 'Telkom Purwokerto Institute of Technology',
       desc: {
-        en: 'Taught C++ programming fundamentals and algorithms, guided students through practicum exercises, and evaluated their assignments.',
-        id: 'Mengajar dasar-dasar pemrograman C++ dan algoritma, membimbing mahasiswa dalam latihan praktikum, dan menilai tugas mereka.',
+        en: "I taught the basics of C++ and algorithms, helped students during practice sessions, and reviewed their assignments.",
+        id: "Saya ngajarin dasar C++ dan algoritma, mendampingi sesi praktikum, dan memeriksa tugas mahasiswa.",
       },
     },
     {
@@ -312,8 +312,8 @@ export const experienceData = {
       },
       org: 'Kampus Merdeka',
       desc: {
-        en: 'Completed an intensive Android development track covering app fundamentals and Jetpack, plus soft-skills training, capped by a final project.',
-        id: 'Menyelesaikan program intensif pengembangan Android yang mencakup dasar-dasar aplikasi dan Jetpack, ditambah pelatihan soft skills, diakhiri dengan proyek akhir.',
+        en: "I studied Android fundamentals and Jetpack, joined soft skills sessions, and put what I learned into a final project.",
+        id: "Saya belajar dasar Android dan Jetpack, ikut sesi soft skills, lalu nerapin hasil belajarnya di proyek akhir.",
       },
     },
   ],
@@ -323,8 +323,8 @@ export const experienceData = {
       title: { en: 'Informatics Engineering', id: 'Teknik Informatika' },
       org: 'Telkom Purwokerto Institute of Technology',
       desc: {
-        en: "Bachelor's degree in Informatics Engineering, concentrating on Android development with Kotlin and Jetpack Compose, backed by coursework in software engineering and mobile architecture.",
-        id: 'Gelar Sarjana Teknik Informatika, dengan konsentrasi pengembangan Android menggunakan Kotlin dan Jetpack Compose, didukung mata kuliah rekayasa perangkat lunak dan arsitektur mobile.',
+        en: "I earned my degree in Informatics Engineering here. I spent a lot of that time learning Android, Kotlin, Jetpack Compose, and software engineering.",
+        id: "Saya kuliah Teknik Informatika di sini. Banyak waktu saya habiskan buat belajar Android, Kotlin, Jetpack Compose, dan rekayasa perangkat lunak.",
       },
     },
     {
@@ -332,8 +332,8 @@ export const experienceData = {
       title: { en: 'Computer and Network Engineering', id: 'Teknik Komputer dan Jaringan' },
       org: 'Telkom Vocational High School Banjarbaru',
       desc: {
-        en: 'Studied computer network engineering fundamentals — networking, hardware, and systems administration — laying an early technical foundation before pursuing software development.',
-        id: 'Mempelajari dasar-dasar teknik jaringan komputer — jaringan, hardware, dan administrasi sistem — membangun fondasi teknis awal sebelum menekuni pengembangan software.',
+        en: "This is where I learned about networks, hardware, and managing computer systems, before getting into app development.",
+        id: "Di sini saya mulai belajar jaringan, hardware, dan pengelolaan sistem komputer, sebelum tertarik bikin aplikasi.",
       },
     },
     {
@@ -341,8 +341,8 @@ export const experienceData = {
       title: { en: 'MTsN', id: 'MTsN' },
       org: 'Islamic Junior High School Martapura',
       desc: {
-        en: 'Completed junior secondary education at an Islamic school in Martapura, South Kalimantan.',
-        id: 'Menyelesaikan pendidikan menengah pertama di sekolah Islam di Martapura, Kalimantan Selatan.',
+        en: "I went to junior high school in Martapura, South Kalimantan.",
+        id: "Saya sekolah di MTsN di Martapura, Kalimantan Selatan.",
       },
     },
     {
@@ -350,8 +350,8 @@ export const experienceData = {
       title: { en: 'SDN', id: 'SDN' },
       org: 'Jawa 2 Elementary School Martapura',
       desc: {
-        en: 'Completed primary education in Martapura, South Kalimantan.',
-        id: 'Menyelesaikan pendidikan dasar di Martapura, Kalimantan Selatan.',
+        en: "I went to elementary school in Martapura, South Kalimantan.",
+        id: "Saya sekolah dasar di Martapura, Kalimantan Selatan.",
       },
     },
   ],

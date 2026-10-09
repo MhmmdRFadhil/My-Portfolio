@@ -8,6 +8,7 @@ export default {
         paper: 'var(--paper)',
         surface: 'var(--surface)',
         surfaceAlt: 'var(--surface-alt)',
+        band: 'var(--band)',
         ink: 'var(--ink)',
         muted: 'var(--muted)',
         line: 'var(--border)',
@@ -16,7 +17,7 @@ export default {
         accent2: 'var(--accent2)',
       },
       fontFamily: {
-        display: ['"Bricolage Grotesque"', 'sans-serif'],
+        display: ['var(--font-display)'],
         // Kept in sync with --font-mono in index.css rather than
         // duplicating the stack here.
         mono: ['var(--font-mono)'],

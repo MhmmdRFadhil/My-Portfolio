@@ -65,7 +65,7 @@ export default function About() {
           {stats.map((s, i) => (
             <Reveal key={i} delay={0.15 + i * 0.08}>
               <TiltWrap max={4}>
-                <div className="card-chunky p-6 transition-[transform,box-shadow] duration-200 hover:-translate-y-1 hover:shadow-[0_9px_0_0_var(--ghost-shadow)]">
+                <div className="card-chunky p-6 hover:-translate-y-1">
                   <StatNumber num={s.num} />
                   <div className="text-[13.5px] text-muted mt-1">{s.label[lang]}</div>
                 </div>

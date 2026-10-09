@@ -1,8 +1,5 @@
 /**
- * Tombol "chunky": bg solid + shadow di bagian bawah saja (bukan
- * diagonal kanan-bawah), warna shadow mengikuti varian tombol
- * (bukan hitam). Style diatur lewat class .btn-chunky di index.css
- * supaya warna shadow per-varian gampang diatur lewat CSS variable.
+ * Shared button styles and theme-aware variants live in index.css.
  */
 export default function Button({
   as = 'a',

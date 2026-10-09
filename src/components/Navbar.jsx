@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Moon, Sun, Menu, X } from 'lucide-react'
 import { navLinks, profile } from '../data/site'
@@ -20,6 +20,19 @@ export default function Navbar() {
   const { lang, toggleLanguage } = useLanguage()
   const t = translations[lang]
   const [open, setOpen] = useState(false)
+  const menuButton = useRef(null)
+
+  useEffect(() => {
+    if (!open) return
+    const onKeyDown = (event) => {
+      if (event.key === 'Escape') {
+        setOpen(false)
+        menuButton.current?.focus()
+      }
+    }
+    document.addEventListener('keydown', onKeyDown)
+    return () => document.removeEventListener('keydown', onKeyDown)
+  }, [open])
   const active = useActiveSection(navIds)
   const scrolling = useIsScrolling()
   const [nearTop, setNearTop] = useState(true)
@@ -63,30 +76,30 @@ export default function Navbar() {
         ${hidden ? '-translate-y-[calc(100%+1rem)]' : 'translate-y-0'}`}
     >
       <div className="wrap pt-3.5">
-        <nav className="flex items-center justify-between h-[76px] px-4 md:px-5
-          bg-surface rounded-[var(--radius-md)] shadow-[0_6px_0_0_var(--ghost-shadow)]">
-          <a href="#home" onClick={(e) => handleNavClick(e, 'home')} className="font-display font-extrabold text-lg flex items-center gap-2.5">
+        <nav className="site-nav" aria-label={lang === 'id' ? 'Navigasi utama' : 'Main navigation'}>
+          <a href="#home" onClick={(e) => handleNavClick(e, 'home')} className="font-display font-semibold text-sm sm:text-lg flex items-center gap-1 sm:gap-2.5">
             <span className="w-2.5 h-2.5 rounded-full bg-primary" />
             {profile.shortName}
             <span className="text-primary">{profile.handle}</span>
           </a>
 
           {/* Desktop nav */}
-          <ul className="hidden md:flex items-center gap-1.5 list-none">
+          <ul className="hidden lg:flex items-center gap-0.5 list-none">
             {navLinks.map((link) => (
               <li key={link.id} className="relative">
                 {active === link.id && (
                   <motion.span
                     layoutId="nav-active-pill"
-                    className="absolute inset-0 rounded-lg bg-[var(--primary-fill)]"
+                    className="absolute inset-0 rounded-lg bg-[var(--primary-tint)]"
                     transition={{ type: 'spring', stiffness: 380, damping: 32 }}
                   />
                 )}
                 <a
                   href={`#${link.id}`}
                   onClick={(e) => handleNavClick(e, link.id)}
-                  className={`relative z-10 text-sm font-bold px-3.5 py-2 rounded-lg block transition-colors
-                    ${active === link.id ? 'text-white' : 'text-muted hover:text-primary hover:bg-[var(--primary-tint)]'}`}
+                  aria-current={active === link.id ? 'location' : undefined}
+                  className={`nav-link relative z-10 rounded-lg block transition-colors
+                    ${active === link.id ? 'text-primary' : 'text-muted hover:text-primary hover:bg-[var(--primary-tint)]'}`}
                 >
                   {link.label[lang]}
                 </a>
@@ -94,12 +107,12 @@ export default function Navbar() {
             ))}
           </ul>
 
-          <div className="flex items-center gap-2.5">
+          <div className="flex items-center gap-1 sm:gap-2.5">
             <motion.button
               onClick={toggleTheme}
               aria-label={t.nav.themeToggle}
               whileTap={{ scale: 0.88 }}
-              className="w-10 h-10 rounded-lg border-2 border-line bg-surface flex items-center justify-center overflow-hidden"
+              className="nav-control overflow-hidden"
             >
               <AnimatePresence mode="wait" initial={false}>
                 <motion.span
@@ -118,7 +131,7 @@ export default function Navbar() {
               onClick={toggleLanguage}
               aria-label={t.nav.langToggle}
               whileTap={{ scale: 0.88 }}
-              className="w-10 h-10 rounded-lg border-2 border-line bg-surface flex items-center justify-center overflow-hidden text-[11px] font-bold"
+              className="nav-control overflow-hidden text-[11px] font-bold"
             >
               <AnimatePresence mode="wait" initial={false}>
                 <motion.span
@@ -135,9 +148,12 @@ export default function Navbar() {
             </motion.button>
             <motion.button
               onClick={() => setOpen((o) => !o)}
+              ref={menuButton}
               aria-label={t.nav.menu}
+              aria-expanded={open}
+              aria-controls="mobile-navigation"
               whileTap={{ scale: 0.88 }}
-              className="md:hidden w-10 h-10 rounded-lg border-2 border-line bg-surface flex items-center justify-center"
+              className="nav-control lg:hidden"
             >
               {open ? <X size={18} /> : <Menu size={18} />}
             </motion.button>
@@ -147,19 +163,21 @@ export default function Navbar() {
 
       {/* Mobile nav — absolute supaya overlay di atas konten, tidak mendorong layout saat dibuka */}
       <div
-        className={`md:hidden absolute inset-x-0 top-full transition-all duration-300 ease-out origin-top
+        id="mobile-navigation"
+        inert={open ? undefined : ''}
+        className={`lg:hidden absolute inset-x-0 top-full transition-all duration-300 ease-out origin-top
           ${open ? 'opacity-100 scale-y-100 pointer-events-auto mt-3' : 'opacity-0 scale-y-95 pointer-events-none mt-0'}`}
       >
         <div className="wrap">
-          <ul className="flex flex-col gap-2 p-3 bg-surface rounded-[var(--radius-md)]
-            shadow-[0_6px_0_0_var(--ghost-shadow)] list-none">
+          <ul className="mobile-nav flex flex-col gap-2 p-3 bg-surface rounded-[var(--radius-md)] list-none">
             {navLinks.map((link) => (
               <li key={link.id}>
                 <a
                   href={`#${link.id}`}
                   onClick={(e) => handleNavClick(e, link.id)}
+                  aria-current={active === link.id ? 'location' : undefined}
                   className={`block text-[13.5px] font-bold px-4 py-3 rounded-lg transition-colors
-                    ${active === link.id ? 'text-white bg-[var(--primary-fill)]' : 'text-muted hover:text-primary hover:bg-[var(--primary-tint)]'}`}
+                    ${active === link.id ? 'text-primary bg-[var(--primary-tint)]' : 'text-muted hover:text-primary hover:bg-[var(--primary-tint)]'}`}
                 >
                   {link.label[lang]}
                 </a>

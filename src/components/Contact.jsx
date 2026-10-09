@@ -1,5 +1,4 @@
 import { useState } from 'react'
-import { AnimatePresence, motion } from 'framer-motion'
 import { Instagram, MapPin, Mail, Send, Loader2 } from 'lucide-react'
 import { contactInfo } from '../data/site'
 import { translations } from '../data/translations'
@@ -9,22 +8,8 @@ import Button from './ui/Button'
 
 const iconMap = { instagram: Instagram, pin: MapPin, email: Mail }
 
-function FieldError({ message }) {
-  return (
-    <AnimatePresence>
-      {message && (
-        <motion.p
-          initial={{ opacity: 0, y: -4, height: 0 }}
-          animate={{ opacity: 1, y: 0, height: 'auto' }}
-          exit={{ opacity: 0, height: 0 }}
-          transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
-          className="text-[13px] text-red-500 mt-1.5"
-        >
-          {message}
-        </motion.p>
-      )}
-    </AnimatePresence>
-  )
+function FieldError({ id, message }) {
+  return <p id={id} className={message ? 'text-[13px] text-[var(--error)] mt-1.5' : 'hidden'}>{message}</p>
 }
 
 // Set in .env as VITE_FORMSPREE_ENDPOINT (see .env.example) — a Formspree
@@ -57,7 +42,12 @@ export default function Contact() {
 
     const fieldErrors = validate(form)
     setErrors(fieldErrors)
-    if (Object.keys(fieldErrors).length > 0) return
+    setStatus('idle')
+    const firstError = Object.keys(fieldErrors)[0]
+    if (firstError) {
+      requestAnimationFrame(() => form.elements[firstError].focus())
+      return
+    }
 
     if (!FORMSPREE_ENDPOINT) {
       console.error('VITE_FORMSPREE_ENDPOINT is not set — see .env.example')
@@ -92,13 +82,13 @@ export default function Contact() {
 
         <Reveal delay={0.1} className="card-chunky overflow-hidden grid grid-cols-1 md:grid-cols-[0.85fr_1.15fr]">
           {/* Left: contact info panel */}
-          <div className="relative bg-[var(--primary-fill)] text-white p-6 md:p-8 flex flex-col justify-center overflow-hidden">
+          <div className="contact-panel relative p-6 md:p-8 flex flex-col justify-center overflow-hidden">
             <Send className="absolute -bottom-8 -right-8 opacity-10 pointer-events-none" size={170} strokeWidth={1.5} />
 
             <div className="relative flex flex-col gap-5">
               <div>
                 <h3 className="text-white text-xl md:text-2xl mb-1.5">{t.contact.getInTouch}</h3>
-                <p className="text-white/75 text-sm">{t.contact.dmText}</p>
+                <p className="text-white/90 text-sm">{t.contact.dmText}</p>
               </div>
 
               <div className="flex flex-col gap-3.5">
@@ -106,7 +96,7 @@ export default function Contact() {
                   const Icon = iconMap[c.icon]
                   const inner = (
                     <>
-                      <span className="w-9 h-9 rounded-lg bg-white/15 border-2 border-white/25 flex items-center justify-center flex-shrink-0">
+                      <span className="contact-icon w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0">
                         <Icon size={16} />
                       </span>
                       <span className="text-[14.5px] text-white/90">{c.text}</span>
@@ -136,39 +126,42 @@ export default function Contact() {
           <form onSubmit={handleSubmit} noValidate className="p-6 md:p-8 flex flex-col">
             <div className="mb-4">
               <label htmlFor="name" className="block text-[13.5px] font-bold mb-1.5">{t.contact.nameLabel}</label>
-              <div className={`rounded-[var(--radius-sm)] border-2 bg-[var(--surface)] transition-[border-color,box-shadow] focus-within:border-[var(--primary)] focus-within:shadow-[0_0_0_4px_var(--primary-tint)] ${errors.name ? 'border-red-500' : 'border-[var(--border-soft)]'}`}>
+              <div className={`rounded-[var(--radius-sm)] border-2 bg-[var(--surface)] transition-[border-color,box-shadow] focus-within:border-[var(--primary)] focus-within:shadow-[0_0_0_4px_var(--primary-tint)] ${errors.name ? 'border-[var(--error)]' : 'border-[var(--border-soft)]'}`}>
                 <input
-                  id="name" name="name" type="text" required placeholder={t.contact.namePlaceholder}
+                  id="name" name="name" autoComplete="name" type="text" required placeholder={t.contact.namePlaceholder}
                   aria-invalid={!!errors.name}
+                  aria-describedby={errors.name ? 'name-error' : undefined}
                   onChange={() => errors.name && setErrors((prev) => ({ ...prev, name: undefined }))}
-                  className="w-full appearance-none rounded-[var(--radius-sm)] px-3.5 py-2.5 border-0 bg-transparent text-ink text-[15px] placeholder:text-[14px] focus:outline-none"
+                  className="w-full appearance-none rounded-[var(--radius-sm)] px-3.5 py-2.5 border-0 bg-transparent text-ink text-base placeholder:text-[14px] focus:outline-none"
                 />
               </div>
-              <FieldError message={errors.name && t.contact[errors.name]} />
+              <FieldError id="name-error" message={errors.name && t.contact[errors.name]} />
             </div>
             <div className="mb-4">
               <label htmlFor="email" className="block text-[13.5px] font-bold mb-1.5">{t.contact.emailLabel}</label>
-              <div className={`rounded-[var(--radius-sm)] border-2 bg-[var(--surface)] transition-[border-color,box-shadow] focus-within:border-[var(--primary)] focus-within:shadow-[0_0_0_4px_var(--primary-tint)] ${errors.email ? 'border-red-500' : 'border-[var(--border-soft)]'}`}>
+              <div className={`rounded-[var(--radius-sm)] border-2 bg-[var(--surface)] transition-[border-color,box-shadow] focus-within:border-[var(--primary)] focus-within:shadow-[0_0_0_4px_var(--primary-tint)] ${errors.email ? 'border-[var(--error)]' : 'border-[var(--border-soft)]'}`}>
                 <input
-                  id="email" name="email" type="email" required placeholder={t.contact.emailPlaceholder}
+                  id="email" name="email" autoComplete="email" type="email" required placeholder={t.contact.emailPlaceholder}
                   aria-invalid={!!errors.email}
+                  aria-describedby={errors.email ? 'email-error' : undefined}
                   onChange={() => errors.email && setErrors((prev) => ({ ...prev, email: undefined }))}
-                  className="w-full appearance-none rounded-[var(--radius-sm)] px-3.5 py-2.5 border-0 bg-transparent text-ink text-[15px] placeholder:text-[14px] focus:outline-none"
+                  className="w-full appearance-none rounded-[var(--radius-sm)] px-3.5 py-2.5 border-0 bg-transparent text-ink text-base placeholder:text-[14px] focus:outline-none"
                 />
               </div>
-              <FieldError message={errors.email && t.contact[errors.email]} />
+              <FieldError id="email-error" message={errors.email && t.contact[errors.email]} />
             </div>
             <div className="mb-2">
               <label htmlFor="message" className="block text-[13.5px] font-bold mb-1.5">{t.contact.messageLabel}</label>
-              <div className={`rounded-[var(--radius-sm)] border-2 bg-[var(--surface)] transition-[border-color,box-shadow] focus-within:border-[var(--primary)] focus-within:shadow-[0_0_0_4px_var(--primary-tint)] ${errors.message ? 'border-red-500' : 'border-[var(--border-soft)]'}`}>
+              <div className={`rounded-[var(--radius-sm)] border-2 bg-[var(--surface)] transition-[border-color,box-shadow] focus-within:border-[var(--primary)] focus-within:shadow-[0_0_0_4px_var(--primary-tint)] ${errors.message ? 'border-[var(--error)]' : 'border-[var(--border-soft)]'}`}>
                 <textarea
                   id="message" name="message" required placeholder={t.contact.messagePlaceholder}
                   aria-invalid={!!errors.message}
+                  aria-describedby={errors.message ? 'message-error' : undefined}
                   onChange={() => errors.message && setErrors((prev) => ({ ...prev, message: undefined }))}
-                  className="w-full min-h-[80px] appearance-none rounded-[var(--radius-sm)] px-3.5 py-2.5 border-0 bg-transparent text-ink text-[15px] placeholder:text-[14px] resize-none focus:outline-none"
+                  className="w-full min-h-[80px] appearance-none rounded-[var(--radius-sm)] px-3.5 py-2.5 border-0 bg-transparent text-ink text-base placeholder:text-[14px] resize-y focus:outline-none"
                 />
               </div>
-              <FieldError message={errors.message && t.contact[errors.message]} />
+              <FieldError id="message-error" message={errors.message && t.contact[errors.message]} />
             </div>
             <Button
               as="button"
@@ -182,32 +175,10 @@ export default function Contact() {
                 : <Send size={15} className="transition-transform duration-200 group-hover:translate-x-1 group-hover:-translate-y-0.5" />}
               {status === 'sending' ? t.contact.sending : t.contact.sendButton}
             </Button>
-            <AnimatePresence mode="wait">
-              {status === 'sent' && (
-                <motion.p
-                  key="sent"
-                  initial={{ opacity: 0, y: -6, height: 0 }}
-                  animate={{ opacity: 1, y: 0, height: 'auto' }}
-                  exit={{ opacity: 0, height: 0 }}
-                  transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
-                  className="text-[13.5px] text-primary mt-3"
-                >
-                  {t.contact.sentMessage}
-                </motion.p>
-              )}
-              {status === 'error' && (
-                <motion.p
-                  key="error"
-                  initial={{ opacity: 0, y: -6, height: 0 }}
-                  animate={{ opacity: 1, y: 0, height: 'auto' }}
-                  exit={{ opacity: 0, height: 0 }}
-                  transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
-                  className="text-[13.5px] text-red-500 mt-3"
-                >
-                  {t.contact.errorMessage}
-                </motion.p>
-              )}
-            </AnimatePresence>
+            <p role="status" aria-live="polite" aria-atomic="true"
+              className={`text-[13.5px] mt-3 ${status === 'error' ? 'text-[var(--error)]' : 'text-primary'}`}>
+              {status === 'sending' ? t.contact.sending : status === 'sent' ? t.contact.sentMessage : status === 'error' ? t.contact.errorMessage : ''}
+            </p>
           </form>
         </Reveal>
       </div>

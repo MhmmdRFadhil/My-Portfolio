@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { motion, useReducedMotion } from 'framer-motion'
 
 /**
@@ -7,10 +8,12 @@ import { motion, useReducedMotion } from 'framer-motion'
  */
 export default function Reveal({ children, delay = 0, y = 26, className = '', as = 'div', mount = false }) {
   const prefersReduced = useReducedMotion()
+  const [revealed, setRevealed] = useState(mount)
   const Comp = motion[as] || motion.div
 
   if (prefersReduced) {
-    return <div className={className}>{children}</div>
+    const Tag = as
+    return <Tag className={className}>{children}</Tag>
   }
 
   // mount=true skips the scroll-triggered viewport check and animates in
@@ -28,6 +31,8 @@ export default function Reveal({ children, delay = 0, y = 26, className = '', as
     <Comp
       initial={{ opacity: 0, y }}
       {...revealProps}
+      onViewportEnter={() => setRevealed(true)}
+      data-revealed={revealed || mount ? 'true' : undefined}
       transition={{ duration: 0.65, delay, ease: [0.16, 1, 0.3, 1] }}
       className={className}
     >
